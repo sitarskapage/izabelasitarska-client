@@ -14,7 +14,10 @@ const routes = [
     element: <App />,
     children: [
       { path: "/", element: <Homepage /> },
-      { path: "bio", element: <Bio /> },
+      {
+        path: "bio",
+        element: <Bio />,
+      },
       { path: "works", element: <Works /> },
       { path: "projects", element: <Projects /> },
       { path: "posts", element: <Posts /> },

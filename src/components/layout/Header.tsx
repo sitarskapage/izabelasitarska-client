@@ -1,14 +1,19 @@
+import { useContext } from "react";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { LinkContainer } from "react-router-bootstrap"; // Ensure correct import
+import { GeneralContext } from "../contexts/GeneralContext";
 
 function Header() {
+  const { preferences } = useContext(GeneralContext);
+  const artists_name = preferences ? preferences.artists_name : "";
+
   return (
-    <Navbar expand="lg" className="bg-body-tertiary">
+    <Navbar expand="lg">
       <Container>
         <LinkContainer to="/">
-          <Navbar.Brand>React-Bootstrap</Navbar.Brand>
+          <Navbar.Brand>{artists_name}</Navbar.Brand>
         </LinkContainer>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
