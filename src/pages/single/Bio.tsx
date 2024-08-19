@@ -1,7 +1,6 @@
 import HTMLReactParser from "html-react-parser/lib/index";
 import Layout from "../../components/layout/Layout.";
 import { useData } from "../../utils/useData";
-import { Container } from "react-bootstrap";
 import { ProfileSchema } from "@jakubkanna/labguy-front-schema";
 
 export default function Bio() {
@@ -21,16 +20,14 @@ export default function Bio() {
 
   return (
     <Layout title="Bio">
-      <Container>
-        <div id="Statement">
-          <h2>Statement</h2>
-          <div>{html_statement && HTMLReactParser(html_statement)}</div>
-        </div>
-        <div id="Additional">
-          <h2>Additional</h2>
-          {arrayToHtml(html_additional)}
-        </div>
-      </Container>
+      <div id="Statement">
+        <h2>Statement</h2>
+        <div>{html_statement && HTMLReactParser(html_statement)}</div>
+      </div>
+      <div id="Additional">
+        <h2>Additional</h2>
+        {arrayToHtml(html_additional)}
+      </div>
     </Layout>
   );
 }
