@@ -5,23 +5,29 @@ import Bio from "./pages/single/Bio";
 import Contact from "./pages/single/Contact";
 import Works from "./pages/Works";
 import Projects from "./pages/Projects";
-import Posts from "./pages/Posts";
+import Post from "./pages/single/Post";
+import Work from "./pages/single/Work";
+import Project from "./pages/single/Project";
 
 const routes = [
-  { path: "*" },
   {
     path: "",
     element: <App />,
     children: [
       { path: "/", element: <Homepage /> },
-      {
-        path: "bio",
-        element: <Bio />,
-      },
-      { path: "works", element: <Works /> },
-      { path: "projects", element: <Projects /> },
-      { path: "posts", element: <Posts /> },
+      { path: ":slug", element: <Post /> },
+      { path: "bio", element: <Bio /> },
       { path: "contact", element: <Contact /> },
+      {
+        path: "works",
+        element: <Works />,
+        children: [{ path: ":slug", element: <Work /> }],
+      },
+      {
+        path: "projects",
+        element: <Projects />,
+        children: [{ path: ":slug", element: <Project /> }],
+      },
     ],
   },
 ];

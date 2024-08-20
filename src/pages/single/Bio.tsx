@@ -5,14 +5,13 @@ import { ProfileSchema } from "@jakubkanna/labguy-front-schema";
 
 export default function Bio() {
   const data = useData<ProfileSchema>("/profile/1");
-
   if (!data) return;
 
   const { html_statement, html_additional } = data;
 
   const arrayToHtml = (arr: ProfileSchema["html_additional"]) => {
     return (arr ?? []).map((item, index) => (
-      <div id={`Additional-${index}`}>
+      <div id={`Additional-${index}`} key={index}>
         {item.html && HTMLReactParser(item.html)}
       </div>
     ));

@@ -1,14 +1,13 @@
-import { useContext, useState, useEffect, useMemo } from "react";
-import { GeneralContext } from "../components/contexts/GeneralContext";
+import { useContext, useState, useEffect } from "react";
+import { GeneralContext } from "../contexts/GeneralContext";
 
 export function useData<T>(endpoint: string) {
   const context = useContext(GeneralContext);
-
   const { setLoading } = context;
   const [data, setData] = useState<T | null>(null);
 
-  const fetchData = useMemo(() => {
-    return async () => {
+  useEffect(() => {
+    const fetchData = async () => {
       setLoading(true);
 
       try {
@@ -28,11 +27,9 @@ export function useData<T>(endpoint: string) {
         setLoading(false);
       }
     };
-  }, [endpoint, setLoading]);
 
-  useEffect(() => {
     fetchData();
-  }, [fetchData]);
+  }, [endpoint, setLoading]);
 
   return data;
 }

@@ -1,3 +1,4 @@
+import { PreferencesSchema } from "@jakubkanna/labguy-front-schema";
 import React, {
   createContext,
   useState,
@@ -6,14 +7,11 @@ import React, {
   ReactNode,
 } from "react";
 
-interface Preferences {
-  artists_name: string;
-  [key: string]: unknown;
-}
-
 interface GeneralContextType {
-  preferences: Preferences | null;
-  setPreferences: React.Dispatch<React.SetStateAction<Preferences | null>>;
+  preferences: PreferencesSchema | null;
+  setPreferences: React.Dispatch<
+    React.SetStateAction<PreferencesSchema | null>
+  >;
   loading: boolean;
   setLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -32,7 +30,9 @@ export const GeneralContext = createContext<GeneralContextType>({
 export const GeneralProvider: React.FC<GeneralProviderProps> = ({
   children,
 }) => {
-  const [preferences, setPreferences] = useState<Preferences | null>(null);
+  const [preferences, setPreferences] = useState<PreferencesSchema | null>(
+    null
+  );
   const [loading, setLoading] = useState<boolean>(true);
 
   const fetchPreferences = useMemo(() => {

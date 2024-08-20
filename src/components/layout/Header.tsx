@@ -3,7 +3,7 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { LinkContainer } from "react-router-bootstrap"; // Ensure correct import
-import { GeneralContext } from "../contexts/GeneralContext";
+import { GeneralContext } from "../../contexts/GeneralContext";
 
 function Header() {
   const { preferences } = useContext(GeneralContext);
@@ -20,9 +20,6 @@ function Header() {
           <Nav className="me-auto">
             <LinkContainer to="/bio">
               <Nav.Link>Bio</Nav.Link>
-            </LinkContainer>
-            <LinkContainer to="/posts">
-              <Nav.Link>Posts</Nav.Link>
             </LinkContainer>
             <LinkContainer to="/projects">
               <Nav.Link>Projects</Nav.Link>

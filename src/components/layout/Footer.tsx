@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { Col, Container, Row } from "react-bootstrap";
-import { GeneralContext } from "../contexts/GeneralContext";
+import { GeneralContext } from "../../contexts/GeneralContext";
 
 export default function Footer() {
   const { preferences } = useContext(GeneralContext);

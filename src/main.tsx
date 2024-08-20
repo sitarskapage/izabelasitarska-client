@@ -1,8 +1,9 @@
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap-icons/font/bootstrap-icons.css";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import Router from "./Router";
-import "bootstrap/dist/css/bootstrap.min.css";
-import { GeneralProvider } from "./components/contexts/GeneralContext";
+import { GeneralProvider } from "./contexts/GeneralContext";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
