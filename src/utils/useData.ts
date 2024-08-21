@@ -21,8 +21,6 @@ export function useData<T>(endpoint: string) {
 
         const result = await response.json();
         setData(result);
-      } catch (err) {
-        console.error("Error fetching data:", err);
       } finally {
         setLoading(false);
       }

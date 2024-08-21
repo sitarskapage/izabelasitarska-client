@@ -18,7 +18,10 @@ export default function Homepage() {
 
   return (
     <Layout title="">
-      <Col className="d-flex flex-column gap-2 h-75">
+      <Col className="d-flex flex-column gap-2 h-100">
+        <Row>
+          <h1>{homepage_heading}</h1>
+        </Row>
         <Row className="flex-grow-1">
           {homepage_background_image && (
             <Image
@@ -26,9 +29,6 @@ export default function Homepage() {
               image={homepage_background_image[0] as ImageRefSchema}
             ></Image>
           )}
-        </Row>
-        <Row>
-          <h1>{homepage_heading}</h1>
         </Row>
         <Row>
           <h2>{homepage_subheading}</h2>

@@ -1,23 +1,27 @@
+import { useState, useEffect } from "react";
+import { useLocation, Outlet } from "react-router-dom";
+import { useData } from "../utils/useData";
 import {
   GeneralSectionSchema,
   ImageRefSchema,
   ProjectSchema,
 } from "@jakubkanna/labguy-front-schema";
-import { useData } from "../utils/useData";
-import Card from "../components/Card";
-import { Outlet, useLocation } from "react-router-dom";
-import { useEffect, useState } from "react";
 import Layout from "../components/layout/Layout.";
+import ProjectCard from "../components/ProjectCard";
+import { Container } from "react-bootstrap";
+
+export interface Project extends ProjectSchema {
+  general: GeneralSectionSchema;
+  images: ImageRefSchema[];
+}
 
 export default function Projects() {
-  const [selected, setSelected] = useState<ProjectSchema | null>(null);
-  const data = useData<ProjectSchema[]>("/projects/");
+  const [selected, setSelected] = useState<Project | null>(null);
+  const data = useData<Project[]>("/projects/");
   const location = useLocation();
 
-  // Reset the selected state when the location changes to the parent route
   useEffect(() => {
-    // Check if we are on the parent route (e.g., "/projects") by comparing the path
-    if (location.pathname === "/projects") {
+    if (location.pathname === "/projects/") {
       setSelected(null);
     }
   }, [location]);
@@ -27,15 +31,17 @@ export default function Projects() {
   return (
     <>
       {!selected && (
-        <Layout title="Projects">
-          {data.map((project, i) => (
-            <Card
-              general={project.general as GeneralSectionSchema}
-              image={project.images?.[0] as ImageRefSchema}
-              key={i}
-              onClick={() => setSelected(project)}
-            ></Card>
-          ))}
+        <Layout title={"Projects"}>
+          <Container className="d-flex flex-column gap-4">
+            {data.map((item, i) => (
+              <ProjectCard
+                general={item.general}
+                image={item.images?.[0]}
+                key={i}
+                onClick={() => setSelected(item)}
+              />
+            ))}
+          </Container>
         </Layout>
       )}
       <Outlet context={selected} />
