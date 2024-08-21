@@ -54,9 +54,10 @@ function getImageAttributes(image: ImageRefSchema) {
 
 interface ImageProps {
   image: ImageRefSchema;
+  className?: string;
 }
 
-export default function Image({ image }: ImageProps) {
+export default function Image({ image, className }: ImageProps) {
   const { src, srcSet, sizes, alt } = getImageAttributes(image);
 
   return (
@@ -66,7 +67,7 @@ export default function Image({ image }: ImageProps) {
       sizes={sizes}
       alt={alt}
       loading="lazy"
-      className="img-fluid"
+      className={className || "img-fluid"}
     />
   );
 }

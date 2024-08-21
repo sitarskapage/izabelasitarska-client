@@ -1,10 +1,7 @@
 import { ReactNode } from "react";
-import { Container, Row } from "react-bootstrap";
 
 export default function Main({ children }: { children: ReactNode }) {
   return (
-    <Container>
-      <Row>{children}</Row>
-    </Container>
+    <main className="container d-flex flex-column flex-grow-1">{children}</main>
   );
 }

@@ -18,12 +18,12 @@ export default function Card({ general, image, onClick }: CardProps) {
     <Container onClick={onClick}>
       <Link to={slug || "#"}>
         <Row>
+          <Col xs={6}>{image && <Image image={image}></Image>}</Col>
+        </Row>
+        <Row>
           <Col>
             <h3>{title}</h3>
           </Col>
-        </Row>
-        <Row>
-          <Col xs={6}>{image && <Image image={image}></Image>}</Col>
         </Row>
       </Link>
       <Row>
