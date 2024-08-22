@@ -1,11 +1,12 @@
 import HTMLReactParser from "html-react-parser/lib/index";
 import Layout from "../../components/layout/Layout.";
-import { useData } from "../../utils/useData";
 import { ProfileSchema } from "@jakubkanna/labguy-front-schema";
+import { useLoaderData } from "react-router-dom";
 
 export default function Bio() {
-  const data = useData<ProfileSchema>("/profile/1");
-  if (!data) return;
+  const data = (useLoaderData() as ProfileSchema) || null;
+
+  if (!data) return null;
 
   const { html_statement, html_additional } = data;
 

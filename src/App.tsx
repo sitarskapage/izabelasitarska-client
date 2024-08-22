@@ -4,6 +4,8 @@ import Header from "./components/layout/Header";
 import Main from "./components/layout/Main";
 import { Outlet } from "react-router-dom";
 import Theme from "./theme/Theme";
+import { ErrorBoundary } from "react-error-boundary";
+import Fallback from "./components/Fallback";
 
 function App() {
   return (
@@ -11,7 +13,9 @@ function App() {
       <Container fluid className="d-flex flex-column vh-100">
         <Header />
         <Main>
-          <Outlet />
+          <ErrorBoundary FallbackComponent={Fallback}>
+            <Outlet />
+          </ErrorBoundary>
         </Main>
         <Footer />
       </Container>

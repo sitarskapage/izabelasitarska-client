@@ -1,6 +1,5 @@
-import { useState, useEffect } from "react";
-import { useLocation, Outlet } from "react-router-dom";
-import { useData } from "../utils/useData";
+import { useState } from "react";
+import { Outlet, useLoaderData } from "react-router-dom";
 import {
   GeneralSectionSchema,
   ImageRefSchema,
@@ -17,14 +16,7 @@ export interface Work extends WorkSchema {
 
 export default function Works() {
   const [selected, setSelected] = useState<Work | null>(null);
-  const data = useData<Work[]>("/works/");
-  const location = useLocation();
-
-  useEffect(() => {
-    if (location.pathname === "/works/") {
-      setSelected(null);
-    }
-  }, [location]);
+  const data = (useLoaderData() as Work[]) || null;
 
   if (!data) return null;
 

@@ -19,16 +19,16 @@ function Header() {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
-              <LinkContainer to="/bio">
+              <LinkContainer to="bio">
                 <Nav.Link>Bio</Nav.Link>
               </LinkContainer>
-              <LinkContainer to="/projects">
+              <LinkContainer to="projects">
                 <Nav.Link>Projects</Nav.Link>
               </LinkContainer>
-              <LinkContainer to="/works">
+              <LinkContainer to="works">
                 <Nav.Link>Works</Nav.Link>
               </LinkContainer>
-              <LinkContainer to="/contact">
+              <LinkContainer to="contact">
                 <Nav.Link>Contact</Nav.Link>
               </LinkContainer>
             </Nav>

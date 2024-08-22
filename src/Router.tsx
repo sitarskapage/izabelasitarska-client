@@ -1,4 +1,8 @@
-import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import {
+  RouteObject,
+  RouterProvider,
+  createBrowserRouter,
+} from "react-router-dom";
 import App from "./App";
 import Homepage from "./pages/single/Home";
 import Bio from "./pages/single/Bio";
@@ -8,25 +12,50 @@ import Projects from "./pages/Projects";
 import Post from "./pages/single/Post";
 import Work from "./pages/single/Work";
 import Project from "./pages/single/Project";
+import { fetchData } from "./utils/loader";
+import { ErrorBoundary } from "react-error-boundary";
+import Fallback from "./components/Fallback";
+import { LoaderFunctionArgs } from "react-router-dom";
 
-const routes = [
+const routes: RouteObject[] = [
   {
     path: "",
     element: <App />,
+    errorElement: <ErrorBoundary FallbackComponent={Fallback} />,
     children: [
       { path: "/", element: <Homepage /> },
       { path: ":slug", element: <Post /> },
-      { path: "bio", element: <Bio /> },
-      { path: "contact", element: <Contact /> },
+      { path: "bio", element: <Bio />, loader: () => fetchData("profile/1") },
+      {
+        path: "contact",
+        element: <Contact />,
+        loader: () => fetchData("profile/1"),
+      },
       {
         path: "works",
         element: <Works />,
-        children: [{ path: ":slug", element: <Work /> }],
+        loader: () => fetchData("works"),
+        children: [
+          {
+            path: ":slug",
+            element: <Work />,
+            loader: ({ params }: LoaderFunctionArgs) =>
+              fetchData("works/" + params.slug),
+          },
+        ],
       },
       {
         path: "projects",
         element: <Projects />,
-        children: [{ path: ":slug", element: <Project /> }],
+        loader: () => fetchData("projects"),
+        children: [
+          {
+            path: ":slug",
+            element: <Project />,
+            loader: ({ params }: LoaderFunctionArgs) =>
+              fetchData("projects/" + params.slug),
+          },
+        ],
       },
     ],
   },

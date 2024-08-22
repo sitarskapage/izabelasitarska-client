@@ -1,16 +1,13 @@
-import { useOutletContext } from "react-router-dom";
+import { useLoaderData } from "react-router-dom";
 import Layout from "../../components/layout/Layout.";
-import {
-  GeneralSectionSchema,
-  WorkSchema,
-} from "@jakubkanna/labguy-front-schema";
+import { Work as WorkSchema } from "../Works";
 
 export default function Work() {
-  const selected: WorkSchema = useOutletContext();
+  const data = (useLoaderData() as WorkSchema) || null;
 
-  const general = selected.general as GeneralSectionSchema;
+  if (!data) return null;
 
-  if (!selected) return null;
+  const { general } = data;
 
   return <Layout title={general.title}>{general.title}</Layout>;
 }

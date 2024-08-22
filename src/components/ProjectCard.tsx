@@ -12,18 +12,16 @@ interface CardProps {
   onClick?: () => void;
 }
 
-export default function ProjectCard({ general, image, onClick }: CardProps) {
+export default function ProjectCard({ general, image }: CardProps) {
   const { title, slug, description } = general;
   return (
     <Row>
       <Col md={6}>
         {" "}
-        <Link to={slug || "#"} onClick={onClick}>
-          {image && <Image image={image}></Image>}{" "}
-        </Link>
+        <Link to={slug || "#"}>{image && <Image image={image}></Image>} </Link>
       </Col>
       <Col md={6}>
-        <Link to={slug || "#"} onClick={onClick}>
+        <Link to={slug || "#"}>
           <h3>{title}</h3>
         </Link>
         <p className="text-truncate">{description}</p>

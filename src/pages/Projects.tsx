@@ -1,6 +1,4 @@
-import { useState, useEffect } from "react";
-import { useLocation, Outlet } from "react-router-dom";
-import { useData } from "../utils/useData";
+import { useLoaderData, useParams, Outlet } from "react-router-dom";
 import {
   GeneralSectionSchema,
   ImageRefSchema,
@@ -16,21 +14,16 @@ export interface Project extends ProjectSchema {
 }
 
 export default function Projects() {
-  const [selected, setSelected] = useState<Project | null>(null);
-  const data = useData<Project[]>("/projects/");
-  const location = useLocation();
-
-  useEffect(() => {
-    if (location.pathname === "/projects/") {
-      setSelected(null);
-    }
-  }, [location]);
+  const data = (useLoaderData() as Project[]) || null;
+  const { slug } = useParams();
 
   if (!data) return null;
 
   return (
     <>
-      {!selected && (
+      {slug ? (
+        <Outlet />
+      ) : (
         <Layout title={"Projects"}>
           <Container className="d-flex flex-column gap-4">
             {data.map((item, i) => (
@@ -38,13 +31,11 @@ export default function Projects() {
                 general={item.general}
                 image={item.images?.[0]}
                 key={i}
-                onClick={() => setSelected(item)}
               />
             ))}
           </Container>
         </Layout>
       )}
-      <Outlet context={selected} />
     </>
   );
 }

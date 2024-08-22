@@ -1,17 +1,14 @@
-import { useOutletContext } from "react-router-dom";
+import { useLoaderData } from "react-router-dom";
 import Layout from "../../components/layout/Layout.";
-import {
-  GeneralSectionSchema,
-  ProjectSchema,
-} from "@jakubkanna/labguy-front-schema";
 import { Col, Row } from "react-bootstrap";
+import { Project as ProjectSchema } from "../Projects";
 
 export default function Project() {
-  const selected: ProjectSchema = useOutletContext();
+  const data = (useLoaderData() as ProjectSchema) || null;
 
-  const general = selected.general as GeneralSectionSchema;
+  if (!data) return null;
 
-  if (!selected) return null;
+  const { general } = data;
 
   return (
     <Layout title={general.title}>

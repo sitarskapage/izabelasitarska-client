@@ -8,7 +8,9 @@ import { Link } from "react-router-dom";
 
 export default function Homepage() {
   const { preferences } = useContext(GeneralContext);
+
   if (!preferences) return null;
+
   const {
     homepage_heading,
     homepage_subheading,
