@@ -15,7 +15,7 @@ export default function WorkCard({ work, onClick }: CardProps) {
 
   return (
     <Container onClick={onClick}>
-      <Link to={slug || "#"}>
+      <Link to={"/works/" + (slug || "#")}>
         <Row className="gap-3">
           <Col xs={12}>
             {images && images[0] ? (

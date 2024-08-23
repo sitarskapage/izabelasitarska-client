@@ -1,8 +1,8 @@
-import { useState } from "react";
-import { Outlet, useLoaderData } from "react-router-dom";
+import { Outlet, useLoaderData, useParams } from "react-router-dom";
 import {
   GeneralSectionSchema,
   ImageRefSchema,
+  VideoRefSchema,
   WorkSchema,
 } from "@jakubkanna/labguy-front-schema";
 import Layout from "../components/layout/Layout.";
@@ -12,26 +12,28 @@ import { Col } from "react-bootstrap";
 export interface Work extends WorkSchema {
   general: GeneralSectionSchema;
   images: ImageRefSchema[];
+  videos: VideoRefSchema[];
 }
 
 export default function Works() {
-  const [selected, setSelected] = useState<Work | null>(null);
   const data = (useLoaderData() as Work[]) || null;
+  const { slug } = useParams();
 
   if (!data) return null;
 
   return (
     <>
-      {!selected && (
-        <Layout title={"Works"}>
+      {slug ? (
+        <Outlet />
+      ) : (
+        <Layout title={"Projects"}>
           <Col xs={12} md={6} lg={3}>
             {data.map((item, i) => (
-              <WorkCard work={item} key={i} onClick={() => setSelected(item)} />
+              <WorkCard work={item} key={i} />
             ))}
           </Col>
         </Layout>
       )}
-      <Outlet context={selected} />
     </>
   );
 }
