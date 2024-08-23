@@ -5,6 +5,7 @@ import { Project as ProjectSchema } from "../Projects";
 import { Link } from "react-router-dom";
 import Image from "../../components/Image";
 import WorkCard from "../../components/WorkCard";
+import Video from "../../components/Video";
 
 export default function Project() {
   const data = (useLoaderData() as ProjectSchema) || null;
@@ -25,7 +26,7 @@ export default function Project() {
 
   return (
     <Layout title={general.title}>
-      <Container className="d-flex flex-column gap-3">
+      <Container className="d-flex flex-column gap-4">
         <Row>
           <Col xs={6}>
             <p>
@@ -41,46 +42,60 @@ export default function Project() {
               <p>
                 <span>Works: </span>
                 {works.map((w) => (
-                  <Link key={w.general.slug} to={"/works/" + w.slug}>
-                    {w.general.title}
-                  </Link>
+                  <>
+                    <Link key={w.general.slug} to={"/works/" + w.slug}>
+                      {w.general.title}
+                    </Link>
+                    {works.length > 1 && <span>, </span>}
+                  </>
                 ))}
               </p>
             )}
           </Col>
         </Row>
-        <Row>
-          <Col>{images && images.map((img) => <Image imageref={img} />)}</Col>
+        <Row className="gap-3">
+          {images &&
+            images.map((img) => (
+              <Col>
+                <Image imageref={img} key={img.etag} />
+              </Col>
+            ))}
         </Row>
+        <Row className="gap-3">
+          {videos &&
+            videos.map((video) => (
+              <Col xs={12}>
+                <Video videoref={video} key={video.etag} />{" "}
+              </Col>
+            ))}
+        </Row>
+        <Row className="gap-3">
+          {works.length > 0 &&
+            works.map((w) => (
+              <Col xs={12}>
+                <WorkCard work={w} key={w.id} />{" "}
+              </Col>
+            ))}
+        </Row>
+
         <Row>
           <Col>
-            {/* {videos.map((video) => (
-            <Video videoref={video} />
-          ))} */}
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            {works.length > 0 && works.map((w) => <WorkCard work={w} />)}
-          </Col>
-        </Row>
-        <Row>
-          <Col>Related</Col>
-        </Row>
-        <Row>
-          <Col>
+            <span>Related: </span>
             {urls &&
               urls.map((url) => (
-                <Link to={url.url} target="_blank">
-                  {url.title}
-                </Link>
+                <>
+                  <Link to={url.url} target="_blank">
+                    {url.title}
+                  </Link>
+                  {urls.length > 1 && <span>, </span>}
+                </>
               ))}
+            <span>, </span>
+            <Link to={"/projects"}>All Projects</Link>
           </Col>
         </Row>
         <Row>
-          <Col>
-            <Link to={"/projects"}>Show all Projects</Link>
-          </Col>
+          <Col></Col>
         </Row>
       </Container>
     </Layout>

@@ -4,6 +4,7 @@ import {
   ImageRefSchema,
   ProjectSchema,
   UrlSchema,
+  VideoRefSchema,
 } from "@jakubkanna/labguy-front-schema";
 import Layout from "../components/layout/Layout.";
 import ProjectCard from "../components/ProjectCard";
@@ -13,6 +14,7 @@ import { Work } from "./Works";
 export interface Project extends ProjectSchema {
   general: GeneralSectionSchema;
   images: ImageRefSchema[];
+  videos: VideoRefSchema[];
   urls: UrlSchema[];
   works: Work[];
 }
