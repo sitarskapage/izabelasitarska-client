@@ -43,7 +43,7 @@ export default function Project() {
                 <span>Works: </span>
                 {works.map((w) => (
                   <>
-                    <Link key={w.general.slug} to={"/works/" + w.slug}>
+                    <Link key={w.general.slug} to={"/works/" + w.general.slug}>
                       {w.general.title}
                     </Link>
                     {works.length > 1 && <span>, </span>}
@@ -56,7 +56,7 @@ export default function Project() {
         <Row className="gap-3">
           {images &&
             images.map((img) => (
-              <Col>
+              <Col xs={12}>
                 <Image imageref={img} key={img.etag} />
               </Col>
             ))}
@@ -90,7 +90,6 @@ export default function Project() {
                   {urls.length > 1 && <span>, </span>}
                 </>
               ))}
-            <span>, </span>
             <Link to={"/projects"}>All Projects</Link>
           </Col>
         </Row>

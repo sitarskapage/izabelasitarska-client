@@ -26,7 +26,7 @@ export default function Works() {
       {slug ? (
         <Outlet />
       ) : (
-        <Layout title={"Projects"}>
+        <Layout title={"Works"}>
           <Col xs={12} md={6} lg={3}>
             {data.map((item, i) => (
               <WorkCard work={item} key={i} />
