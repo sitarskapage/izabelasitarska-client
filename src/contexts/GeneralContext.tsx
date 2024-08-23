@@ -1,4 +1,9 @@
-import { PreferencesSchema } from "@jakubkanna/labguy-front-schema";
+import {
+  ImageRefSchema,
+  PreferencesSchema,
+  UrlSchema,
+  VideoRefSchema,
+} from "@jakubkanna/labguy-front-schema";
 import React, {
   createContext,
   useState,
@@ -7,11 +12,15 @@ import React, {
   ReactNode,
 } from "react";
 
+interface Preferences extends PreferencesSchema {
+  homepage_background_image?: ImageRefSchema[];
+  homepage_background_video?: VideoRefSchema[];
+  homepage_urls: UrlSchema[];
+}
+
 interface GeneralContextType {
-  preferences: PreferencesSchema | null;
-  setPreferences: React.Dispatch<
-    React.SetStateAction<PreferencesSchema | null>
-  >;
+  preferences: Preferences | null;
+  setPreferences: React.Dispatch<React.SetStateAction<Preferences | null>>;
   loading: boolean;
   setLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -30,9 +39,7 @@ export const GeneralContext = createContext<GeneralContextType>({
 export const GeneralProvider: React.FC<GeneralProviderProps> = ({
   children,
 }) => {
-  const [preferences, setPreferences] = useState<PreferencesSchema | null>(
-    null
-  );
+  const [preferences, setPreferences] = useState<Preferences | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
   const fetchPreferences = useMemo(() => {

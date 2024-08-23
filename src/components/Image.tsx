@@ -53,11 +53,13 @@ function getImageAttributes(image: ImageRefSchema) {
 }
 
 interface ImageProps {
-  imageref: ImageRefSchema;
+  imageref?: ImageRefSchema;
   className?: string;
 }
 
 export default function Image({ imageref, className }: ImageProps) {
+  if (!imageref) return;
+
   const { src, srcSet, sizes, alt } = getImageAttributes(imageref);
 
   return (

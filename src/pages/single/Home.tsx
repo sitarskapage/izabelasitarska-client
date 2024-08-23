@@ -2,9 +2,9 @@ import { useContext } from "react";
 import Layout from "../../components/layout/Layout.";
 import { GeneralContext } from "../../contexts/GeneralContext";
 import { Col, ListGroup, Row } from "react-bootstrap";
-import Image from "../../components/Image";
-import { ImageRefSchema, UrlSchema } from "@jakubkanna/labguy-front-schema";
+import { UrlSchema } from "@jakubkanna/labguy-front-schema";
 import { Link } from "react-router-dom";
+import Background from "../../components/Background";
 
 export default function Homepage() {
   const { preferences } = useContext(GeneralContext);
@@ -14,7 +14,8 @@ export default function Homepage() {
   const {
     homepage_heading,
     homepage_subheading,
-    homepage_background_image,
+    homepage_background_image: bgImgRef,
+    homepage_background_video: bgVideoRef,
     homepage_urls,
   } = preferences;
 
@@ -22,32 +23,31 @@ export default function Homepage() {
     <Layout title="">
       <Col className="d-flex flex-column gap-2 h-100">
         <Row>
-          <h1>{homepage_heading}</h1>
+          <Col>
+            <h1>{homepage_heading}</h1>
+          </Col>
         </Row>
         <Row className="flex-grow-1">
-          {homepage_background_image && (
-            <Image
-              className="w-100 h-100 object-fit-cover"
-              imageref={homepage_background_image[0] as ImageRefSchema}
-            ></Image>
-          )}
+          <Col>
+            <Background bgImgRef={bgImgRef} bgVideoRef={bgVideoRef} />
+          </Col>
         </Row>
         <Row>
-          <h2>{homepage_subheading}</h2>
+          <Col>
+            <h2>{homepage_subheading}</h2>
+          </Col>
         </Row>
         <Row>
           <Col>
             <ListGroup horizontal>
               {homepage_urls &&
-                homepage_urls.map((url) => {
-                  return (
-                    <ListGroup.Item>
-                      <Link to={(url as UrlSchema).url} target="_blank">
-                        {(url as UrlSchema).title}
-                      </Link>
-                    </ListGroup.Item>
-                  );
-                })}
+                homepage_urls.map((url) => (
+                  <ListGroup.Item key={url.id}>
+                    <Link to={(url as UrlSchema).url} target="_blank">
+                      {(url as UrlSchema).title}
+                    </Link>
+                  </ListGroup.Item>
+                ))}
             </ListGroup>
           </Col>
         </Row>
