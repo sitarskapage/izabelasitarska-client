@@ -22,7 +22,7 @@ export default function Footer() {
           </Col>
         </Row>
         <Row>
-          <Col className="d-flex align-items-center justify-content-center">
+          <Col className="d-flex align-items-end justify-content-end">
             <small>
               © {currentYear} {artists_name}
             </small>

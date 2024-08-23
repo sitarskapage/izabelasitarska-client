@@ -3,14 +3,18 @@ import {
   GeneralSectionSchema,
   ImageRefSchema,
   ProjectSchema,
+  UrlSchema,
 } from "@jakubkanna/labguy-front-schema";
 import Layout from "../components/layout/Layout.";
 import ProjectCard from "../components/ProjectCard";
 import { Container } from "react-bootstrap";
+import { Work } from "./Works";
 
 export interface Project extends ProjectSchema {
   general: GeneralSectionSchema;
   images: ImageRefSchema[];
+  urls: UrlSchema[];
+  works: Work[];
 }
 
 export default function Projects() {
@@ -27,11 +31,7 @@ export default function Projects() {
         <Layout title={"Projects"}>
           <Container className="d-flex flex-column gap-4">
             {data.map((item, i) => (
-              <ProjectCard
-                general={item.general}
-                image={item.images?.[0]}
-                key={i}
-              />
+              <ProjectCard project={item} key={i} />
             ))}
           </Container>
         </Layout>

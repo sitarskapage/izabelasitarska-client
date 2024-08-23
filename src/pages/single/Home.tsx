@@ -28,7 +28,7 @@ export default function Homepage() {
           {homepage_background_image && (
             <Image
               className="w-100 h-100 object-fit-cover"
-              image={homepage_background_image[0] as ImageRefSchema}
+              imageref={homepage_background_image[0] as ImageRefSchema}
             ></Image>
           )}
         </Row>

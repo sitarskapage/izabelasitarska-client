@@ -26,12 +26,7 @@ export default function Works() {
         <Layout title={"Works"}>
           <Col xs={12} md={6} lg={3}>
             {data.map((item, i) => (
-              <WorkCard
-                work={item}
-                image={item.images?.[0]}
-                key={i}
-                onClick={() => setSelected(item)}
-              />
+              <WorkCard work={item} key={i} onClick={() => setSelected(item)} />
             ))}
           </Col>
         </Layout>
