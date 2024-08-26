@@ -32,9 +32,10 @@ export default function Projects() {
       ) : (
         <Layout title={"Projects"}>
           <Container className="d-flex flex-column gap-4">
-            {data.map((item, i) => (
-              <ProjectCard project={item} key={i} />
-            ))}
+            {data.map(
+              (item, i) =>
+                item.general.published && <ProjectCard project={item} key={i} />
+            )}
           </Container>
         </Layout>
       )}

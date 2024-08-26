@@ -13,6 +13,8 @@ export default function Work() {
 
   const { general, dimensions, year, images, videos } = data;
 
+  if (!general.published) return "This page is private.";
+
   return (
     <Layout title={general.title}>
       <Container className="d-flex flex-column gap-4">

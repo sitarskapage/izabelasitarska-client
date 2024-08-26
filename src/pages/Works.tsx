@@ -28,9 +28,10 @@ export default function Works() {
       ) : (
         <Layout title={"Works"}>
           <Col xs={12} md={6} lg={3}>
-            {data.map((item, i) => (
-              <WorkCard work={item} key={i} />
-            ))}
+            {data.map(
+              (item, i) =>
+                item.general.published && <WorkCard work={item} key={i} />
+            )}
           </Col>
         </Layout>
       )}
