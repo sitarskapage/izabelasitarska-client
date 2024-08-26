@@ -50,12 +50,12 @@ export default function Project() {
               <p>
                 <span>Works: </span>
                 {works.map((w) => (
-                  <>
-                    <Link key={w.general.slug} to={"/works/" + w.general.slug}>
+                  <span key={w.general.slug}>
+                    <Link to={"/works/" + w.general.slug}>
                       {w.general.title}
                     </Link>
                     {works.length > 1 && <span>, </span>}
-                  </>
+                  </span>
                 ))}
               </p>
             )}
@@ -64,24 +64,24 @@ export default function Project() {
         <Row className="gap-3">
           {images &&
             images.map((img) => (
-              <Col xs={12}>
-                <Image imageref={img} key={img.etag} />
+              <Col xs={12} key={img.etag}>
+                <Image imageref={img} />
               </Col>
             ))}
         </Row>
         <Row className="gap-3">
           {videos &&
             videos.map((video) => (
-              <Col xs={12}>
-                <Video videoref={video} key={video.etag} />{" "}
+              <Col xs={12} key={video.etag}>
+                <Video videoref={video} />{" "}
               </Col>
             ))}
         </Row>
         <Row className="gap-3">
           {works.length > 0 &&
             works.map((w) => (
-              <Col xs={12}>
-                <WorkCard work={w} key={w.id} />{" "}
+              <Col xs={12} key={w.id}>
+                <WorkCard work={w} />{" "}
               </Col>
             ))}
         </Row>
@@ -91,12 +91,12 @@ export default function Project() {
             <span>Related: </span>
             {urls &&
               urls.map((url) => (
-                <>
+                <span key={url.id}>
                   <Link to={url.url} target="_blank">
                     {url.title}
                   </Link>
                   {urls.length > 0 && <span>, </span>}
-                </>
+                </span>
               ))}
             <Link to={"/projects"}>All Projects</Link>
           </Col>

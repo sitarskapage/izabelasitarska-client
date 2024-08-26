@@ -15,7 +15,6 @@ import Project from "./pages/single/Project";
 import { fetchData } from "./utils/loader";
 import { ErrorBoundary } from "react-error-boundary";
 import Fallback from "./components/Fallback";
-import { LoaderFunctionArgs } from "react-router-dom";
 
 const routes: RouteObject[] = [
   {
@@ -24,8 +23,22 @@ const routes: RouteObject[] = [
     errorElement: <ErrorBoundary FallbackComponent={Fallback} />,
     children: [
       { path: "/", element: <Homepage /> },
-      { path: ":slug", element: <Post /> },
+      {
+        path: ":slug",
+        element: <Post />,
+        loader: ({ params }) => fetchData("posts/" + params.slug),
+      },
       { path: "bio", element: <Bio />, loader: () => fetchData("profile/1") },
+      {
+        path: "posts",
+        children: [
+          {
+            path: ":slug",
+            element: <Post />,
+            loader: ({ params }) => fetchData("posts/" + params.slug),
+          },
+        ],
+      },
       {
         path: "contact",
         element: <Contact />,
@@ -39,8 +52,7 @@ const routes: RouteObject[] = [
           {
             path: ":slug",
             element: <Work />,
-            loader: ({ params }: LoaderFunctionArgs) =>
-              fetchData("works/" + params.slug),
+            loader: ({ params }) => fetchData("works/" + params.slug),
           },
         ],
       },
@@ -52,8 +64,7 @@ const routes: RouteObject[] = [
           {
             path: ":slug",
             element: <Project />,
-            loader: ({ params }: LoaderFunctionArgs) =>
-              fetchData("projects/" + params.slug),
+            loader: ({ params }) => fetchData("projects/" + params.slug),
           },
         ],
       },
