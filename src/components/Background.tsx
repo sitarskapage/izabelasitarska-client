@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import {
   ImageRefSchema,
   VideoRefSchema,
@@ -12,10 +12,6 @@ interface BackgroundProps {
 }
 
 const Background: React.FC<BackgroundProps> = ({ bgImgRef, bgVideoRef }) => {
-  useEffect(() => {
-    console.log("Initial props:", { bgImgRef, bgVideoRef });
-  }, [bgImgRef, bgVideoRef]);
-
   // Check if image data exists and is not null
   if (bgImgRef && bgImgRef[0] !== null) {
     <Image className="w-100 h-100 object-fit-cover" imageref={bgImgRef[0]} />;

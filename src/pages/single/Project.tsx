@@ -6,6 +6,8 @@ import { Link } from "react-router-dom";
 import Image from "../../components/Image";
 import WorkCard from "../../components/WorkCard";
 import Video from "../../components/Video";
+import HTMLReactParser from "html-react-parser/lib/index";
+import dayjs from "dayjs";
 
 export default function Project() {
   const data = (useLoaderData() as ProjectSchema) || null;
@@ -22,6 +24,7 @@ export default function Project() {
     images,
     videos,
     works,
+    text,
   } = data;
 
   return (
@@ -32,12 +35,15 @@ export default function Project() {
             <p>
               {start_date && (
                 <>
-                  {start_date} - {end_date}
+                  {/* Format dates using dayjs */}
+                  {dayjs(start_date).format("DD MMM YYYY")} -{" "}
+                  {end_date ? dayjs(end_date).format("DD MMM YYYY") : "N/A"}
                 </>
               )}
             </p>
             <p>{subtitle}</p>
             <p>{venue}</p>
+            <>{text && HTMLReactParser(text as string)}</>
             {works.length > 0 && (
               <p>
                 <span>Works: </span>
@@ -87,7 +93,7 @@ export default function Project() {
                   <Link to={url.url} target="_blank">
                     {url.title}
                   </Link>
-                  {urls.length > 1 && <span>, </span>}
+                  {urls.length > 0 && <span>, </span>}
                 </>
               ))}
             <Link to={"/projects"}>All Projects</Link>
