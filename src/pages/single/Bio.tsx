@@ -8,9 +8,9 @@ export default function Bio() {
 
   if (!data) return null;
 
-  const { html_statement, html_additional } = data;
+  const { statement, additional } = data;
 
-  const arrayToHtml = (arr: ProfileSchema["html_additional"]) => {
+  const arrayToHtml = (arr: ProfileSchema["additional"]) => {
     return (arr ?? []).map((item, index) => (
       <div id={`Additional-${index}`} key={index}>
         {item.html && HTMLReactParser(item.html)}
@@ -22,11 +22,11 @@ export default function Bio() {
     <Layout title="Bio">
       <div id="Statement">
         <h2>Statement</h2>
-        <div>{html_statement && HTMLReactParser(html_statement)}</div>
+        <div>{statement && HTMLReactParser(statement)}</div>
       </div>
       <div id="Additional">
         <h2>Additional</h2>
-        {arrayToHtml(html_additional)}
+        {arrayToHtml(additional)}
       </div>
     </Layout>
   );
