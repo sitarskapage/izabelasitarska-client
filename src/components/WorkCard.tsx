@@ -9,14 +9,14 @@ interface CardProps {
   onClick?: () => void;
 }
 
-export default function WorkCard({ work, onClick }: CardProps) {
+export default function WorkCard({ work }: CardProps) {
   const { general, dimensions, year, images, videos } = work;
   const { title, slug } = general;
 
   return (
-    <Container onClick={onClick}>
-      <Link to={"/works/" + (slug || "#")}>
-        <Row className="gap-3">
+    <Link to={"/works/" + (slug || "#")}>
+      <Container>
+        <Row className="gap-3 p-2">
           <Col xs={12}>
             {images && images[0] ? (
               <Image imageref={images[0]}></Image>
@@ -25,15 +25,19 @@ export default function WorkCard({ work, onClick }: CardProps) {
             )}
           </Col>
         </Row>
-      </Link>
-      <Row>
-        <span style={{ textDecoration: "none" }}>
-          <span style={{ fontStyle: "italic" }}>{title}</span>
-          {", " + dimensions + " "}
-          <span style={{ fontSize: "0.8em" }}>(cm)</span>
-          {", " + year}
-        </span>
-      </Row>
-    </Container>
+        <Row>
+          <span style={{ textDecoration: "none" }}>
+            <span style={{ fontStyle: "italic" }}>{title}</span>
+            {dimensions && (
+              <>
+                {", " + dimensions + " "}
+                <span style={{ fontSize: "0.8em" }}>(cm)</span>
+              </>
+            )}
+            {year && <>{", " + year}</>}{" "}
+          </span>
+        </Row>{" "}
+      </Container>
+    </Link>
   );
 }

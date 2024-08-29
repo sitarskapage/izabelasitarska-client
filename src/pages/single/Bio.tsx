@@ -10,16 +10,18 @@ export default function Bio() {
 
   const { statement, additional } = data;
 
-  const arrayToHtml = (arr: ProfileSchema["additional"]) => {
-    return (arr ?? []).map((item, index) => (
+  const arrayToHtml = (arr: unknown) => {
+    const array = Array.isArray(arr) ? arr : [];
+
+    return array.map((item, index) => (
       <div id={`Additional-${index}`} key={index}>
-        {item.html && HTMLReactParser(item.html)}
+        {item?.html && HTMLReactParser(item.html)}
       </div>
     ));
   };
 
   return (
-    <Layout title="Bio">
+    <Layout title="Bio" description={statement || undefined}>
       <div id="Statement">
         <h2>Statement</h2>
         <div>{statement && HTMLReactParser(statement)}</div>

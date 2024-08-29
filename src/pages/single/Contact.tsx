@@ -14,6 +14,10 @@ export default function Contact() {
     <Layout title="Contact">
       {contact?.map((c, i) => (
         <Container key={i}>
+          {" "}
+          <Row>
+            <Col>{c.name}</Col>
+          </Row>
           <Row>
             <Col>{c.email}</Col>
           </Row>

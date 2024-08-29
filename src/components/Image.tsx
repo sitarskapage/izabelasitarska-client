@@ -39,7 +39,7 @@ function getImageAttributes(image: ImageRefSchema) {
       src: getCldUrl(public_id, sizes.MEDIUM), // Default width
       srcSet: getSrcSet(public_id),
       sizes: `(max-width: 600px) ${sizes.SMALL}px, (max-width: 1200px) ${sizes.MEDIUM}px, (max-width: 1600px) ${sizes.BIG}px, ${sizes.FULL}px`,
-      alt: image.description,
+      alt: image.description || "Image",
     };
   }
 
@@ -48,7 +48,7 @@ function getImageAttributes(image: ImageRefSchema) {
     src: "",
     srcSet: "",
     sizes: "",
-    alt: "",
+    alt: "Image",
   };
 }
 
@@ -58,9 +58,12 @@ interface ImageProps {
 }
 
 export default function Image({ imageref, className }: ImageProps) {
-  if (!imageref) return;
+  if (!imageref) return null;
 
   const { src, srcSet, sizes, alt } = getImageAttributes(imageref);
+
+  // Log the attributes for debugging
+  console.log("Image attributes:", { src, srcSet, sizes, alt });
 
   return (
     <img
