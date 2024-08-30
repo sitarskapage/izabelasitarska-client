@@ -11,6 +11,7 @@ import React, {
   useEffect,
   ReactNode,
 } from "react";
+import LoadingPage from "../pages/Loading";
 
 interface Preferences extends PreferencesSchema {
   homepage_background_image?: ImageRefSchema[];
@@ -72,7 +73,7 @@ export const GeneralProvider: React.FC<GeneralProviderProps> = ({
     <GeneralContext.Provider
       value={{ preferences, setPreferences, loading, setLoading }}
     >
-      {children}
+      {preferences ? children : <LoadingPage />}
     </GeneralContext.Provider>
   );
 };

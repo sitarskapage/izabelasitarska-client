@@ -20,14 +20,13 @@ export default function Layout({
     name: preferences?.artists_name,
   };
 
-  <Helmet>
-    <title>{metadata.title}</title>
-    <meta name="description" content={metadata.description} />
-    <meta name="author" content={metadata.name} />
-  </Helmet>;
-
   return (
     <>
+      <Helmet>
+        <title>{metadata.title}</title>
+        <meta name="description" content={metadata.description} />
+        <meta name="author" content={metadata.name} />
+      </Helmet>
       <Row id="SinglePageHeader">{title && <h1>{title}</h1>}</Row>
       <Row id="SinglePageContent" className="flex-grow-1">
         {children}

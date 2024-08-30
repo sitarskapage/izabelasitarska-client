@@ -13,16 +13,15 @@ import Post from "./pages/single/Post";
 import Work from "./pages/single/Work";
 import Project from "./pages/single/Project";
 import { fetchData } from "./utils/loader";
-import { ErrorBoundary } from "react-error-boundary";
-import Fallback from "./components/Fallback";
+import NotFoundPage from "./pages/404";
 
 const routes: RouteObject[] = [
   {
-    path: "",
+    path: "/",
     element: <App />,
-    errorElement: <ErrorBoundary FallbackComponent={Fallback} />,
+    errorElement: <NotFoundPage />,
     children: [
-      { path: "/", element: <Homepage /> },
+      { path: "", element: <Homepage /> },
       {
         path: ":slug",
         element: <Post />,
@@ -31,6 +30,7 @@ const routes: RouteObject[] = [
       { path: "bio", element: <Bio />, loader: () => fetchData("profile/1") },
       {
         path: "posts",
+        element: <NotFoundPage />,
         children: [
           {
             path: ":slug",
