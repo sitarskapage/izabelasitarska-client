@@ -27,6 +27,7 @@ const routes: RouteObject[] = [
         element: <Post />,
         loader: ({ params }) => fetchData("posts/" + params.slug),
       },
+
       { path: "bio", element: <Bio />, loader: () => fetchData("profile/1") },
       {
         path: "posts",
@@ -72,8 +73,9 @@ const routes: RouteObject[] = [
   },
 ];
 
-const router = createBrowserRouter(routes);
-
+const router = createBrowserRouter(routes, {
+  basename: import.meta.env.BASE_URL,
+});
 export default function Router() {
   return <RouterProvider router={router} />;
 }

@@ -1,0 +1,21 @@
+@import "../../node_modules/bootstrap/scss/functions";
+@import "../../node_modules/bootstrap/scss/variables";
+
+$dark: #1e2724;
+$light: #d2efe8;
+
+html,
+body {
+  font-family: "Times New Roman", Times, serif;
+  color: $dark;
+}
+
+a {
+  color: blue;
+  text-decoration: none;
+  &:hover {
+    color: darkblue;
+  }
+}
+
+@import "./scrollbar.scss";
