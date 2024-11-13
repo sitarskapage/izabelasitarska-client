@@ -28,7 +28,7 @@ export default function Layout({
         <meta name="author" content={metadata.name} />
       </Helmet>
       <Row id="SinglePageHeader">{title && <h1>{title}</h1>}</Row>
-      <Row id="SinglePageContent" className="flex-grow-1">
+      <Row id="SinglePageContent" className="h-100">
         {children}
       </Row>
       <Row id="SinglePageFooter"></Row>

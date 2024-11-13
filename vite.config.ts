@@ -4,7 +4,7 @@ import { viteStaticCopy } from "vite-plugin-static-copy";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: "/labguy-client",
+  base: "/jakubkanna-client",
 
   plugins: [
     react(),

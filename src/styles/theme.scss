@@ -1,22 +1,29 @@
 @import "../../node_modules/bootstrap/scss/functions";
 @import "../../node_modules/bootstrap/scss/variables";
 
-$dark: #1e2724;
-$light: #d2efe8;
+$dark: #1e1e27;
+$light: rgb(233, 233, 228);
+$kanna: #eeff87;
 
 html,
 body {
-  font-family: "Times New Roman", Times, serif;
+  font-family: "Helvetica", "Arial", sans-serif;
   color: $dark;
+  background-color: $light;
 }
 
 a {
-  color: blue;
+  color: $dark;
   text-decoration: none;
   &:hover {
-    color: darkblue;
+    color: black;
   }
+}
+
+.bg-kanna {
+  background-color: $kanna;
 }
 
 @import "./scrollbar.scss";
 @import "./btn.scss";
+@import "./navbar.scss";
