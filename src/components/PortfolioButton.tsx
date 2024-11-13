@@ -15,7 +15,7 @@ const PortfolioButton = ({ url }: { url?: string | null }) => {
   }
 
   return (
-    <Button onClick={handleClick} variant="insidejob">
+    <Button onClick={handleClick} variant="labguy">
       {url ? "Download (PDF)" : "Request PDF"}
     </Button>
   );

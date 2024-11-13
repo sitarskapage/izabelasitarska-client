@@ -1,0 +1,8 @@
+.btn-labguy {
+  background-color: blue;
+  color: white;
+  &:hover {
+    background-color: darkblue;
+    color: white;
+  }
+}
