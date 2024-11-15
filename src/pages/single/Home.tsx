@@ -1,10 +1,7 @@
-import { Col } from "react-bootstrap";
-import Layout from "../../components/layout/Layout.";
-
 export default function Homepage() {
   return (
-    <Layout title="">
-      <Col>Homepage</Col>
-    </Layout>
+    <div className="position-absolute top-50 start-50 translate-middle">
+      Loading...
+    </div>
   );
 }

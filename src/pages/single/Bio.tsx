@@ -27,15 +27,13 @@ export default function Bio() {
   return (
     <Layout title="Bio" description={statement || undefined}>
       <div id="Statement">
-        <h2>Statement</h2>
-        <div>{statement && HTMLReactParser(statement)}</div>
+        <h2>{statement && HTMLReactParser(statement)}</h2>
       </div>
-      <div id="Additional">
-        <h2>Additional</h2>
+      <div id="Additional" className="border-dark border-top p-4">
         {arrayToHtml(additional)}
       </div>
       {preferences?.enable_portfolio_pdf && (
-        <div id="Portfolio">
+        <div id="Portfolio" className="border-dark border-top p-4">
           <h2>Portfolio</h2>
           <PortfolioButton url={data.portfolio_pdf_url} />
         </div>

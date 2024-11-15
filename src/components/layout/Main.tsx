@@ -6,11 +6,11 @@ export default function Main({ children }: { children: ReactNode }) {
 
   return (
     <main
-      className="container d-flex flex-column"
+      className="container-fluid d-flex flex-column"
       style={{
         minHeight: "100dvh",
-        paddingTop: `calc(${pt}px + 1rem)`,
-        paddingBottom: `calc(${pb}px + 1rem)`,
+        paddingTop: `calc(${pt}px)`,
+        paddingBottom: `calc(${pb}px)`,
       }}
     >
       {children}

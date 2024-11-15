@@ -8,7 +8,7 @@ import Fallback from "./components/Fallback";
 
 function App() {
   return (
-    <Container fluid className="">
+    <Container fluid className="p-0">
       <Header />
       <Main>
         <ErrorBoundary FallbackComponent={Fallback}>

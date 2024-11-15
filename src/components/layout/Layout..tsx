@@ -1,7 +1,8 @@
 import { ReactNode, useContext } from "react";
-import { Row } from "react-bootstrap";
+import { Container, Row } from "react-bootstrap";
 import { GeneralContext } from "../../contexts/GeneralContext";
 import { Helmet } from "react-helmet";
+import { useLocation } from "react-router-dom";
 
 export default function Layout({
   children,
@@ -20,6 +21,8 @@ export default function Layout({
     name: preferences?.artists_name,
   };
 
+  const location = useLocation();
+
   return (
     <>
       <Helmet>
@@ -27,11 +30,13 @@ export default function Layout({
         <meta name="description" content={metadata.description} />
         <meta name="author" content={metadata.name} />
       </Helmet>
-      <Row id="SinglePageHeader">{title && <h1>{title}</h1>}</Row>
-      <Row id="SinglePageContent" className="h-100">
-        {children}
+      <Row id="SinglePageHeader" className="border-dark border-bottom">
+        {title && <h1 className="display-1">{title}</h1>}
       </Row>
-      <Row id="SinglePageFooter"></Row>
+      <Container className="flex-grow-1 border-dark border-start border-end py-4">
+        <Row id="SinglePageContent">{children}</Row>
+      </Container>
+      <Row id="SinglePageFooter">{location.pathname == "bio" && <>CV</>}</Row>
     </>
   );
 }
