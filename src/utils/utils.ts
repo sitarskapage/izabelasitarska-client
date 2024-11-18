@@ -32,9 +32,9 @@ function getSrcSet(public_id: string) {
 
 // Get Image attributes based on Cloudinary availability
 export function getImageAttributes(image: ImageRefSchema) {
-  const { cld_url, public_id } = image;
+  const { public_id } = image;
 
-  if (cld_url && public_id) {
+  if (public_id) {
     return {
       src: getCldUrl(public_id, sizes.MEDIUM),
       srcSet: getSrcSet(public_id),

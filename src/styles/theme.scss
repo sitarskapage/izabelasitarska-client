@@ -1,5 +1,6 @@
 @import "../../node_modules/bootstrap/scss/functions";
 @import "../../node_modules/bootstrap/scss/variables";
+@import "../../node_modules/bootstrap/scss/bootstrap";
 
 $dark: #1e1e27;
 $light: rgb(233, 233, 228);
@@ -12,9 +13,9 @@ body {
   background-color: $light;
 }
 
-a {
+a,
+.btn-link {
   color: $dark;
-  text-decoration: none;
   &:hover {
     color: black;
   }
@@ -24,6 +25,21 @@ a {
   background-color: $kanna;
 }
 
+table {
+  @extend .table, .table-striped, .table-hover;
+}
+
+.table {
+  --bs-table-bg: rgba(255, 255, 255, 0.2);
+  --bs-table-border-color: $dark;
+  border-color: $dark;
+}
+
+#Tables td:nth-child(4),
+#Tables table th:nth-child(4),
+#Tables col:nth-child(4) {
+  display: none;
+}
 @import "./scrollbar.scss";
 @import "./btn.scss";
 @import "./navbar.scss";

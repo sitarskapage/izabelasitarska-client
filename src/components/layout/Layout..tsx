@@ -3,15 +3,19 @@ import { Container, Row } from "react-bootstrap";
 import { GeneralContext } from "../../contexts/GeneralContext";
 import { Helmet } from "react-helmet";
 import { useLocation } from "react-router-dom";
+import BioTables from "../BioTables";
+import { ProfileSchema } from "@jakubkanna/labguy-front-schema";
 
 export default function Layout({
   children,
   title,
   description,
+  profile,
 }: {
   children: ReactNode;
   title?: string;
   description?: string;
+  profile?: ProfileSchema;
 }) {
   const { preferences } = useContext(GeneralContext);
 
@@ -22,7 +26,6 @@ export default function Layout({
   };
 
   const location = useLocation();
-
   return (
     <>
       <Helmet>
@@ -36,7 +39,11 @@ export default function Layout({
       <Container className="flex-grow-1 border-dark border-start border-end py-4">
         <Row id="SinglePageContent">{children}</Row>
       </Container>
-      <Row id="SinglePageFooter">{location.pathname == "bio" && <>CV</>}</Row>
+      <Row id="SinglePageFooter">
+        {location.pathname == "/bio" && profile && (
+          <BioTables profile={profile} />
+        )}
+      </Row>
     </>
   );
 }
