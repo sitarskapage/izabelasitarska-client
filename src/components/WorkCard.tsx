@@ -20,14 +20,15 @@ export default function WorkCard({ work }: CardProps) {
   const video = isVideo(media[0] as MediaRef) && (media[0] as MediaRef);
   return (
     <Link to={"/works/" + slug}>
-      <Container>
-        <Row className="gap-3 p-2">
-          <Col xs={12}>
-            {image && <Image imageref={image}></Image>}
-            {video && <Video videoref={video}></Video>}
-          </Col>
-        </Row>
-        <Row className="text-center">
+      <div className="h-100">
+        {image && (
+          <Image
+            imageref={image}
+            className="h-100 mw-100 position-absolute top-0 start-50 translate-middle-x"
+          />
+        )}
+        {video && <Video videoref={video}></Video>}
+        <div className="position-absolute bottom-0 start-50 translate-middle">
           <span style={{ textDecoration: "none" }}>
             <span style={{ fontStyle: "italic" }}>{title}</span>
             {dimensions && (
@@ -38,8 +39,8 @@ export default function WorkCard({ work }: CardProps) {
             )}
             {year && <>{", " + year}</>}{" "}
           </span>
-        </Row>{" "}
-      </Container>
+        </div>{" "}
+      </div>
     </Link>
   );
 }

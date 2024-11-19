@@ -31,13 +31,13 @@ export default function ProjectRow({
         <Col xs={9} className="d-flex flex-column justify-content-between">
           {isNew && (
             <Row>
-              <Col className="w-auto">
+              <Col className="w-auto d-flex justify-content-end">
                 <span className="badge bg-dark">New</span>
               </Col>{" "}
             </Row>
           )}
           <Row>
-            <p>{data?.general.description}</p>
+            <p className="mt-2">{data?.general.description}</p>
           </Row>
           <Row>
             <Col className="d-flex justify-content-end">
