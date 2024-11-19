@@ -36,8 +36,10 @@ export default function Layout({
       <Row id="SinglePageHeader" className="border-dark border-bottom">
         {title && <h1 className="display-1">{title}</h1>}
       </Row>
-      <Container className="flex-grow-1 border-dark border-start border-end py-4">
-        <Row id="SinglePageContent">{children}</Row>
+      <Container className="flex-grow-1 border-dark border-start border-end py-4 d-flex">
+        <Row id="SinglePageContent" className="flex-grow-1">
+          {children}
+        </Row>
       </Container>
       <Row id="SinglePageFooter">
         {location.pathname == "/bio" && profile && (
