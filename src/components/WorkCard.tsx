@@ -1,9 +1,8 @@
-import { Col, Container, Row } from "react-bootstrap";
 import Image from "./Image";
 import { Link } from "react-router-dom";
 import { Work } from "../pages/Works";
 import Video from "./Video";
-import { isImage, MediaRef, isVideo } from "../utils/helpers";
+import { isImage, MediaRef, isVideo, isMobile } from "../utils/helpers";
 
 interface CardProps {
   work: Work;
@@ -24,22 +23,31 @@ export default function WorkCard({ work }: CardProps) {
         {image && (
           <Image
             imageref={image}
-            className="h-100 mw-100 position-absolute top-0 start-50 translate-middle-x"
+            className="z-0 h-100 mw-100 position-absolute top-0 start-50 translate-middle-x"
           />
         )}
-        {video && <Video videoref={video}></Video>}
-        <div className="position-absolute bottom-0 start-50 translate-middle">
-          <span style={{ textDecoration: "none" }}>
-            <span style={{ fontStyle: "italic" }}>{title}</span>
-            {dimensions && (
-              <>
-                {", " + dimensions + " "}
-                <span style={{ fontSize: "0.8em" }}>(cm)</span>
-              </>
-            )}
-            {year && <>{", " + year}</>}{" "}
-          </span>
-        </div>{" "}
+        {video && (
+          <>
+            <div className="z-0 position-relative">
+              <Video videoref={video}></Video>
+            </div>{" "}
+            <div className="z-1 w-100 h-100 position-absolute top-0"></div>
+          </>
+        )}
+        {!isMobile() && (
+          <div className="position-absolute bottom-0 start-50 translate-middle-x text-outline">
+            <span style={{ textDecoration: "none" }}>
+              <span style={{ fontStyle: "italic" }}>{title}</span>
+              {dimensions && (
+                <>
+                  {", " + dimensions + " "}
+                  <span style={{ fontSize: "0.8em" }}>(cm)</span>
+                </>
+              )}
+              {year && <>{", " + year}</>}{" "}
+            </span>
+          </div>
+        )}
       </div>
     </Link>
   );

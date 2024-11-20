@@ -34,6 +34,11 @@ table {
   --bs-table-border-color: $dark;
   border-color: $dark;
 }
+.text-outline {
+  color: white;
+  -webkit-text-stroke: 0.5px black;
+  font-weight: 600;
+}
 
 #Tables td:nth-child(4),
 #Tables table th:nth-child(4),
