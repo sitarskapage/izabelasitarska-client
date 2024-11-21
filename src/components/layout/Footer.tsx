@@ -8,6 +8,7 @@ import {
   OverlayTrigger,
   Tooltip,
   TooltipProps,
+  Container,
 } from "react-bootstrap";
 import { GeneralContext } from "../../contexts/GeneralContext";
 import { Link } from "react-router-dom";
@@ -15,12 +16,14 @@ import { Link } from "react-router-dom";
 export default function Footer() {
   const { preferences } = useContext(GeneralContext);
   const artists_name = preferences ? preferences.artists_name : "";
+  const currentYear = new Date().getFullYear();
 
   // State to control the collapse
   const [open, setOpen] = useState(false);
 
   const menuItems = [
     { label: "Bio", path: "bio" },
+    { label: "Blog", path: "posts" },
     { label: "Projects", path: "projects" },
     { label: "Works", path: "works" },
     { label: "Contact", path: "contact" },
@@ -68,26 +71,35 @@ export default function Footer() {
 
       <Collapse in={open} className="">
         {/* border-top border-dark */}
-        <Row id="CollapseMenu">
-          {menuItems.map((item, index) => (
-            <Col
-              key={index}
-              xs={12}
-              sm={6}
-              md={4}
-              lg={3}
-              className="py-5  text-center"
-            >
-              <Link
-                to={item.path}
-                onClick={() => setOpen(false)}
-                className="fs-3"
+        <Container fluid id="CollapseMenu" className="px-0">
+          <Row>
+            {menuItems.map((item, index) => (
+              <Col
+                key={index}
+                xs={12}
+                sm={6}
+                md={4}
+                lg={3}
+                className="py-5  text-center"
               >
-                {item.label}
-              </Link>
+                <Link
+                  to={item.path}
+                  onClick={() => setOpen(false)}
+                  className="fs-3"
+                >
+                  {item.label}
+                </Link>
+              </Col>
+            ))}
+          </Row>
+          <Row>
+            <Col className="font-monospace border-top border-dark d-flex justify-content-end">
+              <small>
+                © {currentYear} {artists_name}
+              </small>
             </Col>
-          ))}
-        </Row>
+          </Row>
+        </Container>
       </Collapse>
     </footer>
   );

@@ -37,7 +37,7 @@ export default function Layout({
         {title && <h1 className="display-1">{title}</h1>}
       </Row>
       <Container className="flex-grow-1 border-dark border-start border-end d-flex">
-        <Row id="SinglePageContent" className="flex-grow-1">
+        <Row id="SinglePageContent" className="flex-grow-1 py-2">
           {children}
         </Row>
       </Container>

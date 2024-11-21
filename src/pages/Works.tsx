@@ -45,7 +45,7 @@ export default function Works() {
           <Col className="p-0">
             {/* Tag Filter Buttons */}
             {tags.length > 0 && (
-              <div className="py-3 px-2 border-bottom border-dark">
+              <div className="pb-2 px-2 border-bottom border-dark">
                 <div className="d-flex flex-wrap align-items-center">
                   <span>Display by:</span>
                   {tags.map((tag) => (
