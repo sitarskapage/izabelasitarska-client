@@ -6,6 +6,7 @@ import { useContext } from "react";
 import { GeneralContext } from "../../contexts/GeneralContext";
 import PortfolioButton from "../../components/PortfolioButton";
 import { renderSingleItem } from "../../hooks/useArrayRender";
+import BioTables from "../../components/BioTables";
 
 export default function Bio() {
   const data = (useLoaderData() as ProfileSchema) || null;
@@ -16,7 +17,11 @@ export default function Bio() {
   const { statement, additional } = data;
 
   return (
-    <Layout title="Bio" description={statement || undefined} profile={data}>
+    <Layout
+      title="Bio"
+      description={statement || undefined}
+      footer={<BioTables profile={data} />}
+    >
       <div id="Statement">{statement && HTMLReactParser(statement)}</div>
       <div id="Additional" className="border-dark border-top p-4">
         {renderSingleItem(additional, 0)}

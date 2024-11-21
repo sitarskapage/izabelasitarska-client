@@ -23,8 +23,7 @@ export default function Footer() {
 
   const menuItems = [
     { label: "Bio", path: "bio" },
-    { label: "Blog", path: "posts" },
-    { label: "Projects", path: "projects" },
+    { label: "Blog", path: "blog" },
     { label: "Works", path: "works" },
     { label: "Contact", path: "contact" },
   ];
@@ -41,7 +40,7 @@ export default function Footer() {
   );
 
   return (
-    <footer className="container-fluid position-fixed bottom-0 start-0 bg-kanna w-100 border-top border-dark">
+    <footer className="container-fluid position-fixed bottom-0 start-0 bg-kanna w-100 border-top border-dark mh-100 z-3">
       <nav className="d-flex justify-content-between align-items-center">
         <OverlayTrigger
           overlay={renderTooltip}
@@ -71,7 +70,7 @@ export default function Footer() {
 
       <Collapse in={open} className="">
         {/* border-top border-dark */}
-        <Container fluid id="CollapseMenu" className="px-0">
+        <Container fluid id="CollapseMenu" className="px-0 ">
           <Row>
             {menuItems.map((item, index) => (
               <Col

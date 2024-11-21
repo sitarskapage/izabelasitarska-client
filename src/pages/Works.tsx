@@ -16,36 +16,36 @@ export interface Work extends WorkSchema {
 }
 
 export default function Works() {
-  const data = (useLoaderData() as Work[]) || null;
+  const works = (useLoaderData() as Work[]) || null;
   const { slug } = useParams();
   const [activeTag, setActiveTag] = useState<string | null | undefined>(null);
-
-  if (!data) return null;
 
   // Get unique tags from works
   const tags = Array.from(
     new Set(
-      data.flatMap((work) => work.general.tags ?? []) // Flatten all tags and remove duplicates
+      works.flatMap((work) => work.general.tags ?? []) // Flatten all tags and remove duplicates
     )
   );
 
   // Filter works by the selected tag
   const filteredWorks = activeTag
-    ? data.filter((work) =>
+    ? works.filter((work) =>
         work.general.tags?.some((tag) => (tag as TagSchema).title === activeTag)
       )
-    : data;
+    : works;
 
   return (
     <>
       {slug ? (
         <Outlet />
+      ) : !works ? (
+        <p>No works yet.</p>
       ) : (
-        <Layout title={"Works"}>
+        <Layout title={"Works"} fluid>
           <Col className="p-0">
             {/* Tag Filter Buttons */}
             {tags.length > 0 && (
-              <div className="pb-2 px-2 border-bottom border-dark">
+              <div className="py-2 px-2 border-bottom border-dark">
                 <div className="d-flex flex-wrap align-items-center">
                   <span>Display by:</span>
                   {tags.map((tag) => (

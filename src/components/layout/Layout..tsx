@@ -2,20 +2,24 @@ import { ReactNode, useContext } from "react";
 import { Container, Row } from "react-bootstrap";
 import { GeneralContext } from "../../contexts/GeneralContext";
 import { Helmet } from "react-helmet";
-import { useLocation } from "react-router-dom";
-import BioTables from "../BioTables";
+
 import { ProfileSchema } from "@jakubkanna/labguy-front-schema";
 
 export default function Layout({
   children,
   title,
   description,
-  profile,
+  footer,
+  header,
+  fluid,
 }: {
   children: ReactNode;
   title?: string;
   description?: string;
   profile?: ProfileSchema;
+  footer?: ReactNode;
+  header?: ReactNode;
+  fluid?: boolean;
 }) {
   const { preferences } = useContext(GeneralContext);
 
@@ -25,7 +29,9 @@ export default function Layout({
     name: preferences?.artists_name,
   };
 
-  const location = useLocation();
+  const containerClass =
+    "flex-grow-1 border-dark border-start border-end d-flex py-2";
+  const containerClassFludid = "flex-grow-1 px-0 d-flex";
   return (
     <>
       <Helmet>
@@ -33,19 +39,20 @@ export default function Layout({
         <meta name="description" content={metadata.description} />
         <meta name="author" content={metadata.name} />
       </Helmet>
-      <Row id="SinglePageHeader" className="border-dark border-bottom">
-        {title && <h1 className="display-1">{title}</h1>}
-      </Row>
-      <Container className="flex-grow-1 border-dark border-start border-end d-flex">
-        <Row id="SinglePageContent" className="flex-grow-1 py-2">
-          {children}
+      <>
+        <Row id="SinglePageHeader" className="border-dark border-bottom">
+          {header || (title && <h1 className="display-1">{title}</h1>)}
         </Row>
-      </Container>
-      <Row id="SinglePageFooter">
-        {location.pathname == "/bio" && profile && (
-          <BioTables profile={profile} />
-        )}
-      </Row>
+        <Container
+          fluid={fluid}
+          className={fluid ? containerClassFludid : containerClass}
+        >
+          <Row id="SinglePageContent" className="flex-grow-1">
+            {children}
+          </Row>
+        </Container>
+        <Row id="SinglePageFooter">{footer}</Row>
+      </>
     </>
   );
 }

@@ -8,12 +8,11 @@ import Homepage from "./pages/single/Home";
 import Bio from "./pages/single/Bio";
 import Contact from "./pages/single/Contact";
 import Works from "./pages/Works";
-import Projects from "./pages/Projects";
 import Post from "./pages/single/Post";
 import Work from "./pages/single/Work";
-import Project from "./pages/single/Project";
 import { fetchData } from "./utils/loader";
 import NotFoundPage from "./pages/404";
+import Posts from "./pages/Posts";
 
 const routes: RouteObject[] = [
   {
@@ -30,8 +29,9 @@ const routes: RouteObject[] = [
 
       { path: "bio", element: <Bio />, loader: () => fetchData("profile/1") },
       {
-        path: "posts",
-        element: <NotFoundPage />,
+        path: "blog",
+        element: <Posts />,
+        loader: () => fetchData("posts"),
         children: [
           {
             path: ":slug",
@@ -54,18 +54,6 @@ const routes: RouteObject[] = [
             path: ":slug",
             element: <Work />,
             loader: ({ params }) => fetchData("works/" + params.slug),
-          },
-        ],
-      },
-      {
-        path: "projects",
-        element: <Projects />,
-        loader: () => fetchData("projects"),
-        children: [
-          {
-            path: ":slug",
-            element: <Project />,
-            loader: ({ params }) => fetchData("projects/" + params.slug),
           },
         ],
       },
