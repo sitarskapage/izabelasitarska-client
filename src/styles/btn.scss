@@ -6,3 +6,31 @@
     color: white;
   }
 }
+.btn-funding {
+  border-color: $dark;
+  background: radial-gradient(
+    circle at top left,
+    #1050ff,
+    #8bc9bf,
+    #9cc98b,
+    #c9c68b
+  );
+  background-size: 5000% 5000%; /* Increase size for smoother transition */
+  animation: gradient 15s ease infinite;
+  &:hover {
+    animation: none;
+    @extend .btn-dark;
+  }
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
