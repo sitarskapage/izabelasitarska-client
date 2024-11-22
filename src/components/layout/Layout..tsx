@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 
 import { ProfileSchema } from "@jakubkanna/labguy-front-schema";
 import { container } from "../../utils/framer-motion";
+import AnimatedTitle from "../AnimatedTitle";
 
 export default function Layout({
   children,
@@ -49,7 +50,11 @@ export default function Layout({
             id="SinglePageHeader"
             className="border-dark border-bottom py-4 bg-light z-1"
           >
-            {header || <h1 className="display-1 fw-normal mb-0">{title}</h1>}
+            {header || (
+              <h1 className="display-1 fw-normal mb-0">
+                <AnimatedTitle title={title} />
+              </h1>
+            )}
           </Row>
         )}
 
