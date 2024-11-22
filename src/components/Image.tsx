@@ -12,6 +12,7 @@ export default function Image({ imageref, className }: ImageProps) {
   const [imgSrc, setImgSrc] = useState<string | undefined>("");
   const [loading, setLoading] = useState(true);
   const [isImageValid, setIsImageValid] = useState<boolean>(true);
+  const { height, width } = imageref;
 
   const { src, srcSet, sizes, alt } = imageref
     ? getImageAttributes(imageref)
@@ -32,29 +33,28 @@ export default function Image({ imageref, className }: ImageProps) {
         })
         .catch(() => {
           setIsImageValid(false);
-        })
-        .finally(() => {
-          setLoading(false);
         });
     }
   }, [src]);
-
-  if (loading) {
-    return <p>Loading...</p>;
-  }
 
   if (!isImageValid) {
     return;
   }
 
   return (
-    <img
-      src={imgSrc}
-      srcSet={srcSet}
-      sizes={sizes}
-      alt={alt}
-      loading="lazy"
-      className={className || "img-fluid"}
-    />
+    <>
+      {loading && (
+        <img height={height} width={width} className="img-fluid"></img>
+      )}
+      <img
+        src={imgSrc}
+        srcSet={srcSet}
+        sizes={sizes}
+        alt={alt}
+        style={!loading ? {} : { display: `none` }}
+        onLoad={() => setLoading(false)}
+        className={className || "img-fluid"}
+      />
+    </>
   );
 }

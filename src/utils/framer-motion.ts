@@ -1,7 +1,7 @@
 const container = {
-  initial: { y: -50 },
+  initial: { y: "-100dvh" },
   animate: { y: 0 },
-  exit: { y: 50 },
+  exit: { y: "100dvh" },
 };
 
 export { container };
