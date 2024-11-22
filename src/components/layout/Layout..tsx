@@ -2,8 +2,10 @@ import { ReactNode, useContext } from "react";
 import { Container, Row } from "react-bootstrap";
 import { GeneralContext } from "../../contexts/GeneralContext";
 import { Helmet } from "react-helmet";
+import { motion } from "framer-motion";
 
 import { ProfileSchema } from "@jakubkanna/labguy-front-schema";
+import { container } from "../../utils/framer-motion";
 
 export default function Layout({
   children,
@@ -31,7 +33,8 @@ export default function Layout({
 
   const containerClass =
     "flex-grow-1 border-dark border-start border-end d-flex py-2";
-  const containerClassFludid = "flex-grow-1 d-flex";
+  const containerClassFluid = "flex-grow-1 d-flex";
+
   return (
     <>
       <Helmet>
@@ -40,19 +43,47 @@ export default function Layout({
         <meta name="author" content={metadata.name} />
       </Helmet>
       <>
-        <Row id="SinglePageHeader" className="border-dark border-bottom py-4 ">
-          {header ||
-            (title && <h1 className="display-1 fw-normal mb-0">{title}</h1>)}
-        </Row>
+        {/* Header */}
+        {title && (
+          <Row
+            id="SinglePageHeader"
+            className="border-dark border-bottom py-4 bg-light z-1"
+          >
+            {header || <h1 className="display-1 fw-normal mb-0">{title}</h1>}
+          </Row>
+        )}
+
+        {/* Body */}
         <Container
           fluid={fluid}
-          className={fluid ? containerClassFludid : containerClass}
+          className={fluid ? containerClassFluid : containerClass}
         >
-          <Row id="SinglePageContent" className="flex-grow-1">
-            {children}
-          </Row>
+          <motion.div
+            key="content"
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            variants={container}
+            transition={{ duration: 0.5 }}
+            className="flex-grow-1"
+          >
+            <Row id="SinglePageContent" className="h-100">
+              {children}
+            </Row>
+          </motion.div>
         </Container>
-        <Row id="SinglePageFooter">{footer}</Row>
+
+        {/*Footer*/}
+        <motion.div
+          key="footer"
+          initial="initial"
+          animate="animate"
+          exit="exit"
+          variants={container}
+          transition={{ duration: 0.5 }}
+        >
+          <Row id="SinglePageFooter">{footer}</Row>
+        </motion.div>
       </>
     </>
   );

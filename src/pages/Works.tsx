@@ -10,6 +10,7 @@ import WorkCard from "../components/WorkCard";
 import { isMobile, MediaRef } from "../utils/helpers";
 import { Col, Row } from "react-bootstrap";
 import { useState } from "react";
+import { motion } from "framer-motion";
 
 export interface Work extends WorkSchema {
   general: GeneralSectionSchema & { tags?: TagSchema[] };
@@ -76,14 +77,22 @@ export default function Works() {
             )}
 
             {/* Active Tag Title */}
-            {activeTag && (
-              <Row className="py-3 border-bottom border-dark">
+            <Row className="py-3 border-bottom border-dark">
+              <motion.div
+                layout
+                initial={{ height: 0 }}
+                animate={{
+                  height: activeTag ? "auto" : 0,
+                }}
+                transition={{ duration: 0.25, ease: "easeInOut" }}
+                className="overflow-hidden"
+              >
                 <span className="display-5">Filtered by: {activeTag}</span>
-              </Row>
-            )}
+              </motion.div>
+            </Row>
 
             {/* Work Cards */}
-            <Row className="">
+            <Row className="position-relative">
               {filteredWorks.map((item, i) =>
                 item.general.published ? (
                   <div

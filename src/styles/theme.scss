@@ -22,6 +22,9 @@ a,
 .bg-kanna {
   background-color: $kanna;
 }
+.bg-light {
+  background-color: $light !important;
+}
 
 table {
   @extend .table, .table-striped, .table-hover;

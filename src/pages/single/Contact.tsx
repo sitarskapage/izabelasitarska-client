@@ -15,33 +15,35 @@ export default function Contact() {
       <Col className="d-flex flex-column">
         {contact?.map((c, i) => (
           <Row key={i}>
-            {" "}
-            <Row>
-              <Col>{c.name}</Col>
-            </Row>
-            <Row>
-              <Col>{c.email}</Col>
-            </Row>
-            <Row>
-              <Col>
-                {c.socialmedia?.map((sm, i) => (
-                  <Container key={i}>
-                    <Link
-                      to={sm.profileUrl || "#"}
-                      target="_blank"
-                      style={{ display: "flex", gap: "0.25rem" }}
-                    >
-                      <i
-                        className={
-                          "bi " + "bi-" + sm.platform?.toLocaleLowerCase() || ""
-                        }
-                      ></i>
-                      {sm.username}
-                    </Link>
-                  </Container>
-                ))}
-              </Col>
-            </Row>
+            <Col>
+              <Row>
+                <Col>{c.name}</Col>
+              </Row>
+              <Row>
+                <Col>{c.email}</Col>
+              </Row>
+              <Row>
+                <Col>
+                  {c.socialmedia?.map((sm, i) => (
+                    <Container key={i}>
+                      <Link
+                        to={sm.profileUrl || "#"}
+                        target="_blank"
+                        style={{ display: "flex", gap: "0.25rem" }}
+                      >
+                        <i
+                          className={
+                            "bi " + "bi-" + sm.platform?.toLocaleLowerCase() ||
+                            ""
+                          }
+                        ></i>
+                        {sm.username}
+                      </Link>
+                    </Container>
+                  ))}
+                </Col>
+              </Row>
+            </Col>
           </Row>
         ))}
         <Row className="mt-auto border-top border-dark small">

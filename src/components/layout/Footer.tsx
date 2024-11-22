@@ -12,6 +12,7 @@ import {
 } from "react-bootstrap";
 import { GeneralContext } from "../../contexts/GeneralContext";
 import { Link } from "react-router-dom";
+import { isMobile } from "../../utils/helpers";
 
 export default function Footer() {
   const { preferences } = useContext(GeneralContext);
@@ -28,16 +29,22 @@ export default function Footer() {
     { label: "Contact", path: "contact" },
   ];
 
-  const renderTooltip = (props: TooltipProps) => (
-    <Tooltip id="button-tooltip" {...props}>
-      Homepage
-    </Tooltip>
-  );
-  const renderTooltip2 = (props: TooltipProps) => (
-    <Tooltip id="button-tooltip" {...props}>
-      Menu
-    </Tooltip>
-  );
+  const renderTooltip = (props: TooltipProps) =>
+    !isMobile ? (
+      <Tooltip id="button-tooltip" {...props}>
+        Homepage
+      </Tooltip>
+    ) : (
+      <></>
+    );
+  const renderTooltip2 = (props: TooltipProps) =>
+    !isMobile() ? (
+      <Tooltip id="button-tooltip" {...props}>
+        Menu
+      </Tooltip>
+    ) : (
+      <></>
+    );
 
   return (
     <footer className="container-fluid position-fixed bottom-0 start-0 bg-kanna w-100 border-top border-dark mh-100 z-3">

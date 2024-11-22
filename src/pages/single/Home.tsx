@@ -1,7 +1,12 @@
+import { Col } from "react-bootstrap";
+import Layout from "../../components/layout/Layout.";
+
 export default function Homepage() {
   return (
-    <div className="position-absolute top-50 start-50 translate-middle">
-      Loading...
-    </div>
+    <Layout fluid>
+      <Col className="d-flex flex-column justify-content-center align-items-center">
+        Loading...
+      </Col>
+    </Layout>
   );
 }
