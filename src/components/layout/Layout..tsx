@@ -31,7 +31,7 @@ export default function Layout({
 
   const containerClass =
     "flex-grow-1 border-dark border-start border-end d-flex py-2";
-  const containerClassFludid = "flex-grow-1 px-0 d-flex";
+  const containerClassFludid = "flex-grow-1 d-flex";
   return (
     <>
       <Helmet>
@@ -40,8 +40,9 @@ export default function Layout({
         <meta name="author" content={metadata.name} />
       </Helmet>
       <>
-        <Row id="SinglePageHeader" className="border-dark border-bottom">
-          {header || (title && <h1 className="display-1">{title}</h1>)}
+        <Row id="SinglePageHeader" className="border-dark border-bottom py-4 ">
+          {header ||
+            (title && <h1 className="display-1 fw-normal mb-0">{title}</h1>)}
         </Row>
         <Container
           fluid={fluid}

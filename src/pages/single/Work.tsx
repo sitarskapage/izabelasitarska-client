@@ -1,7 +1,6 @@
 import { useLoaderData } from "react-router-dom";
 import Layout from "../../components/layout/Layout.";
-import { Col, Container, Row } from "react-bootstrap";
-import { Work as WorkSchema } from "../Works";
+import { Col, Row } from "react-bootstrap";
 import Image from "../../components/Image";
 import Video from "../../components/Video";
 import { Link } from "react-router-dom";
@@ -10,9 +9,10 @@ import {
   ImageRefSchema,
   VideoRefSchema,
 } from "@jakubkanna/labguy-front-schema";
+import { Work as WorkType } from "../Works";
 
 export default function Work() {
-  const data = (useLoaderData() as WorkSchema) || null;
+  const data = (useLoaderData() as WorkType) || null;
 
   if (!data) return null;
 
@@ -21,23 +21,22 @@ export default function Work() {
   if (!general.published) return "This page is private.";
 
   return (
-    <Layout title={general.title}>
-      <Container className="d-flex flex-column gap-4 mh-100 overflow-auto">
-        {/* Display Dimensions and Year */}
-        <Row>
-          <Col xs={12}>
-            <p id="Details">
+    <Layout fluid title={general.title}>
+      <Col xs={12} className="px-0">
+        <Row className="border-bottom border-dark">
+          <Col className="p-4">
+            <h3 id="Details">
               {dimensions && <span>{dimensions} (cm), </span>}
               {medium && <span>{medium}, </span>}
               {year && <span>{year}</span>}
-            </p>
+            </h3>
           </Col>
         </Row>
         {/* Display Images */}
-        <Row className="gap-3">
+        <Row>
           {media && media.length > 0 ? (
             media.map((item) => (
-              <Col xs={12} key={item?.etag}>
+              <Col key={item?.etag} className="border-bottom border-dark p-0">
                 {isImage(item) && <Image imageref={item as ImageRefSchema} />}{" "}
                 {/* Render image */}
                 {isVideo(item) && (
@@ -52,12 +51,11 @@ export default function Work() {
         </Row>
         {/* Footer Section */}
         <Row>
-          <Col>
-            <span>Related: </span>
+          <Col className="py-4">
             <Link to={"/works"}>All Works</Link>
           </Col>
         </Row>
-      </Container>
+      </Col>
     </Layout>
   );
 }

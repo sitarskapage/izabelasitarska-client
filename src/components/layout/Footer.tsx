@@ -92,7 +92,7 @@ export default function Footer() {
             ))}
           </Row>
           <Row>
-            <Col className="font-monospace border-top border-dark d-flex justify-content-end">
+            <Col className="font-monospace pt-2 border-dark d-flex justify-content-end">
               <small>
                 © {currentYear} {artists_name}
               </small>

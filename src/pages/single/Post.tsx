@@ -22,14 +22,21 @@ function renderPostContent(content: Content | undefined) {
   return content.map((block, index) => {
     if ("text" in block) {
       // Handle Text block
-      return <div key={index}>{HTMLReactParser(block.text as string)}</div>;
+      return (
+        <div key={index} className="border-bottom border-dark p-2">
+          {HTMLReactParser(block.text as string)}
+        </div>
+      );
     }
 
     if ("images" in block) {
       // Handle Image block
       const images = block.images as ImageRefSchema[];
       return images.map((image, i) => (
-        <ImageComponent key={`${index}-${i}`} imageref={image} />
+        <div className="border-bottom border-dark">
+          {" "}
+          <ImageComponent key={`${index}-${i}`} imageref={image} />
+        </div>
       ));
     }
 
@@ -37,7 +44,10 @@ function renderPostContent(content: Content | undefined) {
       // Handle Video block
       const videos = block.videos as VideoRefSchema[];
       return videos.map((video, i) => (
-        <VideoComponent key={`${index}-${i}`} videoref={video} />
+        <div className="border-bottom border-dark">
+          {" "}
+          <VideoComponent key={`${index}-${i}`} videoref={video} />
+        </div>
       ));
     }
 
@@ -62,7 +72,7 @@ export default function Post() {
 
   return (
     <Layout title={general.title}>
-      <Container className="d-flex flex-column gap-4">
+      <Container className="d-flex flex-column p-0">
         {renderPostContent(content)}
       </Container>
     </Layout>

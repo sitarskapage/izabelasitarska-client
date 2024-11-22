@@ -7,12 +7,14 @@ import {
 } from "@jakubkanna/labguy-front-schema";
 import Layout from "../components/layout/Layout.";
 import WorkCard from "../components/WorkCard";
-import { isMobile } from "../utils/helpers";
-import { Col } from "react-bootstrap";
+import { isMobile, MediaRef } from "../utils/helpers";
+import { Col, Row } from "react-bootstrap";
 import { useState } from "react";
 
 export interface Work extends WorkSchema {
   general: GeneralSectionSchema & { tags?: TagSchema[] };
+  etag: string;
+  media?: MediaRef[];
 }
 
 export default function Works() {
@@ -45,7 +47,7 @@ export default function Works() {
           <Col className="p-0">
             {/* Tag Filter Buttons */}
             {tags.length > 0 && (
-              <div className="py-2 px-2 border-bottom border-dark">
+              <Row className="py-3 border-bottom border-dark">
                 <div className="d-flex flex-wrap align-items-center">
                   <span>Display by:</span>
                   {tags.map((tag) => (
@@ -70,18 +72,18 @@ export default function Works() {
                     </button>
                   ))}
                 </div>
-              </div>
+              </Row>
             )}
 
             {/* Active Tag Title */}
             {activeTag && (
-              <div className="py-3 px-2 border-bottom border-dark">
+              <Row className="py-3 border-bottom border-dark">
                 <span className="display-5">Filtered by: {activeTag}</span>
-              </div>
+              </Row>
             )}
 
             {/* Work Cards */}
-            <div className="p-0 d-flex w-100 flex-wrap">
+            <Row className="">
               {filteredWorks.map((item, i) =>
                 item.general.published ? (
                   <div
@@ -102,7 +104,7 @@ export default function Works() {
                   </div>
                 ) : null
               )}
-            </div>
+            </Row>
           </Col>
         </Layout>
       )}

@@ -84,7 +84,7 @@ export default function Project() {
         {/* Related links */}
         <Row>
           <Col>
-            <span>Related: </span>
+            <span>Links: </span>
             {urls && urls.length > 0 ? (
               urls.map((url, index) => (
                 <span key={url.id}>

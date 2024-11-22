@@ -14,7 +14,7 @@ export default function Contact() {
     <Layout title="Contact">
       <Col className="d-flex flex-column">
         {contact?.map((c, i) => (
-          <Container key={i}>
+          <Row key={i}>
             {" "}
             <Row>
               <Col>{c.name}</Col>
@@ -42,7 +42,7 @@ export default function Contact() {
                 ))}
               </Col>
             </Row>
-          </Container>
+          </Row>
         ))}
         <Row className="mt-auto border-top border-dark small">
           <Col className="d-flex align-items-center pt-1">

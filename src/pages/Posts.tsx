@@ -25,13 +25,13 @@ export default function Posts() {
       .find((img) => isImage(img));
 
     return (
-      <Col key={post.general.slug} className="mb-4">
+      <Col key={post.general.slug} className="mb-4 px-0">
         <Link to={post.general.slug || "#"} className="text-decoration-none">
           <Row className={` ${!isLast ? "border-bottom border-dark" : ""}`}>
-            <Col xs={12} md={9} className="py-2 position-relative">
+            <Col xs={12} md={9} className="py-3 px-4 position-relative">
               <h2 className="h4">{post.general.title}</h2>
               <small className="font-monospace">{post.general.createdAt}</small>
-              <i className="bi bi-arrow-up-right position-absolute end-0 bottom-0 p-2 font-weight-bold fs-4"></i>
+              <i className="bi bi-arrow-up-right position-absolute end-0 bottom-0 pb-1 px-3 font-weight-bold fs-4"></i>
             </Col>
             <Col
               xs={12}
