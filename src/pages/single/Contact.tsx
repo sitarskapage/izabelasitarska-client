@@ -1,6 +1,6 @@
 import { ProfileSchema } from "@jakubkanna/labguy-front-schema";
 import Layout from "../../components/layout/Layout.";
-import { Col, Container, Row } from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
 import { Link, useLoaderData } from "react-router-dom";
 
 export default function Contact() {
@@ -25,7 +25,7 @@ export default function Contact() {
               <Row>
                 <Col>
                   {c.socialmedia?.map((sm, i) => (
-                    <Container key={i}>
+                    <div className="d-inline-block" key={i}>
                       <Link
                         to={sm.profileUrl || "#"}
                         target="_blank"
@@ -39,7 +39,7 @@ export default function Contact() {
                         ></i>
                         {sm.username}
                       </Link>
-                    </Container>
+                    </div>
                   ))}
                 </Col>
               </Row>

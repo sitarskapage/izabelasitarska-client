@@ -56,13 +56,12 @@ export default function BioTables({ profile }: { profile: ProfileSchema }) {
             {publicId && (
               <div
                 style={{
-                  height: "500px",
                   position: "sticky",
                   bottom: `calc(${paddingBottom}px + 1rem)`,
                   marginTop: "1rem",
                   top: "1rem",
                 }}
-                className="border-top border-bottom border-dark"
+                className="border-top border-bottom border-dark ratio ratio-4x3"
               >
                 <Image
                   imageref={{ public_id: publicId }}

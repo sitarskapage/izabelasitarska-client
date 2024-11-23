@@ -7,16 +7,23 @@ $kanna: #eeff87;
 html,
 body {
   font-family: "Helvetica", "Arial", sans-serif;
-  color: $dark;
+  color: $dark !important;
   background-color: $light;
 }
 
 a,
 .btn-link {
+  cursor: pointer;
   color: $dark;
   &:hover {
     color: black;
+    background-color: $kanna;
+    border-radius: 0.25rem;
+    padding: 0;
   }
+}
+.link {
+  @extend a;
 }
 
 .bg-kanna {
