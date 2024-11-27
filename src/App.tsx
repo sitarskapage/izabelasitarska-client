@@ -1,4 +1,3 @@
-import { Container } from "react-bootstrap";
 import Footer from "./components/layout/Footer";
 import Header from "./components/layout/Header";
 import Main from "./components/layout/Main";
@@ -8,7 +7,7 @@ import Fallback from "./components/Fallback";
 
 function App() {
   return (
-    <Container fluid className="p-0">
+    <>
       <Header />
       <Main>
         <ErrorBoundary FallbackComponent={Fallback}>
@@ -16,7 +15,7 @@ function App() {
         </ErrorBoundary>
       </Main>
       <Footer />
-    </Container>
+    </>
   );
 }
 

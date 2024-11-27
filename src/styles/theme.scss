@@ -34,14 +34,23 @@ a,
 }
 
 table {
-  @extend .table, .table-striped, .table-hover;
+  @extend .table, .table-hover;
 }
 
 .table {
   --bs-table-bg: rgba(255, 255, 255, 0.2);
   --bs-table-border-color: $dark;
   border-color: $dark;
+  border: none;
+  border-top: 1px solid;
+  td {
+    padding-left: 2rem;
+  }
+  &:last-child {
+    margin: 0;
+  }
 }
+
 .text-outline {
   color: white;
   -webkit-text-stroke: 0.5px black;
@@ -53,7 +62,11 @@ table {
 #Tables col:nth-child(4) {
   display: none;
 }
-
+#Tables {
+  h3 {
+    padding: 1rem;
+  }
+}
 .min-vh-25 {
   height: 25vh;
 }

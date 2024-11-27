@@ -5,11 +5,12 @@ import {
 } from "@jakubkanna/labguy-front-schema";
 import { Outlet, useLoaderData, useParams } from "react-router-dom";
 import { Col, Row } from "react-bootstrap";
-import { isImage, isMobile } from "../utils/helpers";
+import { isImage } from "../utils/helpers";
 import { Link } from "react-router-dom";
 import Image from "../components/Image";
 import Layout from "../components/layout/Layout.";
 import { useState } from "react";
+import useIsMobile from "../hooks/useIsMobile";
 
 export interface Post extends PostSchema {
   general: GeneralSectionSchema;
@@ -19,6 +20,7 @@ export default function Posts() {
   const posts = useLoaderData() as Post[] | null;
   const { slug } = useParams();
   const [fontSizeClass, setFontSizeClass] = useState("fs-4");
+  const isMobile = useIsMobile();
 
   const PostItem = ({ post, isLast }: { post: Post; isLast: boolean }) => {
     // Find the first image
@@ -27,7 +29,7 @@ export default function Posts() {
       .find((img) => isImage(img));
 
     return (
-      <Col key={post.general.slug} className="mb-4 px-0">
+      <Col key={post.general.slug} className="mb-4 ">
         <Link to={post.general.slug || "#"} className="text-decoration-none">
           <Row
             className={` ${!isLast ? "border-bottom border-dark" : ""}`}
@@ -44,7 +46,7 @@ export default function Posts() {
             <Col
               xs={12}
               md={3}
-              className={isMobile() ? "p-0" : "border-start border-dark p-0"}
+              className={isMobile ? "p-0" : "border-start border-dark p-0"}
             >
               {image && <Image imageref={image} />}
             </Col>
@@ -70,7 +72,7 @@ export default function Posts() {
   return slug ? (
     <Outlet />
   ) : (
-    <Layout title="Blog" fluid>
+    <Layout title="Blog">
       {!posts || posts.length === 0 ? <p>No posts yet.</p> : <PostsList />}
     </Layout>
   );

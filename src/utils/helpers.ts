@@ -70,8 +70,4 @@ function parseDate(dateObj: { [k: string]: unknown } | null | undefined) {
   } ${year ? year : ""}${time ? ", " + time : ""}`;
 }
 
-function isMobile() {
-  return window.innerWidth < 768;
-}
-
-export { isVideo, isImage, isUpcoming, isCurrent, parseDate, isMobile };
+export { isVideo, isImage, isUpcoming, isCurrent, parseDate };

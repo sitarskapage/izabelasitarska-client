@@ -1,15 +1,18 @@
 import { useEffect, useRef, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
-import { isMobile } from "../utils/helpers";
 import { ProfileSchema } from "@jakubkanna/labguy-front-schema";
 import { renderSingleItem } from "../hooks/useArrayRender";
 import Image from "../components/Image";
 import useCalculatePadding from "../hooks/useCalculatePadding";
+import useIsMobile from "../hooks/useIsMobile";
+import { motion } from "framer-motion";
+import { containerSizeMiddle } from "../utils/framer-motion";
 
 export default function BioTables({ profile }: { profile: ProfileSchema }) {
   const [publicId, setPublicId] = useState<string | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const { paddingBottom } = useCalculatePadding();
+  const isMobile = useIsMobile();
 
   const onMouseEnter = (_index: number, row: Element) => {
     const publicIdCell = row.querySelector("td:nth-child(4)"); // Target the 4th column for publicId
@@ -24,6 +27,7 @@ export default function BioTables({ profile }: { profile: ProfileSchema }) {
 
   useEffect(() => {
     const rows = containerRef.current?.querySelectorAll("table tr");
+
     rows?.forEach((row, index) => {
       if (index > 0) {
         // Start from second row (skip header)
@@ -45,16 +49,26 @@ export default function BioTables({ profile }: { profile: ProfileSchema }) {
   return (
     <Container fluid className="border-dark border-top" ref={containerRef}>
       <Row id="Tables">
-        <Col className="p-4" md={6}>
-          {renderSingleItem(profile.additional, 1)}
+        <Col className="p-0" md={6}>
+          <div
+            className={`border-start border-end border-dark ${!isMobile ? "mx-5" : ""}`}
+          >
+            {renderSingleItem(profile.additional, 1)}
+          </div>
         </Col>
-        {!isMobile() && (
+        {!isMobile && (
           <Col
             md={6}
             className="border-dark border-start px-0 position-relative d-flex flex-column justify-content-center"
           >
-            {publicId && (
-              <div
+            {publicId ? (
+              <motion.div
+                key={publicId}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+                variants={containerSizeMiddle}
+                transition={{ duration: 0.66 }}
                 style={{
                   position: "sticky",
                   bottom: `calc(${paddingBottom}px + 1rem)`,
@@ -67,7 +81,13 @@ export default function BioTables({ profile }: { profile: ProfileSchema }) {
                   imageref={{ public_id: publicId }}
                   className="w-100 object-fit-cover h-100"
                 />
-              </div>
+              </motion.div>
+            ) : (
+              <p className="text-center font-monospace">
+                {
+                  "<= Drag your mouse over one of the links to display an image."
+                }
+              </p>
             )}
           </Col>
         )}

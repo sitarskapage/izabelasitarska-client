@@ -5,12 +5,12 @@ import {
   PostSchema,
   VideoRefSchema,
 } from "@jakubkanna/labguy-front-schema";
-import { Container } from "react-bootstrap";
 import HTMLReactParser from "html-react-parser";
 import VideoComponent from "../../components/Video";
 import ImageComponent from "../../components/Image";
 import Layout from "../../components/layout/Layout.";
 import { Content } from "@jakubkanna/labguy-front-schema/dist/Post.schema";
+import { Col, Container } from "react-bootstrap";
 
 interface Post extends PostSchema {
   general: GeneralSectionSchema;
@@ -72,9 +72,11 @@ export default function Post() {
 
   return (
     <Layout title={general.title}>
-      <Container className="d-flex flex-column p-0">
-        {renderPostContent(content)}
-      </Container>
+      <Col>
+        <Container className="d-flex flex-column border-start border-end border-dark px-0">
+          {renderPostContent(content)}
+        </Container>
+      </Col>
     </Layout>
   );
 }

@@ -12,12 +12,13 @@ import {
 } from "react-bootstrap";
 import { GeneralContext } from "../../contexts/GeneralContext";
 import { Link } from "react-router-dom";
-import { isMobile } from "../../utils/helpers";
+import useIsMobile from "../../hooks/useIsMobile";
 
 export default function Footer() {
   const { preferences } = useContext(GeneralContext);
   const artists_name = preferences ? preferences.artists_name : "";
   const currentYear = new Date().getFullYear();
+  const isMobile = useIsMobile();
 
   // State to control the collapse
   const [open, setOpen] = useState(false);
@@ -38,7 +39,7 @@ export default function Footer() {
       <></>
     );
   const renderTooltip2 = (props: TooltipProps) =>
-    !isMobile() ? (
+    !isMobile ? (
       <Tooltip id="button-tooltip" {...props}>
         Menu
       </Tooltip>
@@ -47,15 +48,20 @@ export default function Footer() {
     );
 
   return (
-    <footer className="container-fluid position-fixed bottom-0 start-0 bg-kanna w-100 border-top border-dark mh-100 z-3">
-      <nav className="d-flex justify-content-between align-items-center">
+    <footer
+      className={`container-fluid position-fixed bottom-0 start-0 bg-kanna w-100 border-top border-dark mh-100 z-3
+         ${isMobile && "py-2"}`}
+    >
+      <nav className={"d-flex justify-content-between align-items-center"}>
         <OverlayTrigger
           overlay={renderTooltip}
           placement="right"
           delay={{ show: 1000, hide: 400 }}
         >
           <Navbar.Brand className="text-uppercase">
-            <Link to={"/"}>{artists_name}</Link>
+            <Link to={"/"} onClick={() => setOpen(false)}>
+              {artists_name}
+            </Link>
           </Navbar.Brand>
         </OverlayTrigger>
         <OverlayTrigger

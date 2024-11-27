@@ -21,28 +21,37 @@ export default function Work() {
   if (!general.published) return "This page is private.";
 
   return (
-    <Layout fluid title={general.title}>
-      <Col xs={12} className="px-0">
-        <Row className="border-bottom border-dark">
-          <Col className="p-4">
-            <h3 id="Details">
-              {dimensions && <span>{dimensions} (cm), </span>}
-              {medium && <span>{medium}, </span>}
-              {year && <span>{year}</span>}
-            </h3>
-          </Col>
-        </Row>
+    <Layout title={general.title}>
+      <Col xs={12}>
+        {year && (
+          <Row className="border-bottom border-dark">
+            <Col className="p-4">
+              <h3 id="Details">
+                {dimensions && <span>{dimensions} (cm), </span>}
+                {medium && <span>{medium}, </span>}
+                {year && <span>{year}</span>}
+              </h3>
+            </Col>
+          </Row>
+        )}
         {/* Display Images */}
-        <Row>
+        <Row className="border-bottom border-dark">
           {media && media.length > 0 ? (
             media.map((item) => (
-              <Col key={item?.etag} className="border-bottom border-dark p-0">
-                {isImage(item) && <Image imageref={item as ImageRefSchema} />}{" "}
-                {/* Render image */}
-                {isVideo(item) && (
-                  <Video videoref={item as VideoRefSchema} />
-                )}{" "}
-                {/* Render video */}
+              <Col xs={12} key={item?.etag}>
+                <Row>
+                  {isImage(item) && (
+                    <Image
+                      imageref={item as ImageRefSchema}
+                      className="p-0 img-fluid"
+                    />
+                  )}{" "}
+                  {/* Render image */}
+                  {isVideo(item) && (
+                    <Video videoref={item as VideoRefSchema} />
+                  )}{" "}
+                  {/* Render video */}
+                </Row>
               </Col>
             ))
           ) : (

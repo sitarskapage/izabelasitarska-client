@@ -2,8 +2,9 @@ import Image from "./Image";
 import { Link } from "react-router-dom";
 import { Work } from "../pages/Works";
 import Video from "./Video";
-import { isImage, MediaRef, isVideo, isMobile } from "../utils/helpers";
+import { isImage, MediaRef, isVideo } from "../utils/helpers";
 import { useState } from "react";
+import useIsMobile from "../hooks/useIsMobile";
 
 interface CardProps {
   work: Work;
@@ -14,6 +15,7 @@ export default function WorkCard({ work }: CardProps) {
   const { general, dimensions, year, media } = work;
   const { title, slug } = general;
   const [fontSizeClass, setFontSizeClass] = useState("");
+  const isMobile = useIsMobile();
 
   if (!media) return;
 
@@ -42,7 +44,7 @@ export default function WorkCard({ work }: CardProps) {
             <div className="z-1 w-100 h-100 position-absolute top-0"></div>
           </>
         )}
-        {!isMobile() && (
+        {!isMobile && (
           <div className="position-absolute bottom-0 start-50 translate-middle-x text-outline">
             <span style={{ textDecoration: "none" }}>
               <span style={{ fontStyle: "italic" }}>{title}</span>

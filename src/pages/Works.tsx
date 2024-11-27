@@ -7,10 +7,11 @@ import {
 } from "@jakubkanna/labguy-front-schema";
 import Layout from "../components/layout/Layout.";
 import WorkCard from "../components/WorkCard";
-import { isMobile, MediaRef } from "../utils/helpers";
+import { MediaRef } from "../utils/helpers";
 import { Col, Row } from "react-bootstrap";
 import { useState } from "react";
 import { motion } from "framer-motion";
+import useIsMobile from "../hooks/useIsMobile";
 
 export interface Work extends WorkSchema {
   general: GeneralSectionSchema & { tags?: TagSchema[] };
@@ -22,6 +23,7 @@ export default function Works() {
   const works = (useLoaderData() as Work[]) || null;
   const { slug } = useParams();
   const [activeTag, setActiveTag] = useState<string | null | undefined>(null);
+  const isMobile = useIsMobile();
 
   // Get unique tags from works
   const tags = Array.from(
@@ -44,8 +46,8 @@ export default function Works() {
       ) : !works ? (
         <p>No works yet.</p>
       ) : (
-        <Layout title={"Works"} fluid>
-          <Col className="p-0">
+        <Layout title={"Works"}>
+          <Col>
             {/* Tag Filter Buttons */}
             {tags.length > 0 && (
               <Row className="py-3 border-bottom border-dark">
@@ -77,7 +79,7 @@ export default function Works() {
             )}
 
             {/* Active Tag Title */}
-            <Row className="py-3 border-bottom border-dark">
+            <Row className={activeTag ? "py-3 border-bottom border-dark" : ""}>
               <motion.div
                 layout
                 initial={{ height: 0 }}
@@ -105,7 +107,7 @@ export default function Works() {
                           ? "1px solid #ccc"
                           : "none",
                       boxSizing: "border-box",
-                      width: isMobile() ? "100%" : "33.333%",
+                      width: isMobile ? "100%" : "33.333%",
                       height: "auto",
                     }}
                   >
