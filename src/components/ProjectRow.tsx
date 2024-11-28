@@ -1,7 +1,7 @@
 import { Col, Row } from "react-bootstrap";
-import { isMobile } from "../utils/helpers";
 import { Link } from "react-router-dom";
 import { Project } from "../pages/Projects";
+import useIsMobile from "../hooks/useIsMobile";
 
 interface ProjectRowProps {
   id: string;
@@ -21,13 +21,14 @@ export default function ProjectRow({
   const classes = isLast
     ? "gap-3 py-4 px-2"
     : "gap-3 py-4 px-2 border-bottom border-dark";
+  const isMobile = useIsMobile();
 
   return (
     <Row className={classes} style={{ height: "33.3%" }} id={id}>
       <Col className="d-flex justify-content-center align-items-center">
         {image}
       </Col>
-      {!isMobile() && (
+      {!isMobile && (
         <Col xs={9} className="d-flex flex-column justify-content-between">
           {isNew && (
             <Row>

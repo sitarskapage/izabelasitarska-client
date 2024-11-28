@@ -1,4 +1,9 @@
-const containerTopToBottom = {
+const TopToBot = {
+  initial: { y: "-100dvh" },
+  animate: { y: 0 },
+  exit: { y: "100dvh" },
+};
+const BotToTop = {
   initial: { y: "-100dvh" },
   animate: { y: 0 },
   exit: { y: "100dvh" },
@@ -11,4 +16,25 @@ const containerSizeMiddle = {
 
 const containerTransDuration = 0.5;
 
-export { containerTopToBottom, containerSizeMiddle, containerTransDuration };
+const Yvariants = {
+  hidden: (direction: number) => ({
+    y: direction === 1 ? "100vh" : "-100vh", // Enter from bottom or top
+    opacity: 0,
+  }),
+  visible: {
+    y: 0, // Centered when visible
+    opacity: 1,
+  },
+  exit: (direction: number) => ({
+    y: direction === 1 ? "-100vh" : "100vh", // Exit to top or bottom
+    opacity: 0,
+  }),
+};
+
+export {
+  TopToBot,
+  BotToTop,
+  containerSizeMiddle,
+  containerTransDuration,
+  Yvariants,
+};

@@ -4,9 +4,9 @@ import {
   useMotionValueEvent,
   useScroll,
 } from "framer-motion";
-import { ReactNode, useRef } from "react";
+import { ReactNode, useEffect, useRef } from "react";
 import {
-  containerTopToBottom,
+  TopToBot,
   containerTransDuration,
 } from "../../utils/framerMotionVariants";
 
@@ -15,48 +15,59 @@ const RowWrapper = ({
   delay,
   z,
   position,
+  onScrollProgressChange,
+  id,
 }: {
   children: ReactNode;
   delay?: number;
   z: number;
   position: number;
+  onScrollProgressChange?: (progress: number) => void; // Prop type
+  id: string;
 }) => {
   const styles: { [key: string]: MotionStyle } = {
     row: {
       height: "33.333%",
-      overflowX: "hidden",
-      overflowY: "scroll",
+      overflow: "hidden",
     },
   };
 
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ container: ref });
 
-  // Use useMotionValueEvent to log scroll updates
+  // Use useMotionValueEvent to notify the parent about scroll progress updates
   useMotionValueEvent(scrollYProgress, "change", (latest) => {
     console.log("Scroll progress:", latest);
+    if (onScrollProgressChange) {
+      onScrollProgressChange(latest); // Notify parent
+    }
   });
 
-  // Function to programmatically set scroll position
-  const scrollToProgress = (progress: number) => {
-    if (!ref.current) return;
+  // Scroll to the desired position when 'position' changes
+  useEffect(() => {
+    const scrollToProgress = (progress: number) => {
+      if (!ref.current) return;
 
-    const element = ref.current;
-    const maxScroll = element.scrollHeight - element.clientHeight;
-    element.scrollTop = maxScroll * progress;
-  };
+      const element = ref.current;
+      const maxScroll = element.scrollHeight - element.clientHeight;
+      element.scrollTop = maxScroll * progress;
+    };
+
+    scrollToProgress(position); // Sync scroll position with parent prop
+  }, [position]);
 
   return (
     <motion.div
-      key={z}
+      key={id}
       initial="initial"
       animate="animate"
       exit="exit"
-      variants={containerTopToBottom}
+      variants={TopToBot}
       transition={{ duration: delay || containerTransDuration }}
       style={styles.row}
       className={`row border-bottom border-dark  bg-light z-${z} position-relative`}
       ref={ref}
+      id={id}
     >
       {children}
     </motion.div>

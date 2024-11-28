@@ -8,7 +8,7 @@ import {
 import HTMLReactParser from "html-react-parser";
 import VideoComponent from "../../components/Video";
 import ImageComponent from "../../components/Image";
-import Layout from "../../components/layout/Layout.";
+import Layout from "../../components/layout/Layout";
 import { Content } from "@jakubkanna/labguy-front-schema/dist/Post.schema";
 import { Col, Container } from "react-bootstrap";
 

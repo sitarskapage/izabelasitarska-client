@@ -17,7 +17,6 @@ export default function Main({
       className={`container-fluid d-flex flex-column ${isHome && "h-100"}`}
       style={{
         minHeight: "100dvh",
-        paddingTop: `${0}px`,
         paddingBottom: `${footerHeight}px`,
       }}
     >

@@ -1,5 +1,4 @@
 import { useLoaderData } from "react-router-dom";
-import Layout from "../../components/layout/Layout.";
 import { Col, Row } from "react-bootstrap";
 import Image from "../../components/Image";
 import Video from "../../components/Video";
@@ -10,6 +9,7 @@ import {
   VideoRefSchema,
 } from "@jakubkanna/labguy-front-schema";
 import { Work as WorkType } from "../Works";
+import Layout from "../../components/layout/Layout";
 
 export default function Work() {
   const data = (useLoaderData() as WorkType) || null;

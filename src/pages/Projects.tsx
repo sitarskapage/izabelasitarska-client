@@ -4,7 +4,7 @@ import {
   ProjectSchema,
   UrlSchema,
 } from "@jakubkanna/labguy-front-schema";
-import Layout from "../components/layout/Layout.";
+import Layout from "../components/layout/Layout";
 import { Container } from "react-bootstrap";
 import { Work } from "./Works";
 import { MediaRef } from "../utils/helpers";

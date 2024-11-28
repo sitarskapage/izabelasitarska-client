@@ -5,7 +5,7 @@ import {
   TagSchema,
   WorkSchema,
 } from "@jakubkanna/labguy-front-schema";
-import Layout from "../components/layout/Layout.";
+import Layout from "../components/layout/Layout";
 import WorkCard from "../components/WorkCard";
 import { MediaRef } from "../utils/helpers";
 import { Col, Row } from "react-bootstrap";

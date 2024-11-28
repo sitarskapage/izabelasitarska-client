@@ -8,7 +8,7 @@ import { Col, Row } from "react-bootstrap";
 import { isImage } from "../utils/helpers";
 import { Link } from "react-router-dom";
 import Image from "../components/Image";
-import Layout from "../components/layout/Layout.";
+import Layout from "../components/layout/Layout";
 import { useState } from "react";
 import useIsMobile from "../hooks/useIsMobile";
 
