@@ -1,9 +1,13 @@
-import { Col, Row } from "react-bootstrap";
-import useCalculatePadding from "../../hooks/useCalculatePadding";
+import { Col } from "react-bootstrap";
+import { motion } from "framer-motion";
+import {
+  containerTopToBottom,
+  containerTransDuration,
+} from "../../utils/framerMotionVariants";
+import { ReactNode } from "react";
+import React from "react";
 
-export default function Homepage() {
-  const { paddingBottom: pb } = useCalculatePadding();
-
+function Homepage() {
   const styles = {
     largeText: {
       fontSize: "50vh",
@@ -11,41 +15,66 @@ export default function Homepage() {
       fontWeight: 700,
     },
     container: {
-      height: `calc(100dvh - ${pb}px)`,
+      display: "flex",
+      flexDirection: "column",
+      height: `100%`,
     },
     row: {
       height: "33.333%",
     },
   };
+
   const colClass = "d-flex flex-column text-uppercase";
-  return (
-    <Col xs={12} style={styles.container}>
-      <Row
-        className="border-bottom border-dark overflow-hidden"
+
+  const RowWrapper = ({
+    children,
+    delay,
+    z,
+  }: {
+    children: ReactNode;
+    delay?: number;
+    z: number;
+  }) => {
+    return (
+      <motion.div
+        key={z}
+        initial="initial"
+        animate="animate"
+        exit="exit"
+        variants={containerTopToBottom}
+        transition={{ duration: delay || containerTransDuration }}
         style={styles.row}
+        className={`row border-bottom border-dark overflow-hidden bg-light z-${z} position-relative`}
       >
-        {/* Where are we going? */}
+        {children}
+      </motion.div>
+    );
+  };
+
+  return (
+    <Col xs={12} style={styles.container as React.CSSProperties}>
+      {/* Where are we going? */}
+      <RowWrapper delay={0.183} z={2}>
+        {/* 0.183 = 0.5 / 1/3 */}
         <Col xs={12} className={colClass} style={styles.largeText}>
           <span>Where</span>
           <span>are</span>
           <span>we</span>
           <span>going?</span>
         </Col>
-      </Row>
-      <Row
-        className="border-bottom border-dark overflow-hidden"
-        style={styles.row}
-      >
-        {/* What is adrenaline today? */}
+      </RowWrapper>
+      {/* What is adrenaline today? */}
+      <RowWrapper delay={0.275} z={1}>
+        {/* 0.183 = 0.5 / 1/2 */}
         <Col xs={12} className={colClass} style={styles.largeText}>
           <span>What</span>
           <span>is</span>
           <span>adrenaline</span>
           <span>today?</span>
         </Col>
-      </Row>
-      <Row className="overflow-hidden" style={styles.row}>
-        {/* Can riding a bike be an art? */}
+      </RowWrapper>
+      {/* Can riding a bike be an art? */}
+      <RowWrapper delay={0.5} z={0}>
         <Col xs={12} className={colClass} style={styles.largeText}>
           <span>Can</span>
           <span>riding</span>
@@ -53,7 +82,8 @@ export default function Homepage() {
           <span>be</span>
           <span>an art?</span>
         </Col>
-      </Row>
+      </RowWrapper>
     </Col>
   );
 }
+export default React.memo(Homepage);

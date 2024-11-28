@@ -51,3 +51,30 @@ export function getImageAttributes(image: ImageRefSchema) {
     alt: "",
   };
 }
+export interface Padding {
+  paddingTop: number;
+  paddingBottom: number;
+}
+
+export const getPadding = (): Padding => {
+  const getElementHeight = (element: HTMLElement | null): number => {
+    if (!element) return 0;
+
+    const style = window.getComputedStyle(element);
+    return (
+      element.clientHeight +
+      parseFloat(style.marginTop) +
+      parseFloat(style.marginBottom) +
+      parseFloat(style.paddingTop) +
+      parseFloat(style.paddingBottom)
+    );
+  };
+
+  const header = document.querySelector("header");
+  const footer = document.querySelector("footer");
+
+  return {
+    paddingTop: getElementHeight(header),
+    paddingBottom: getElementHeight(footer),
+  };
+};

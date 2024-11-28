@@ -5,7 +5,10 @@ import { Helmet } from "react-helmet";
 import { motion } from "framer-motion";
 
 import { ProfileSchema } from "@jakubkanna/labguy-front-schema";
-import { containerTopToBottom } from "../../utils/framer-motion";
+import {
+  containerTopToBottom,
+  containerTransDuration,
+} from "../../utils/framerMotionVariants";
 import AnimatedTitle from "../AnimatedTitle";
 
 export default function Layout({
@@ -57,7 +60,7 @@ export default function Layout({
           animate="animate"
           exit="exit"
           variants={containerTopToBottom}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: containerTransDuration }}
           className="row flex-grow-1"
         >
           {/* Body */}

@@ -1,24 +1,26 @@
-import { useContext, useState } from "react";
-import {
-  Navbar,
-  Collapse,
-  Button,
-  Row,
-  Col,
-  OverlayTrigger,
-  Tooltip,
-  TooltipProps,
-  Container,
-} from "react-bootstrap";
+import { useContext, useEffect, useRef, useState } from "react";
+import { Navbar, Collapse, Button, Row, Col, Container } from "react-bootstrap";
 import { GeneralContext } from "../../contexts/GeneralContext";
 import { Link } from "react-router-dom";
 import useIsMobile from "../../hooks/useIsMobile";
 
-export default function Footer() {
+export default function Footer({
+  setFooterHeight,
+}: {
+  setFooterHeight: React.Dispatch<React.SetStateAction<number>>;
+}) {
   const { preferences } = useContext(GeneralContext);
   const artists_name = preferences ? preferences.artists_name : "";
   const currentYear = new Date().getFullYear();
   const isMobile = useIsMobile();
+  const footerRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (footerRef.current) {
+      const height = footerRef.current.clientHeight;
+      if (height) setFooterHeight(height);
+    }
+  }, [setFooterHeight]);
 
   // State to control the collapse
   const [open, setOpen] = useState(false);
@@ -30,58 +32,31 @@ export default function Footer() {
     { label: "Contact", path: "contact" },
   ];
 
-  const renderTooltip = (props: TooltipProps) =>
-    !isMobile ? (
-      <Tooltip id="button-tooltip" {...props}>
-        Homepage
-      </Tooltip>
-    ) : (
-      <></>
-    );
-  const renderTooltip2 = (props: TooltipProps) =>
-    !isMobile ? (
-      <Tooltip id="button-tooltip" {...props}>
-        Menu
-      </Tooltip>
-    ) : (
-      <></>
-    );
-
   return (
     <footer
       className={`container-fluid position-fixed bottom-0 start-0 bg-kanna w-100 border-top border-dark mh-100 z-3
          ${isMobile && "py-2"}`}
+      ref={footerRef}
     >
       <nav className={"d-flex justify-content-between align-items-center"}>
-        <OverlayTrigger
-          overlay={renderTooltip}
-          placement="right"
-          delay={{ show: 1000, hide: 400 }}
+        <Navbar.Brand className="text-uppercase">
+          <Link to={"/"} onClick={() => setOpen(false)}>
+            {artists_name}
+          </Link>
+        </Navbar.Brand>
+
+        <Button
+          onClick={() => setOpen(!open)}
+          aria-controls="CollapseMenu"
+          aria-expanded={open}
+          className="p-0 flex-grow-1 d-flex justify-content-end"
+          variant="link"
         >
-          <Navbar.Brand className="text-uppercase">
-            <Link to={"/"} onClick={() => setOpen(false)}>
-              {artists_name}
-            </Link>
-          </Navbar.Brand>
-        </OverlayTrigger>
-        <OverlayTrigger
-          overlay={renderTooltip2}
-          placement="top"
-          delay={{ show: 1000, hide: 10 }}
-        >
-          <Button
-            onClick={() => setOpen(!open)}
-            aria-controls="CollapseMenu"
-            aria-expanded={open}
-            className="p-0 flex-grow-1 d-flex justify-content-end"
-            variant="link"
-          >
-            <i className="bi bi-list fs-2 text-dark"></i>
-          </Button>
-        </OverlayTrigger>
+          <i className="bi bi-list fs-2 text-dark"></i>
+        </Button>
       </nav>
 
-      <Collapse in={open} className="">
+      <Collapse in={open}>
         {/* border-top border-dark */}
         <Container fluid id="CollapseMenu" className="px-0 ">
           <Row>

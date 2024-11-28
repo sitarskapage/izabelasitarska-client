@@ -9,4 +9,6 @@ const containerSizeMiddle = {
   exit: { clipPath: "inset(50% 0% 50% 0%)" }, // Keep clipped when exiting
 };
 
-export { containerTopToBottom, containerSizeMiddle };
+const containerTransDuration = 0.5;
+
+export { containerTopToBottom, containerSizeMiddle, containerTransDuration };

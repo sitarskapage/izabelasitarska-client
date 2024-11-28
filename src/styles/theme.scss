@@ -9,6 +9,10 @@ body {
   font-family: "Helvetica", "Arial", sans-serif;
   color: $dark !important;
   background-color: $light;
+  height: 100%;
+}
+#root {
+  height: 100%;
 }
 
 a,

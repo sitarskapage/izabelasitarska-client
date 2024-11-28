@@ -6,7 +6,7 @@ import Image from "../components/Image";
 import useCalculatePadding from "../hooks/useCalculatePadding";
 import useIsMobile from "../hooks/useIsMobile";
 import { motion } from "framer-motion";
-import { containerSizeMiddle } from "../utils/framer-motion";
+import { containerSizeMiddle } from "../utils/framerMotionVariants";
 
 export default function BioTables({ profile }: { profile: ProfileSchema }) {
   const [publicId, setPublicId] = useState<string | null>(null);

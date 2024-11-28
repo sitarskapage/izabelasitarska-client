@@ -1,7 +1,6 @@
-// there is a problem that it calculates footer height before it finished animating
-
 import { useState, useEffect } from "react";
 import { useWindowSize } from "@react-hook/window-size";
+import { containerTransDuration } from "../utils/framerMotionVariants";
 
 interface Padding {
   paddingTop: number;
@@ -43,8 +42,11 @@ const useCalculatePadding = (): Padding => {
       });
     };
 
-    // Update padding whenever window dimensions change
-    updatePadding();
+    // footer might be 'open' when navigating to the other page so the calculation on the target page might be wrong
+    //solving it by adding slight delay because there is framer motion transition animation anyway
+    const timer = setTimeout(updatePadding, containerTransDuration * 1000); // Delay for animation duration
+
+    return () => clearTimeout(timer); // Cleanup on unmount
   }, [windowWidth, windowHeight]);
 
   return padding;

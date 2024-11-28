@@ -1,16 +1,24 @@
 import { ReactNode } from "react";
-import useCalculatePadding from "../../hooks/useCalculatePadding";
+import { useLocation } from "react-router-dom";
 
-export default function Main({ children }: { children: ReactNode }) {
-  const { paddingTop: pt, paddingBottom: pb } = useCalculatePadding();
+export default function Main({
+  children,
+  footerHeight,
+}: {
+  children: ReactNode;
+  footerHeight: number;
+}) {
+  const location = useLocation();
+
+  const isHome = location.pathname == "/";
 
   return (
     <main
-      className="container-fluid d-flex flex-column"
+      className={`container-fluid d-flex flex-column ${isHome && "h-100"}`}
       style={{
         minHeight: "100dvh",
-        paddingTop: `calc(${pt}px)`,
-        paddingBottom: `calc(${pb}px)`,
+        paddingTop: `${0}px`,
+        paddingBottom: `${footerHeight}px`,
       }}
     >
       {children}
