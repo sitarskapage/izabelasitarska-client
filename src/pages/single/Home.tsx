@@ -1,60 +1,63 @@
 import { Col } from "react-bootstrap";
-import { motion } from "framer-motion";
-import {
-  containerTopToBottom,
-  containerTransDuration,
-} from "../../utils/framerMotionVariants";
-import { ReactNode } from "react";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import RowWrapper from "../../components/Homepage/RowWrapper";
 
 function Homepage() {
-  const styles = {
+  const styles: { [key: string]: React.CSSProperties } = {
     largeText: {
       fontSize: "50vh",
       lineHeight: 1,
       fontWeight: 700,
+      wordWrap: "break-word",
     },
     container: {
       display: "flex",
       flexDirection: "column",
-      height: `100%`,
-    },
-    row: {
-      height: "33.333%",
+      height: "100%",
     },
   };
 
   const colClass = "d-flex flex-column text-uppercase";
 
-  const RowWrapper = ({
-    children,
-    delay,
-    z,
-  }: {
-    children: ReactNode;
-    delay?: number;
-    z: number;
-  }) => {
-    return (
-      <motion.div
-        key={z}
-        initial="initial"
-        animate="animate"
-        exit="exit"
-        variants={containerTopToBottom}
-        transition={{ duration: delay || containerTransDuration }}
-        style={styles.row}
-        className={`row border-bottom border-dark overflow-hidden bg-light z-${z} position-relative`}
-      >
-        {children}
-      </motion.div>
-    );
+  const [position, setPosition] = useState(0);
+
+  const handleWheel = (event: WheelEvent) => {
+    // Determine scroll direction and increment or decrement position
+    const scrollDelta = event.deltaY; // Positive value means scrolling down, negative means scrolling up
+    setPosition((prev) => prev + scrollDelta);
   };
 
+  // Handle touch move event (for mobile devices)
+  const handleTouchMove = (event: TouchEvent) => {
+    // Get the touch movement on the Y-axis
+    const touchMove = event.touches[0].clientY;
+
+    // Calculate scroll delta (you can tweak this for more control)
+    setPosition((prev) => prev + touchMove);
+  };
+
+  useEffect(() => {
+    // For desktop, listen to mouse wheel events
+    const wheelListener = (event: WheelEvent) => handleWheel(event);
+    document.addEventListener("wheel", wheelListener);
+
+    // For mobile, listen to touchmove events
+    const touchMoveListener = (event: TouchEvent) => handleTouchMove(event);
+    document.addEventListener("touchmove", touchMoveListener, {
+      passive: false,
+    });
+
+    // Clean up the event listeners when the component unmounts
+    return () => {
+      document.removeEventListener("wheel", wheelListener);
+      document.removeEventListener("touchmove", touchMoveListener);
+    };
+  }, []);
+  // useEffect(() => console.log(position), [position]);
   return (
-    <Col xs={12} style={styles.container as React.CSSProperties}>
+    <Col xs={12} style={styles.container}>
       {/* Where are we going? */}
-      <RowWrapper delay={0.183} z={2}>
+      <RowWrapper delay={0.183} z={2} position={position}>
         {/* 0.183 = 0.5 / 1/3 */}
         <Col xs={12} className={colClass} style={styles.largeText}>
           <span>Where</span>
@@ -64,7 +67,7 @@ function Homepage() {
         </Col>
       </RowWrapper>
       {/* What is adrenaline today? */}
-      <RowWrapper delay={0.275} z={1}>
+      <RowWrapper delay={0.275} z={1} position={position}>
         {/* 0.183 = 0.5 / 1/2 */}
         <Col xs={12} className={colClass} style={styles.largeText}>
           <span>What</span>
@@ -74,7 +77,7 @@ function Homepage() {
         </Col>
       </RowWrapper>
       {/* Can riding a bike be an art? */}
-      <RowWrapper delay={0.5} z={0}>
+      <RowWrapper delay={0.5} z={0} position={position}>
         <Col xs={12} className={colClass} style={styles.largeText}>
           <span>Can</span>
           <span>riding</span>
