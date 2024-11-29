@@ -1,4 +1,4 @@
-import { useLoaderData } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import {
   GeneralSectionSchema,
   ImageRefSchema,
@@ -11,6 +11,7 @@ import ImageComponent from "../../components/Image";
 import Layout from "../../components/layout/Layout";
 import { Content } from "@jakubkanna/labguy-front-schema/dist/Post.schema";
 import { Col, Container } from "react-bootstrap";
+import { useFetchData } from "../../hooks/useFetch";
 
 interface Post extends PostSchema {
   general: GeneralSectionSchema;
@@ -56,12 +57,9 @@ function renderPostContent(content: Content | undefined) {
 }
 
 export default function Post() {
-  const data = useLoaderData() as Post;
-
-  if (!data) {
-    console.warn("No data received in Post component.");
-    return null;
-  }
+  const { slug } = useParams();
+  const { data } = useFetchData<Post>(`posts/${slug}`);
+  if (!data) return null;
 
   const { general, content } = data;
 

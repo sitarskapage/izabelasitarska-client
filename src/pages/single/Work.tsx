@@ -1,19 +1,19 @@
-import { useLoaderData } from "react-router-dom";
 import { Col, Row } from "react-bootstrap";
 import Image from "../../components/Image";
 import Video from "../../components/Video";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { isImage, isVideo } from "../../utils/helpers";
 import {
   ImageRefSchema,
   VideoRefSchema,
 } from "@jakubkanna/labguy-front-schema";
-import { Work as WorkType } from "../Works";
+import { Work as WorkSchema } from "../Works";
 import Layout from "../../components/layout/Layout";
+import { useFetchData } from "../../hooks/useFetch";
 
 export default function Work() {
-  const data = (useLoaderData() as WorkType) || null;
-
+  const { slug } = useParams();
+  const { data } = useFetchData<WorkSchema>(`works/${slug}`);
   if (!data) return null;
 
   const { general, dimensions, medium, year, media } = data;

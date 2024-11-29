@@ -43,6 +43,7 @@ export default function Layout({
         <Row
           id="SinglePageHeader"
           className="border-dark border-bottom py-4 bg-light z-1"
+          style={{ marginBottom: "-1px" }}
         >
           {header || (
             <h1 className="display-1 fw-normal mb-0">
@@ -51,14 +52,22 @@ export default function Layout({
           )}
         </Row>
       )}
-
+      {/* Body */}
       <motion.div
-        initial={{ y: "-100dvh" }} // How to enter
+        key={title}
+        initial={{ y: "100dvh" }} // How to enter
         animate={{ y: 0 }} // Where to start
-        exit={{ y: "100dvh" }} // How to exit
+        exit={{ y: "-100dvh" }} // How to exit
         transition={{ duration: containerTransDuration }}
-        className="row flex-grow-1"
-        onAnimationEndCapture={() => console.log("Animation ended")}
+        className="row flex-grow-1 border-bottom border-dark border-top"
+        onAnimationStart={() => {
+          console.log("animation START");
+          document.body.classList.add("disable-hover-animations");
+        }}
+        onAnimationComplete={() => {
+          console.log("animation END");
+          document.body.classList.remove("disable-hover-animations");
+        }}
       >
         <Col xs={12}>
           <Row id="SinglePageContent" className="h-100">

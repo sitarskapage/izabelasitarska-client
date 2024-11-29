@@ -85,6 +85,11 @@ $utilities: (
     ),
   ),
 );
+.disable-hover-animations * {
+  pointer-events: none !important;
+  animation: none !important;
+  transition: none !important;
+}
 
 @import "./scrollbar.scss";
 @import "./btn.scss";

@@ -1,5 +1,5 @@
 /** It creates set of flatMap to get all tags from works, then filter them by clicked tag. It could be optimized in the future, if there is a lot of works so fetching tags and filtering works would happen on backend for better performance*/
-import { Outlet, useLoaderData, useParams } from "react-router-dom";
+import { Outlet, useParams } from "react-router-dom";
 import {
   GeneralSectionSchema,
   TagSchema,
@@ -12,6 +12,7 @@ import { Col, Row } from "react-bootstrap";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import useIsMobile from "../hooks/useIsMobile";
+import { useFetchData } from "../hooks/useFetch";
 
 export interface Work extends WorkSchema {
   general: GeneralSectionSchema & { tags?: TagSchema[] };
@@ -20,30 +21,32 @@ export interface Work extends WorkSchema {
 }
 
 export default function Works() {
-  const works = (useLoaderData() as Work[]) || null;
+  const { data } = useFetchData<Work[]>("works");
+
   const { slug } = useParams();
   const [activeTag, setActiveTag] = useState<string | null | undefined>(null);
   const isMobile = useIsMobile();
 
+  if (!data) return null;
   // Get unique tags from works
   const tags = Array.from(
     new Set(
-      works.flatMap((work) => work.general.tags ?? []) // Flatten all tags and remove duplicates
+      data.flatMap((work) => work.general.tags ?? []) // Flatten all tags and remove duplicates
     )
   );
 
   // Filter works by the selected tag
   const filteredWorks = activeTag
-    ? works.filter((work) =>
+    ? data.filter((work) =>
         work.general.tags?.some((tag) => (tag as TagSchema).title === activeTag)
       )
-    : works;
+    : data;
 
   return (
     <>
       {slug ? (
         <Outlet />
-      ) : !works ? (
+      ) : !data ? (
         <p>No works yet.</p>
       ) : (
         <Layout title={"Works"}>

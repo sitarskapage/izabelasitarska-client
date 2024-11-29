@@ -1,11 +1,11 @@
 import { ProfileSchema } from "@jakubkanna/labguy-front-schema";
 import Layout from "../../components/layout/Layout";
 import { Col, Container, Row } from "react-bootstrap";
-import { Link, useLoaderData } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { useFetchData } from "../../hooks/useFetch";
 
 export default function Contact() {
-  const data = (useLoaderData() as ProfileSchema) || null;
-
+  const { data } = useFetchData<ProfileSchema>("profile/1");
   if (!data) return null;
 
   const { contact } = data;
