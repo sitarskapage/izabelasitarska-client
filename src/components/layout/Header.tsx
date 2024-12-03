@@ -4,13 +4,16 @@ import { Helmet } from "react-helmet";
 
 function Header() {
   const { preferences } = useContext(GeneralContext);
+  const lightColor = getComputedStyle(
+    document.documentElement
+  ).getPropertyValue("--light-color");
 
   return (
     <header>
       <Helmet>
         <title>{preferences?.artists_name}</title>
         <meta name="author" content={preferences?.artists_name} />
-
+        <meta name="theme-color" content={lightColor} />
         {/* Favicons and Icons for Different Platforms */}
         <link
           rel="icon"
@@ -38,13 +41,17 @@ function Header() {
           rel="icon"
           type="image/png"
           sizes="192x192"
-          href={`${import.meta.env.BASE_URL}/favicon/android-chrome-192x192.png`}
+          href={`${
+            import.meta.env.BASE_URL
+          }/favicon/android-chrome-192x192.png`}
         />
         <link
           rel="icon"
           type="image/png"
           sizes="512x512"
-          href={`${import.meta.env.BASE_URL}/favicon/android-chrome-512x512.png`}
+          href={`${
+            import.meta.env.BASE_URL
+          }/favicon/android-chrome-512x512.png`}
         />
 
         {/* Optional: Web App Manifest for Android */}

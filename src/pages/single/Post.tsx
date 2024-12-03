@@ -10,8 +10,9 @@ import VideoComponent from "../../components/Video";
 import ImageComponent from "../../components/Image";
 import Layout from "../../components/layout/Layout";
 import { Content } from "@jakubkanna/labguy-front-schema/dist/Post.schema";
-import { Col, Container } from "react-bootstrap";
+import { Col, Container, Row } from "react-bootstrap";
 import { useFetchData } from "../../hooks/useFetch";
+import useIsMobile from "../../hooks/useIsMobile";
 
 interface Post extends PostSchema {
   general: GeneralSectionSchema;
@@ -24,7 +25,7 @@ function renderPostContent(content: Content | undefined) {
     if ("text" in block) {
       // Handle Text block
       return (
-        <div key={index} className="border-bottom border-dark p-2">
+        <div key={index} className="border-bottom border-dark p-3">
           {HTMLReactParser(block.text as string)}
         </div>
       );
@@ -59,6 +60,8 @@ function renderPostContent(content: Content | undefined) {
 export default function Post() {
   const { slug } = useParams();
   const { data } = useFetchData<Post>(`posts/${slug}`);
+  const isMobile = useIsMobile();
+
   if (!data) return null;
 
   const { general, content } = data;
@@ -71,9 +74,18 @@ export default function Post() {
   return (
     <Layout title={general.title}>
       <Col>
-        <Container className="d-flex flex-column border-start border-end border-dark px-0">
-          {renderPostContent(content)}
-        </Container>
+        <Row>
+          <Container
+            fluid={isMobile}
+            className={
+              isMobile
+                ? "p-0"
+                : "d-flex flex-column border-start border-end border-dark px-0"
+            }
+          >
+            {renderPostContent(content)}
+          </Container>
+        </Row>
       </Col>
     </Layout>
   );

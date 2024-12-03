@@ -9,6 +9,7 @@ import {
   TopToBot,
   containerTransDuration,
 } from "../../utils/framerMotionVariants";
+import useIsMobile from "../../hooks/useIsMobile";
 
 const RowWrapper = ({
   children,
@@ -34,6 +35,7 @@ const RowWrapper = ({
 
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ container: ref });
+  const isMobile = useIsMobile();
 
   // Use useMotionValueEvent to notify the parent about scroll progress updates
   useMotionValueEvent(scrollYProgress, "change", (latest) => {
@@ -48,12 +50,20 @@ const RowWrapper = ({
       if (!ref.current) return;
 
       const element = ref.current;
-      const maxScroll = element.scrollHeight - element.clientHeight;
-      element.scrollTop = maxScroll * progress;
+
+      if (isMobile) {
+        // Horizontal scroll logic for mobile
+        const maxScroll = element.scrollWidth - element.clientWidth;
+        element.scrollLeft = maxScroll * progress;
+      } else {
+        // Vertical scroll logic for desktop
+        const maxScroll = element.scrollHeight - element.clientHeight;
+        element.scrollTop = maxScroll * progress;
+      }
     };
 
     scrollToProgress(position); // Sync scroll position with parent prop
-  }, [position]);
+  }, [isMobile, position]);
 
   return (
     <motion.div

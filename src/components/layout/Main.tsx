@@ -20,7 +20,7 @@ export default function Main({
       style={{
         minHeight: "100dvh",
         paddingBottom: `${footerHeight}px`,
-        height: isHome ? `calc(100vh - ${footerHeight}px)` : "100%",
+        height: isHome ? `calc(100dvh - ${footerHeight}px)` : "100%",
       }}
     >
       {children}

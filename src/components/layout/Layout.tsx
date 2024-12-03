@@ -55,9 +55,9 @@ export default function Layout({
       {/* Body */}
       <motion.div
         key={title}
-        initial={{ y: "100dvh" }}
-        animate={{ y: 0 }}
-        exit={{ y: "-100dvh" }}
+        initial={{ y: "100dvh", filter: "url(#halftone)" }}
+        animate={{ y: 0, filter: "" }}
+        exit={{ y: "-100dvh", filter: "url(#halftone)" }}
         id="SingePageBody"
         transition={{ duration: containerTransDuration }}
         className="row flex-grow-1 border-bottom border-dark border-top"

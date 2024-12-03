@@ -8,10 +8,14 @@ import BioTables from "../../components/BioTables";
 import { Col, Container, Row } from "react-bootstrap";
 import { useFetchData } from "../../hooks/useFetch";
 import { ProfileSchema } from "@jakubkanna/labguy-front-schema";
+import useIsMobile from "../../hooks/useIsMobile";
 
 export default function Bio() {
   const { preferences } = useContext(GeneralContext);
   const { data } = useFetchData<ProfileSchema>("profile/1");
+
+  const isMobile = useIsMobile();
+
   if (!data) return null;
 
   const { statement, additional } = data;
@@ -23,7 +27,9 @@ export default function Bio() {
       footer={<BioTables profile={data} />}
     >
       <Col>
-        <Container className="border-start border-end border-dark">
+        <Container
+          className={isMobile ? "p-0" : "border-start border-end border-dark"}
+        >
           <Row id="Statement">
             <Col className="p-2">{statement && HTMLReactParser(statement)}</Col>
           </Row>

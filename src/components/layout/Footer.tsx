@@ -33,7 +33,7 @@ export default function Footer({
       const height = footerRef.current.clientHeight;
       if (height) setFooterHeight(height);
     }
-  }, [setFooterHeight]);
+  }, [setFooterHeight, isMobile]);
 
   useEffect(() => {
     if (isBottom) setOpen(true);
@@ -49,8 +49,9 @@ export default function Footer({
 
   return (
     <footer
-      className={`container-fluid position-fixed bottom-0 start-0 bg-kanna w-100 border-top border-dark mh-100 z-3
-         ${isMobile && "py-2"}`}
+      className={`container-fluid position-fixed bottom-0 start-0 bg-kanna w-100 border-top border-dark mh-100 overflow-auto z-3 ${
+        isMobile && "py-2"
+      }`}
       ref={footerRef}
     >
       {/* HIDDEN */}

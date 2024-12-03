@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { Col } from "react-bootstrap";
 import RowWrapper from "../../components/Homepage/RowWrapper";
+import useIsMobile from "../../hooks/useIsMobile";
 
 function Homepage() {
   const styles: { [key: string]: React.CSSProperties } = {
@@ -17,7 +18,10 @@ function Homepage() {
     },
   };
 
-  const colClass = "d-flex flex-column text-uppercase";
+  const isMobile = useIsMobile();
+  const colClass =
+    "d-flex text-uppercase text-wrap gap-5 " +
+    (isMobile ? "text-nowrap" : "flex-column");
 
   const [scrollProgress, setScrollProgress] = useState<Record<number, number>>({
     0: 0,
@@ -25,25 +29,34 @@ function Homepage() {
     2: 0,
   });
   const [activeRow, setActiveRow] = useState(0);
+  const smoothAmount = isMobile ? 1500 : 750;
 
-  const handleWheel = useCallback(
-    (event: WheelEvent) => {
-      const scrollDelta = event.deltaY;
+  // Helper function to prevent scrolling overflow
+  const preventOverflow = (progress: number) =>
+    Math.max(0, Math.min(1, progress));
 
+  const updateScrollProgress = useCallback(
+    (delta: number) => {
+      const clampedDelta = Math.max(
+        -smoothAmount,
+        Math.min(smoothAmount, delta)
+      );
       setScrollProgress((prev) => {
         const currentProgress = prev[activeRow] || 0;
-        let newProgress = currentProgress + scrollDelta / 750;
+        let newProgress = currentProgress + clampedDelta / smoothAmount;
 
-        // Prevent overflow of scrollProgress
-        newProgress = Math.max(0, Math.min(1, newProgress));
+        // Ensure value stays between 0 and 1
+        newProgress = preventOverflow(newProgress);
 
-        // Handle row transition logic
-        if (newProgress >= 1 && activeRow < 2) {
-          // Move to the next row
-          setActiveRow((prevActiveRow) => prevActiveRow + 1);
-        } else if (newProgress <= 0 && activeRow > 0) {
-          // Move to the previous row
-          setActiveRow((prevActiveRow) => prevActiveRow - 1);
+        console.log("Progress:", newProgress);
+
+        // Handle row transition logic (move to next or previous row)
+        if (newProgress >= 0.99 && activeRow < 2) {
+          setActiveRow(activeRow + 1);
+          return { ...prev, [activeRow]: 1 }; // Ensure current row completes
+        } else if (newProgress <= 0.01 && activeRow > 0) {
+          setActiveRow(activeRow - 1);
+          return { ...prev, [activeRow]: 0 }; // Ensure current row resets
         }
 
         return {
@@ -52,17 +65,65 @@ function Homepage() {
         };
       });
     },
-    [activeRow]
+    [activeRow, smoothAmount]
   );
+
+  const handleWheel = useCallback(
+    (event: WheelEvent) => {
+      const scrollDelta = event.deltaY + event.deltaX;
+      updateScrollProgress(scrollDelta);
+    },
+    [updateScrollProgress]
+  );
+
+  const handleTouchStart = useCallback(
+    (event: TouchEvent) => {
+      const touchStart = {
+        x: event.touches[0].clientX,
+        y: event.touches[0].clientY,
+      };
+      const handleTouchMove = (moveEvent: TouchEvent) => {
+        const touchEnd = {
+          x: moveEvent.touches[0].clientX,
+          y: moveEvent.touches[0].clientY,
+        };
+
+        // Calculate the vertical swipe distance
+        const deltaY = (touchStart.y - touchEnd.y) * 0.1;
+
+        updateScrollProgress(deltaY); // Update scroll progress
+      };
+
+      const handleTouchEnd = () => {
+        // Clean up listeners after the touch ends
+        document.removeEventListener("touchmove", handleTouchMove);
+        document.removeEventListener("touchend", handleTouchEnd);
+      };
+
+      // Add listeners for touch move and touch end
+      document.addEventListener("touchmove", handleTouchMove);
+      document.addEventListener("touchend", handleTouchEnd);
+    },
+    [updateScrollProgress]
+  );
+
+  useEffect(() => console.log("ACTIVEROW:", activeRow), [activeRow]);
 
   useEffect(() => {
     const wheelListener = (event: WheelEvent) => handleWheel(event);
     document.addEventListener("wheel", wheelListener);
+    document.addEventListener("touchstart", handleTouchStart);
 
     return () => {
       document.removeEventListener("wheel", wheelListener);
+      document.removeEventListener("touchstart", handleTouchStart);
     };
-  }, [handleWheel]);
+  }, [handleWheel, handleTouchStart]);
+
+  // Sentence data
+  const sentence1 = ["Where", "are", "we", "going?"];
+  const sentence2 = ["What", "is", "adrenaline", "today?"];
+  const sentence3 = ["Can", "riding", "a bike", "be an art?"];
 
   return (
     <Col xs={12} style={styles.container}>
@@ -76,12 +137,10 @@ function Homepage() {
           setScrollProgress((prev) => ({ ...prev, 0: progress }))
         }
       >
-        {/* 0.183 = 0.5 / 1/3 */}
         <Col xs={12} className={colClass} style={styles.largeText}>
-          <span>Where</span>
-          <span>are</span>
-          <span>we</span>
-          <span>going?</span>
+          {sentence1.map((val, index) => (
+            <span key={index}>{val}</span>
+          ))}
         </Col>
       </RowWrapper>
       {/* What is adrenaline today? */}
@@ -95,10 +154,9 @@ function Homepage() {
         }
       >
         <Col xs={12} className={colClass} style={styles.largeText}>
-          <span>What</span>
-          <span>is</span>
-          <span>adrenaline</span>
-          <span>today?</span>
+          {sentence2.map((val, index) => (
+            <span key={index}>{val}</span>
+          ))}
         </Col>
       </RowWrapper>
       {/* Can riding a bike be an art? */}
@@ -112,15 +170,13 @@ function Homepage() {
         }
       >
         <Col xs={12} className={colClass} style={styles.largeText}>
-          <span>Can</span>
-          <span>riding</span>
-          <span>a bike</span>
-          <span>be</span>
-          <span>an art?</span>
+          {sentence3.map((val, index) => (
+            <span key={index}>{val}</span>
+          ))}
         </Col>
       </RowWrapper>
     </Col>
   );
 }
 
-export default React.memo(Homepage);
+export default Homepage;

@@ -4,6 +4,11 @@ $dark: #1e1e27;
 $light: rgb(233, 233, 228);
 $kanna: #eeff87;
 
+:root {
+  --light-color: #{$light};
+  font-size: 20px;
+}
+
 html,
 body {
   font-family: "Helvetica", "Arial", sans-serif;
@@ -11,7 +16,9 @@ body {
   background-color: $light;
   min-height: 100%;
   position: relative;
+  overscroll-behavior: none;
 }
+
 #root {
   min-height: 100%;
   position: relative;

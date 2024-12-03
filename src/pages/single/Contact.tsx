@@ -3,9 +3,12 @@ import Layout from "../../components/layout/Layout";
 import { Col, Container, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useFetchData } from "../../hooks/useFetch";
+import useIsMobile from "../../hooks/useIsMobile";
 
 export default function Contact() {
   const { data } = useFetchData<ProfileSchema>("profile/1");
+  const isMobile = useIsMobile();
+
   if (!data) return null;
 
   const { contact } = data;
@@ -13,7 +16,13 @@ export default function Contact() {
   return (
     <Layout title="Contact">
       <Col xs={12}>
-        <Container className="border-start border-end border-dark h-100 d-flex flex-column py-2">
+        <Container
+          className={
+            isMobile
+              ? "h-100 d-flex flex-column py-2 px-0"
+              : "border-start border-end border-dark h-100 d-flex flex-column py-2"
+          }
+        >
           {contact?.map((c, i) => (
             <Row key={i}>
               <Col>
