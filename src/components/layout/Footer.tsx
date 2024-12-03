@@ -1,9 +1,10 @@
 import { useContext, useEffect, useRef, useState } from "react";
-import { Navbar, Collapse, Button, Row, Col, Container } from "react-bootstrap";
+import { Navbar, Button, Row, Col, Container } from "react-bootstrap";
 import { GeneralContext } from "../../contexts/GeneralContext";
 import { Link } from "react-router-dom";
 import useIsMobile from "../../hooks/useIsMobile";
 import { ScrollContext } from "../../contexts/ScrollContext";
+import { AnimatePresence, motion } from "framer-motion";
 
 export default function Footer({
   setFooterHeight,
@@ -16,21 +17,9 @@ export default function Footer({
   const isMobile = useIsMobile();
   const footerRef = useRef<HTMLDivElement | null>(null);
   const isBottom = useContext(ScrollContext);
-
-  useEffect(() => {
-    if (footerRef.current) {
-      const height = footerRef.current.clientHeight;
-      if (height) setFooterHeight(height);
-    }
-  }, [setFooterHeight]);
-
-  // State to control the collapse
   const [open, setOpen] = useState(false);
-
-  useEffect(() => {
-    if (isBottom) console.log("IS BOTTOM");
-    if (!isBottom) console.log("IS NOT BOTTOM");
-  }, [isBottom]);
+  const [contentHeight, setContentHeight] = useState<number | null>(null);
+  const contentRef = useRef<HTMLDivElement | null>(null);
 
   const menuItems = [
     { label: "Bio", path: "bio" },
@@ -39,12 +28,32 @@ export default function Footer({
     { label: "Contact", path: "contact" },
   ];
 
+  useEffect(() => {
+    if (footerRef.current) {
+      const height = footerRef.current.clientHeight;
+      if (height) setFooterHeight(height);
+    }
+  }, [setFooterHeight]);
+
+  useEffect(() => {
+    if (isBottom) setOpen(true);
+    if (!isBottom) setOpen(false);
+  }, [isBottom]);
+
+  // Measure content height when it is rendered
+  useEffect(() => {
+    if (contentRef.current) {
+      setContentHeight(contentRef.current.scrollHeight);
+    }
+  }, [open]);
+
   return (
     <footer
       className={`container-fluid position-fixed bottom-0 start-0 bg-kanna w-100 border-top border-dark mh-100 z-3
          ${isMobile && "py-2"}`}
       ref={footerRef}
     >
+      {/* HIDDEN */}
       <nav className={"d-flex justify-content-between align-items-center"}>
         <Navbar.Brand className="text-uppercase">
           <Link to={"/"} onClick={() => setOpen(false)}>
@@ -54,8 +63,6 @@ export default function Footer({
 
         <Button
           onClick={() => setOpen(!open)}
-          aria-controls="CollapseMenu"
-          aria-expanded={open}
           className="p-0 flex-grow-1 d-flex justify-content-end"
           variant="link"
         >
@@ -63,38 +70,50 @@ export default function Footer({
         </Button>
       </nav>
 
-      <Collapse in={open}>
-        {/* border-top border-dark */}
-        <Container fluid id="CollapseMenu" className="px-0 ">
-          <Row>
-            {menuItems.map((item, index) => (
-              <Col
-                key={index}
-                xs={12}
-                sm={6}
-                md={4}
-                lg={3}
-                className="py-5  text-center"
-              >
-                <Link
-                  to={item.path}
-                  onClick={() => setOpen(false)}
-                  className="fs-3"
-                >
-                  {item.label}
-                </Link>
-              </Col>
-            ))}
-          </Row>
-          <Row>
-            <Col className="font-monospace pt-2 border-dark d-flex justify-content-end">
-              <small>
-                © {currentYear} {artists_name}
-              </small>
-            </Col>
-          </Row>
-        </Container>
-      </Collapse>
+      {/* VISIBLE */}
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ height: 0 }}
+            animate={{ height: contentHeight || "auto" }}
+            exit={{ height: 0 }}
+            transition={{ duration: 0.33 }}
+            style={{ overflow: "hidden" }}
+          >
+            <div ref={contentRef}>
+              <Container fluid id="CollapseMenu" className="px-0 mh-100">
+                <Row>
+                  {menuItems.map((item, index) => (
+                    <Col
+                      key={index}
+                      xs={12}
+                      sm={6}
+                      md={4}
+                      lg={3}
+                      className="py-5 text-center"
+                    >
+                      <Link
+                        to={item.path}
+                        onClick={() => setOpen(false)}
+                        className="fs-3"
+                      >
+                        {item.label}
+                      </Link>
+                    </Col>
+                  ))}
+                </Row>
+                <Row>
+                  <Col className="font-monospace pt-2 border-dark d-flex justify-content-end">
+                    <small>
+                      © {currentYear} {artists_name}
+                    </small>
+                  </Col>
+                </Row>
+              </Container>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </footer>
   );
 }
