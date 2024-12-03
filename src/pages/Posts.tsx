@@ -30,7 +30,7 @@ export default function Posts() {
       .find((img) => isImage(img));
 
     return (
-      <Col key={post.general.slug} className="mb-4 ">
+      <Col key={post.general.slug} className="mb-4">
         <Link to={post.general.slug || "#"} className="text-decoration-none">
           <Row
             className={` ${!isLast ? "border-bottom border-dark" : ""}`}

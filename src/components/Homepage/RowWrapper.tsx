@@ -37,7 +37,6 @@ const RowWrapper = ({
 
   // Use useMotionValueEvent to notify the parent about scroll progress updates
   useMotionValueEvent(scrollYProgress, "change", (latest) => {
-    console.log("Scroll progress:", latest);
     if (onScrollProgressChange) {
       onScrollProgressChange(latest); // Notify parent
     }

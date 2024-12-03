@@ -67,8 +67,8 @@ export default function Works() {
                         tag.title === activeTag
                           ? "btn-dark" // Active buttons have the "btn-dark" class
                           : tag.title === "Looking for funding"
-                            ? "btn-funding" // Default style for the "Looking for funding" button
-                            : "btn-outline-dark" // Default style for other buttons
+                          ? "btn-funding" // Default style for the "Looking for funding" button
+                          : "btn-outline-dark" // Default style for other buttons
                       } mx-1`}
                       onClick={() =>
                         setActiveTag(tag.title === activeTag ? null : tag.title)

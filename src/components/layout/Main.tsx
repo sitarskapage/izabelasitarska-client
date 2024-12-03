@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
 export default function Main({
@@ -9,15 +9,18 @@ export default function Main({
   footerHeight: number;
 }) {
   const location = useLocation();
+  const [isHome, setIsHome] = useState(true);
 
-  const isHome = location.pathname == "/";
+  useEffect(() => setIsHome(location.pathname == "/"), [location.pathname]);
+  useEffect(() => console.log(isHome), [isHome]);
 
   return (
     <main
-      className={`container-fluid d-flex flex-column ${isHome && "h-100"}`}
+      className={`container-fluid d-flex flex-column`}
       style={{
         minHeight: "100dvh",
         paddingBottom: `${footerHeight}px`,
+        height: isHome ? `calc(100vh - ${footerHeight}px)` : "100%",
       }}
     >
       {children}

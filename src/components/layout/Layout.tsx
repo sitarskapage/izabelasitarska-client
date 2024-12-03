@@ -55,18 +55,16 @@ export default function Layout({
       {/* Body */}
       <motion.div
         key={title}
-        initial={{ y: "100dvh" }} // How to enter
-        animate={{ y: 0 }} // Where to start
-        exit={{ y: "-100dvh" }} // How to exit
+        initial={{ y: "100dvh" }}
+        animate={{ y: 0 }}
+        exit={{ y: "-100dvh" }}
         id="SingePageBody"
         transition={{ duration: containerTransDuration }}
         className="row flex-grow-1 border-bottom border-dark border-top"
         onAnimationStart={() => {
-          console.log("animation START");
           document.body.classList.add("disable-hover-animations");
         }}
         onAnimationComplete={() => {
-          console.log("animation END");
           document.body.classList.remove("disable-hover-animations");
         }}
       >
