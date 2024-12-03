@@ -52,6 +52,11 @@ table {
   }
   &:last-child {
     margin: 0;
+    tbody tr:last-child {
+      td {
+        border-bottom: none;
+      }
+    }
   }
 }
 

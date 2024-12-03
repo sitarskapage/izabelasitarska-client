@@ -4,16 +4,19 @@ import Header from "./components/layout/Header";
 import Main from "./components/layout/Main";
 import { ReactNode, useState } from "react";
 import Fallback from "./components/Fallback";
+import ScrollProvider from "./contexts/providers/ScrollProvider";
 
 function App({ children }: { children: ReactNode }) {
   const [footerHeight, setFooterHeight] = useState(0);
   return (
     <>
-      <ErrorBoundary FallbackComponent={Fallback}>
-        <Header />
-        <Main footerHeight={footerHeight}>{children}</Main>
-        <Footer setFooterHeight={setFooterHeight} />
-      </ErrorBoundary>
+      <ScrollProvider>
+        <ErrorBoundary FallbackComponent={Fallback}>
+          <Header />
+          <Main footerHeight={footerHeight}>{children}</Main>
+          <Footer setFooterHeight={setFooterHeight} />
+        </ErrorBoundary>
+      </ScrollProvider>
     </>
   );
 }

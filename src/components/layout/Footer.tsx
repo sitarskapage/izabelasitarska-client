@@ -3,6 +3,7 @@ import { Navbar, Collapse, Button, Row, Col, Container } from "react-bootstrap";
 import { GeneralContext } from "../../contexts/GeneralContext";
 import { Link } from "react-router-dom";
 import useIsMobile from "../../hooks/useIsMobile";
+import { ScrollContext } from "../../contexts/ScrollContext";
 
 export default function Footer({
   setFooterHeight,
@@ -14,6 +15,7 @@ export default function Footer({
   const currentYear = new Date().getFullYear();
   const isMobile = useIsMobile();
   const footerRef = useRef<HTMLDivElement | null>(null);
+  const isBottom = useContext(ScrollContext);
 
   useEffect(() => {
     if (footerRef.current) {
@@ -24,6 +26,11 @@ export default function Footer({
 
   // State to control the collapse
   const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    if (isBottom) console.log("IS BOTTOM");
+    if (!isBottom) console.log("IS NOT BOTTOM");
+  }, [isBottom]);
 
   const menuItems = [
     { label: "Bio", path: "bio" },

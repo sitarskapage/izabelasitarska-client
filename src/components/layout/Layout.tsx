@@ -58,6 +58,7 @@ export default function Layout({
         initial={{ y: "100dvh" }} // How to enter
         animate={{ y: 0 }} // Where to start
         exit={{ y: "-100dvh" }} // How to exit
+        id="SingePageBody"
         transition={{ duration: containerTransDuration }}
         className="row flex-grow-1 border-bottom border-dark border-top"
         onAnimationStart={() => {
