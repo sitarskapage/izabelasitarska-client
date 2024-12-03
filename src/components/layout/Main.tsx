@@ -12,7 +12,6 @@ export default function Main({
   const [isHome, setIsHome] = useState(true);
 
   useEffect(() => setIsHome(location.pathname == "/"), [location.pathname]);
-  useEffect(() => console.log(isHome), [isHome]);
 
   return (
     <main

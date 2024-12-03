@@ -74,7 +74,7 @@ const RowWrapper = ({
       variants={TopToBot}
       transition={{ duration: delay || containerTransDuration }}
       style={styles.row}
-      className={`row border-bottom border-dark  bg-light z-${z} position-relative`}
+      className={`row border-bottom border-dark  bg-kanna z-${z} position-relative`}
       ref={ref}
       id={id}
     >

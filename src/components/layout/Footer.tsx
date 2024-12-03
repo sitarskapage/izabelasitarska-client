@@ -1,5 +1,5 @@
 import { useContext, useEffect, useRef, useState } from "react";
-import { Navbar, Button, Row, Col, Container } from "react-bootstrap";
+import { Navbar, Button, Row, Col } from "react-bootstrap";
 import { GeneralContext } from "../../contexts/GeneralContext";
 import { Link } from "react-router-dom";
 import useIsMobile from "../../hooks/useIsMobile";
@@ -49,7 +49,7 @@ export default function Footer({
 
   return (
     <footer
-      className={`container-fluid position-fixed bottom-0 start-0 bg-kanna w-100 border-top border-dark mh-100 overflow-auto z-3 ${
+      className={`container-fluid position-fixed bottom-0 start-0 bg-kanna w-100 border-top border-dark mh-100 z-3 overflow-auto ${
         isMobile && "py-2"
       }`}
       ref={footerRef}
@@ -79,39 +79,35 @@ export default function Footer({
             animate={{ height: contentHeight || "auto" }}
             exit={{ height: 0 }}
             transition={{ duration: 0.33 }}
-            style={{ overflow: "hidden" }}
+            ref={contentRef}
           >
-            <div ref={contentRef}>
-              <Container fluid id="CollapseMenu" className="px-0 mh-100">
-                <Row>
-                  {menuItems.map((item, index) => (
-                    <Col
-                      key={index}
-                      xs={12}
-                      sm={6}
-                      md={4}
-                      lg={3}
-                      className="py-5 text-center"
-                    >
-                      <Link
-                        to={item.path}
-                        onClick={() => setOpen(false)}
-                        className="fs-3"
-                      >
-                        {item.label}
-                      </Link>
-                    </Col>
-                  ))}
-                </Row>
-                <Row>
-                  <Col className="font-monospace pt-2 border-dark d-flex justify-content-end">
-                    <small>
-                      © {currentYear} {artists_name}
-                    </small>
-                  </Col>
-                </Row>
-              </Container>
-            </div>
+            <Row>
+              {menuItems.map((item, index) => (
+                <Col
+                  key={index}
+                  xs={12}
+                  sm={6}
+                  md={4}
+                  lg={3}
+                  className="py-5 text-center"
+                >
+                  <Link
+                    to={item.path}
+                    onClick={() => setOpen(false)}
+                    className="fs-3"
+                  >
+                    {item.label}
+                  </Link>
+                </Col>
+              ))}
+            </Row>
+            <Row>
+              <Col className="font-monospace pt-2 border-dark d-flex justify-content-end">
+                <small>
+                  © {currentYear} {artists_name}
+                </small>
+              </Col>
+            </Row>
           </motion.div>
         )}
       </AnimatePresence>
