@@ -18,8 +18,8 @@ export default function Main({
       className={`container-fluid d-flex flex-column`}
       style={{
         minHeight: "100dvh",
-        paddingBottom: `${footerHeight}px`,
-        height: isHome ? `calc(100dvh - ${footerHeight}px)` : "100%",
+        paddingBottom: !isHome ? `${footerHeight}px` : 0,
+        height: isHome ? `100dvh` : "100%",
       }}
     >
       {children}

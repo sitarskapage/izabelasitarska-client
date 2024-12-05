@@ -6,7 +6,7 @@ $kanna: #eeff87;
 
 :root {
   --light-color: #{$light};
-  font-size: 20px;
+  font-size: 18px;
 }
 
 html,
@@ -99,10 +99,18 @@ $utilities: (
     ),
   ),
 );
+
 .disable-hover-animations * {
   pointer-events: none !important;
   animation: none !important;
   transition: none !important;
+}
+
+.font-times {
+  font-family: "Times New Roman", Times, serif;
+  color: $kanna;
+  -webkit-text-stroke: 1px black;
+  font-weight: 600;
 }
 
 @import "./scrollbar.scss";

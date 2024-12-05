@@ -2,6 +2,7 @@ import React, { useEffect, useState, useCallback } from "react";
 import { Col } from "react-bootstrap";
 import RowWrapper from "../../components/Homepage/RowWrapper";
 import useIsMobile from "../../hooks/useIsMobile";
+import AbsoluteDivs from "../../components/Homepage/AbsoluteDivs";
 
 function Homepage() {
   const styles: { [key: string]: React.CSSProperties } = {
@@ -126,56 +127,59 @@ function Homepage() {
   const sentence3 = ["Can", "riding", "a bike", "be an art?"];
 
   return (
-    <Col xs={12} style={styles.container}>
-      {/* Where are we going? */}
-      <RowWrapper
-        delay={0.183}
-        z={2}
-        position={scrollProgress[0]}
-        id="0"
-        onScrollProgressChange={(progress) =>
-          setScrollProgress((prev) => ({ ...prev, 0: progress }))
-        }
-      >
-        <Col xs={12} className={colClass} style={styles.largeText}>
-          {sentence1.map((val, index) => (
-            <span key={index}>{val}</span>
-          ))}
-        </Col>
-      </RowWrapper>
-      {/* What is adrenaline today? */}
-      <RowWrapper
-        delay={0.275}
-        z={1}
-        position={scrollProgress[1]}
-        id="1"
-        onScrollProgressChange={(progress) =>
-          setScrollProgress((prev) => ({ ...prev, 1: progress }))
-        }
-      >
-        <Col xs={12} className={colClass} style={styles.largeText}>
-          {sentence2.map((val, index) => (
-            <span key={index}>{val}</span>
-          ))}
-        </Col>
-      </RowWrapper>
-      {/* Can riding a bike be an art? */}
-      <RowWrapper
-        delay={0.5}
-        z={0}
-        position={scrollProgress[2]}
-        id="2"
-        onScrollProgressChange={(progress) =>
-          setScrollProgress((prev) => ({ ...prev, 2: progress }))
-        }
-      >
-        <Col xs={12} className={colClass} style={styles.largeText}>
-          {sentence3.map((val, index) => (
-            <span key={index}>{val}</span>
-          ))}
-        </Col>
-      </RowWrapper>
-    </Col>
+    <>
+      <AbsoluteDivs />
+      <Col xs={12} style={styles.container}>
+        {/* Where are we going? */}
+        <RowWrapper
+          delay={0.183}
+          z={2}
+          position={scrollProgress[0]}
+          id="0"
+          onScrollProgressChange={(progress) =>
+            setScrollProgress((prev) => ({ ...prev, 0: progress }))
+          }
+        >
+          <Col xs={12} className={colClass} style={styles.largeText}>
+            {sentence1.map((val, index) => (
+              <span key={index}>{val}</span>
+            ))}
+          </Col>
+        </RowWrapper>
+        {/* What is adrenaline today? */}
+        <RowWrapper
+          delay={0.275}
+          z={1}
+          position={scrollProgress[1]}
+          id="1"
+          onScrollProgressChange={(progress) =>
+            setScrollProgress((prev) => ({ ...prev, 1: progress }))
+          }
+        >
+          <Col xs={12} className={colClass} style={styles.largeText}>
+            {sentence2.map((val, index) => (
+              <span key={index}>{val}</span>
+            ))}
+          </Col>
+        </RowWrapper>
+        {/* Can riding a bike be an art? */}
+        <RowWrapper
+          delay={0.5}
+          z={0}
+          position={scrollProgress[2]}
+          id="2"
+          onScrollProgressChange={(progress) =>
+            setScrollProgress((prev) => ({ ...prev, 2: progress }))
+          }
+        >
+          <Col xs={12} className={colClass} style={styles.largeText}>
+            {sentence3.map((val, index) => (
+              <span key={index}>{val}</span>
+            ))}
+          </Col>
+        </RowWrapper>
+      </Col>
+    </>
   );
 }
 

@@ -1,7 +1,7 @@
 const TopToBot = {
   initial: { y: "-100dvh" },
   animate: { y: 0 },
-  exit: { y: "100dvh" }, //CAN BE IMPROVED LATER, should be the length of the content
+  exit: { y: "100dvh" },
 };
 
 const containerSizeMiddle = {
