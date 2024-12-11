@@ -37,9 +37,9 @@ const AbsoluteDivs = () => {
       style: { top: "calc(33.3333%)" },
       delayMultiplier: 1,
       className:
-        "position-absolute w-100 border border-dark start-0 z-3 bg-kanna ps-3 pt-2",
+        "position-absolute w-100 border border-dark start-0 z-3 bg-kanna ps-3",
       content: (
-        <div ref={div2Ref}>
+        <div ref={div2Ref} className="pt-2">
           <span className="font-monospace">Post:</span>
           <span
             className="display-5 font-times ps-3 d-block pb-2"
@@ -63,6 +63,11 @@ const AbsoluteDivs = () => {
           y: { delay: 0.4, ...sharedExitSettings },
         },
       },
+      transition: {
+        duration: 0.25,
+        delay: 0.25,
+        y: { delay: 0.8, ease: "linear" },
+      },
       style: { top: "calc(33.3333%)" },
       delayMultiplier: 2,
       className:
@@ -76,7 +81,7 @@ const AbsoluteDivs = () => {
               className="border-start border-dark pt-2 px-0 h-100 overflow-hidden d-flex flex-column justify-content-center"
             >
               <img
-                src={`${import.meta.env.BASE_URL}/images/walker_jakubkanna.png`}
+                src={`${import.meta.env.BASE_URL}/images/exodus-walker_jakubkanna.png`}
                 className="w-100 object-fit-cover"
                 style={{ mixBlendMode: "multiply" }}
               ></img>
@@ -96,10 +101,15 @@ const AbsoluteDivs = () => {
       className:
         "position-absolute w-100 border border-dark start-0 z-3 bg-kanna ps-3",
       content: (
-        <>
+        <div className="pt-2">
           <span className="font-monospace">Work:</span>
-          <span className="display-5 font-times ps-3 d-block pb-2">Title</span>
-        </>
+          <span
+            className="display-5 font-times ps-3 d-block pb-2"
+            style={{ lineHeight: 1 }}
+          >
+            Title
+          </span>
+        </div>
       ),
     },
     {
@@ -117,6 +127,11 @@ const AbsoluteDivs = () => {
       },
       style: { top: "calc(66.6666%)" },
       delayMultiplier: 3,
+      transition: {
+        duration: 0.25,
+        delay: 0.25,
+        y: { delay: 1.2, ease: "linear" },
+      },
       className:
         "position-absolute w-100 border border-dark start-0 z-3 bg-kanna ps-3",
       content: (
@@ -128,7 +143,7 @@ const AbsoluteDivs = () => {
               className="border-start border-dark pt-2 px-0 h-100 overflow-hidden d-flex flex-column justify-content-center"
             >
               <img
-                src={`${import.meta.env.BASE_URL}/images/walker_jakubkanna.png`}
+                src={`${import.meta.env.BASE_URL}/images/exodus-eyes.png`}
                 className="w-100 object-fit-cover"
                 style={{ mixBlendMode: "multiply" }}
               ></img>
@@ -152,16 +167,21 @@ const AbsoluteDivs = () => {
           className,
           content,
           delayMultiplier,
+          transition,
         }) => (
           <motion.div
             key={key}
             initial={initial}
             animate={animate}
             exit={exit}
-            transition={{
-              ...initialTransition,
-              delay: delayMultiplier * baseDelay,
-            }}
+            transition={
+              transition
+                ? transition
+                : {
+                    ...initialTransition,
+                    delay: delayMultiplier * baseDelay,
+                  }
+            }
             className={className}
             id={id}
             style={style}
