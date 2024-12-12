@@ -1,7 +1,7 @@
 import { Col, Row } from "react-bootstrap";
 import Image from "../../components/Image";
 import Video from "../../components/Video";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { isImage, isVideo } from "../../utils/helpers";
 import {
   ImageRefSchema,
@@ -60,9 +60,9 @@ export default function Work() {
         </Row>
         {/* Footer Section */}
         <Row>
-          <Col className="py-4">
+          {/* <Col className="py-4">
             <Link to={"/works"}>All Works</Link>
-          </Col>
+          </Col> */}
         </Row>
       </Col>
     </Layout>
