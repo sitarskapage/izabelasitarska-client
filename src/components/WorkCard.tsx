@@ -12,7 +12,7 @@ interface CardProps {
 }
 
 export default function WorkCard({ work }: CardProps) {
-  const { general, dimensions, year, media } = work;
+  const { general, year, media } = work;
   const { title, slug } = general;
   const [fontSizeClass, setFontSizeClass] = useState("");
   const isMobile = useIsMobile();
@@ -46,16 +46,10 @@ export default function WorkCard({ work }: CardProps) {
         )}
         {!isMobile && (
           <div className="position-absolute bottom-0 start-50 translate-middle-x text-outline">
-            <span style={{ textDecoration: "none" }}>
-              <span style={{ fontStyle: "italic" }}>{title}</span>
-              {dimensions && (
-                <>
-                  {", " + dimensions + " "}
-                  <span style={{ fontSize: "0.8em" }}>(cm)</span>
-                </>
-              )}
-              {year && <>{", " + year}</>}{" "}
-            </span>
+            <div className="text-decoration-none text-center">
+              <span className="fst-italic">{title}</span>
+              {year && <span>{", " + year}</span>}
+            </div>
           </div>
         )}
       </div>

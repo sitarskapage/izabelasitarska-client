@@ -3,6 +3,7 @@ import { Outlet, useParams } from "react-router-dom";
 import {
   GeneralSectionSchema,
   TagSchema,
+  UrlSchema,
   WorkSchema,
 } from "@jakubkanna/labguy-front-schema";
 import Layout from "../components/layout/Layout";
@@ -18,6 +19,7 @@ export interface Work extends WorkSchema {
   general: GeneralSectionSchema & { tags?: TagSchema[] };
   etag: string;
   media?: MediaRef[];
+  urls: UrlSchema[];
 }
 
 export default function Works() {
@@ -28,10 +30,13 @@ export default function Works() {
   const isMobile = useIsMobile();
 
   if (!data) return null;
+
   // Get unique tags from works
   const tags = Array.from(
     new Set(
-      data.flatMap((work) => work.general.tags ?? []) // Flatten all tags and remove duplicates
+      data
+        .flatMap((work) => work.general.tags ?? [])
+        .map((tag: TagSchema) => tag.title)
     )
   );
 
@@ -58,23 +63,23 @@ export default function Works() {
                   <span>Display by:</span>
                   {tags.map((tag) => (
                     <button
-                      key={tag.title}
+                      key={tag}
                       // Assign default and active class names dynamically based on the tag's title and active state.
                       // The button with the title "Looking for funding" has "btn-funding" by default,
                       // while all other buttons have "btn-outline-dark" by default.
                       // When a button is clicked (i.e., it becomes active), it gets "btn-dark" applied.
                       className={`btn btn-sm ${
-                        tag.title === activeTag
+                        tag === activeTag
                           ? "btn-dark" // Active buttons have the "btn-dark" class
-                          : tag.title === "Looking for funding"
-                            ? "btn-funding" // Default style for the "Looking for funding" button
-                            : "btn-outline-dark" // Default style for other buttons
+                          : tag === "Looking for funding"
+                          ? "btn-funding" // Default style for the "Looking for funding" button
+                          : "btn-outline-dark" // Default style for other buttons
                       } mx-1`}
                       onClick={() =>
-                        setActiveTag(tag.title === activeTag ? null : tag.title)
+                        setActiveTag(tag === activeTag ? null : tag)
                       }
                     >
-                      {tag.title}
+                      {tag}
                     </button>
                   ))}
                 </div>

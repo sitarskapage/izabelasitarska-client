@@ -16,7 +16,7 @@ export default function Work() {
   const { data } = useFetchData<WorkSchema>(`works/${slug}`);
   if (!data) return null;
 
-  const { general, dimensions, medium, year, media } = data;
+  const { general, dimensions, medium, year, media, urls } = data;
 
   if (!general.published) return "This page is private.";
 
@@ -31,6 +31,18 @@ export default function Work() {
                 {medium && <span>{medium}, </span>}
                 {year && <span>{year}</span>}
               </h3>
+              {urls && (
+                <>
+                  <span>Links: </span>
+
+                  {urls.map((url, index) => (
+                    <>
+                      <a href={url.url}>{url.title}</a>
+                      {index < urls.length - 1 && <span>, </span>}
+                    </>
+                  ))}
+                </>
+              )}
             </Col>
           </Row>
         )}
@@ -47,15 +59,13 @@ export default function Work() {
                     />
                   )}{" "}
                   {/* Render image */}
-                  {isVideo(item) && (
-                    <Video videoref={item as VideoRefSchema} />
-                  )}{" "}
+                  {isVideo(item) && <Video videoref={item as VideoRefSchema} />}
                   {/* Render video */}
                 </Row>
               </Col>
             ))
           ) : (
-            <p>No media available for this project.</p>
+            <></>
           )}
         </Row>
         {/* Footer Section */}

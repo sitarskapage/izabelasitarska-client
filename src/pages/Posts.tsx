@@ -9,9 +9,9 @@ import { isImage } from "../utils/helpers";
 import { Link } from "react-router-dom";
 import Image from "../components/Image";
 import Layout from "../components/layout/Layout";
-import { useState } from "react";
 import useIsMobile from "../hooks/useIsMobile";
 import { useFetchData } from "../hooks/useFetch";
+import { useState } from "react";
 
 export interface Post extends PostSchema {
   general: GeneralSectionSchema;
@@ -20,40 +20,52 @@ export interface Post extends PostSchema {
 export default function Posts() {
   const { data } = useFetchData<Post[]>("posts");
   const { slug } = useParams();
-  const [fontSizeClass, setFontSizeClass] = useState("fs-4");
   const isMobile = useIsMobile();
 
   const PostItem = ({ post, isLast }: { post: Post; isLast: boolean }) => {
+    //
+    const [isHovered, setIsHovered] = useState(false);
+
+    const handleMouseOver = () => setIsHovered(true);
+    const handleMouseOut = () => setIsHovered(false);
+
+    const arrowStyle = {
+      fontSize: isHovered ? "1.5rem" : "1.25rem", // Equivalent to fs-3 and fs-4
+      fontWeight: "bold",
+    };
     // Find the first image
     const image = post.content
       ?.flatMap((item) => (item.images as ImageRefSchema[]) || [])
       .find((img) => isImage(img));
 
     return (
-      <Col key={post.general.slug} className="mb-4">
-        <Link to={post.general.slug || "#"} className="text-decoration-none">
-          <Row
-            className={` ${!isLast ? "border-bottom border-dark" : ""}`}
-            onMouseOver={() => setFontSizeClass("fs-3")}
-            onMouseOut={() => setFontSizeClass("fs-4")}
+      <Link
+        to={post.general.slug || "#"}
+        className="text-decoration-none"
+        key={post.general.slug}
+      >
+        <Row
+          className={`${!isLast ? "border-bottom border-dark" : ""}`}
+          onMouseOver={handleMouseOver}
+          onMouseOut={handleMouseOut}
+        >
+          <Col xs={12} md={9} className="py-3 px-4 position-relative">
+            <h2 className="h4">{post.general.title}</h2>
+            <small className="font-monospace">{post.general.createdAt}</small>
+            <i
+              className="bi bi-arrow-up-right position-absolute end-0 bottom-0 pb-1 px-3 font-weight-bold "
+              style={arrowStyle}
+            ></i>
+          </Col>
+          <Col
+            xs={12}
+            md={3}
+            className={isMobile ? "p-0" : "border-start border-dark p-0"}
           >
-            <Col xs={12} md={9} className="py-3 px-4 position-relative">
-              <h2 className="h4">{post.general.title}</h2>
-              <small className="font-monospace">{post.general.createdAt}</small>
-              <i
-                className={`bi bi-arrow-up-right position-absolute end-0 bottom-0 pb-1 px-3 font-weight-bold ${fontSizeClass}`}
-              ></i>
-            </Col>
-            <Col
-              xs={12}
-              md={3}
-              className={isMobile ? "p-0" : "border-start border-dark p-0"}
-            >
-              {image && <Image imageref={image} />}
-            </Col>
-          </Row>
-        </Link>
-      </Col>
+            {image && <Image imageref={image} />}
+          </Col>
+        </Row>
+      </Link>
     );
   };
 
@@ -74,7 +86,9 @@ export default function Posts() {
     <Outlet />
   ) : (
     <Layout title="Blog">
-      {!data || data.length === 0 ? <p>No posts yet.</p> : <PostsList />}
+      <Col className="mb-4">
+        {!data || data.length === 0 ? <p>No posts yet.</p> : <PostsList />}
+      </Col>
     </Layout>
   );
 }

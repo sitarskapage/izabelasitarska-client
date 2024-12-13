@@ -27,7 +27,7 @@ export default function ScrollProvider({ children }: { children: ReactNode }) {
         }
 
         // Update isBottom state after scroll count reaches threshold
-        if (scrollCount >= 2) {
+        if (scrollCount >= 3) {
           setIsBottom(true);
         }
         if (scrollCount <= 0) {
