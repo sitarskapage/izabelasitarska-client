@@ -23,7 +23,7 @@ export interface Work extends WorkSchema {
 }
 
 export default function Works() {
-  const { data } = useFetchData<Work[]>("works");
+  const { data } = useFetchData<Work[]>("works?unique=true");
 
   const { slug } = useParams();
   const [activeTag, setActiveTag] = useState<string | null | undefined>(null);

@@ -62,7 +62,14 @@ export default function Posts() {
             md={3}
             className={isMobile ? "p-0" : "border-start border-dark p-0"}
           >
-            {image && <Image imageref={image} />}
+            <div className="ratio ratio-1x1">
+              {image && (
+                <Image
+                  imageref={image}
+                  className="img-fluid object-fit-cover"
+                />
+              )}
+            </div>
           </Col>
         </Row>
       </Link>
@@ -86,7 +93,7 @@ export default function Posts() {
     <Outlet />
   ) : (
     <Layout title="Blog">
-      <Col className="mb-4">
+      <Col>
         {!data || data.length === 0 ? <p>No posts yet.</p> : <PostsList />}
       </Col>
     </Layout>

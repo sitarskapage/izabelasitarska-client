@@ -30,7 +30,7 @@ function Homepage() {
     2: 0,
   });
   const [activeRow, setActiveRow] = useState(0);
-  const smoothAmount = isMobile ? 1500 : 750;
+  const smoothAmount = 1500;
 
   // Helper function to prevent scrolling overflow
   const preventOverflow = (progress: number) =>

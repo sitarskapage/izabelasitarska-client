@@ -61,6 +61,7 @@ export default function Layout({
         id="SingePageBody"
         transition={{ duration: containerTransDuration }}
         className="row flex-grow-1 border-bottom border-dark border-top"
+        style={{ marginBottom: "-1px" }}
         onAnimationStart={() => {
           document.body.classList.add("disable-hover-animations");
         }}
