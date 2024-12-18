@@ -6,8 +6,8 @@ import {
   VideoRefSchema,
 } from "@jakubkanna/labguy-front-schema";
 import HTMLReactParser from "html-react-parser";
-import VideoComponent from "../../components/Video";
-import ImageComponent from "../../components/Image";
+import VideoComponent from "../../components/media/Video";
+import ImageComponent from "../../components/media/Image";
 import Layout from "../../components/layout/Layout";
 import { Content } from "@jakubkanna/labguy-front-schema/dist/Post.schema";
 import { Col, Container } from "react-bootstrap";

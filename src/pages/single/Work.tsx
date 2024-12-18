@@ -1,6 +1,6 @@
 import { Col, Row } from "react-bootstrap";
-import Image from "../../components/Image";
-import Video from "../../components/Video";
+import Image from "../../components/media/Image";
+import Video from "../../components/media/Video";
 import { useParams } from "react-router-dom";
 import { isImage, isVideo } from "../../utils/helpers";
 import {

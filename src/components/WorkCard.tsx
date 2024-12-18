@@ -1,7 +1,7 @@
-import Image from "./Image";
+import Image from "./media/Image";
 import { Link } from "react-router-dom";
 import { Work } from "../pages/Works";
-import Video from "./Video";
+import Video from "./media/Video";
 import { isImage, MediaRef, isVideo } from "../utils/helpers";
 import { useState } from "react";
 import useIsMobile from "../hooks/useIsMobile";

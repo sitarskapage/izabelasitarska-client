@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import { ProfileSchema } from "@jakubkanna/labguy-front-schema";
 import { renderSingleItem } from "../hooks/useArrayRender";
-import Image from "../components/Image";
+import Image from "./media/Image";
 import useCalculatePadding from "../hooks/useCalculatePadding";
 import useIsMobile from "../hooks/useIsMobile";
 import { motion } from "framer-motion";

@@ -1,10 +1,10 @@
 import { Col, Row } from "react-bootstrap";
-import Image from "./Image";
+import Image from "./media/Image";
 import { Link } from "react-router-dom";
 
 import { Project } from "../pages/Projects";
 import { isImage, isVideo, MediaRef } from "../utils/helpers";
-import Video from "./Video";
+import Video from "./media/Video";
 
 interface CardProps {
   project: Project;

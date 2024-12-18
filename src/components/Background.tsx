@@ -1,5 +1,5 @@
-import Image from "./Image";
-import Video from "./Video";
+import Image from "./media/Image";
+import Video from "./media/Video";
 import { isImage, isVideo, MediaRef } from "../utils/helpers";
 import {
   ImageRefSchema,

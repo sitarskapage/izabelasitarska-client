@@ -1,6 +1,6 @@
 import { isImage, isVideo, MediaRef } from "../utils/helpers";
-import Image from "./Image";
-import Video from "./Video";
+import Image from "./media/Image";
+import Video from "./media/Video";
 
 interface MediaProps {
   media: MediaRef[];

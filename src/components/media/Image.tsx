@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { ImageRefSchema } from "@jakubkanna/labguy-front-schema";
-import { getImageAttributes } from "../utils/utils";
+import { getImageAttributes } from "../../utils/utils";
 
 interface ImageProps {
   imageref: ImageRefSchema;
@@ -10,9 +10,9 @@ interface ImageProps {
 
 export default function Image({ imageref, className }: ImageProps) {
   const [imgSrc, setImgSrc] = useState<string | undefined>("");
-  const [loading, setLoading] = useState(true);
   const [isImageValid, setIsImageValid] = useState<boolean>(true);
-  const { height, width } = imageref;
+  // const [loading, setLoading] = useState(true);
+  // const { height, width } = imageref;
 
   const { src, srcSet, sizes, alt } = imageref
     ? getImageAttributes(imageref)
@@ -43,16 +43,18 @@ export default function Image({ imageref, className }: ImageProps) {
 
   return (
     <>
-      {loading && (
+      {/* {loading && (
         <img height={height} width={width} className="img-fluid"></img>
-      )}
+      )} */}
       <img
         src={imgSrc}
         srcSet={srcSet}
         sizes={sizes}
         alt={alt}
-        style={!loading ? {} : { display: `none` }}
-        onLoad={() => setLoading(false)}
+        // style={!loading ? {} : { display: `none` }}
+        // onLoad={() => {
+        //   setLoading(false);
+        // }}
         className={className || "img-fluid"}
         loading="lazy"
       />
