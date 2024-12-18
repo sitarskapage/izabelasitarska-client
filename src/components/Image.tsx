@@ -54,6 +54,7 @@ export default function Image({ imageref, className }: ImageProps) {
         style={!loading ? {} : { display: `none` }}
         onLoad={() => setLoading(false)}
         className={className || "img-fluid"}
+        loading="lazy"
       />
     </>
   );
