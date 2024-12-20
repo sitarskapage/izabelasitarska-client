@@ -1,9 +1,10 @@
-import { isImage, isVideo, MediaRef } from "../utils/helpers";
+import { is3d, isImage, isVideo, MediaRef } from "../utils/helpers";
 import Image from "./media/Image";
+import Model from "./media/Model";
 import Video from "./media/Video";
 
 interface MediaProps {
-  media: MediaRef[];
+  media: MediaRef;
   className?: string;
 }
 
@@ -13,17 +14,14 @@ export default function MediaComponent({ media, className }: MediaProps) {
     return <p>No media available.</p>;
   }
 
-  return (
-    <>
-      {media.map((item, index) => {
-        if (isImage(item)) {
-          return <Image key={index} imageref={item} className={className} />;
-        } else if (isVideo(item)) {
-          return <Video key={index} videoref={item} />;
-        } else {
-          return <p key={index}>Unsupported media type.</p>;
-        }
-      })}
-    </>
-  );
+  switch (true) {
+    case isImage(media):
+      return <Image imageref={media} className={className} />;
+    case isVideo(media):
+      return <Video videoref={media} />;
+    case is3d(media):
+      return <Model threedref={media} />;
+    default:
+      return <p>Unsupported media type.</p>;
+  }
 }

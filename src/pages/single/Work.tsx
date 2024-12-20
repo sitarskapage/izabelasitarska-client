@@ -1,15 +1,10 @@
 import { Col, Row } from "react-bootstrap";
-import Image from "../../components/media/Image";
-import Video from "../../components/media/Video";
 import { useParams } from "react-router-dom";
-import { isImage, isVideo } from "../../utils/helpers";
-import {
-  ImageRefSchema,
-  VideoRefSchema,
-} from "@jakubkanna/labguy-front-schema";
+
 import { Work as WorkSchema } from "../Works";
 import Layout from "../../components/layout/Layout";
 import { useFetchData } from "../../hooks/useFetch";
+import MediaComponent from "../../components/Media";
 
 export default function Work() {
   const { slug } = useParams();
@@ -52,15 +47,7 @@ export default function Work() {
             media.map((item) => (
               <Col xs={12} key={item?.etag}>
                 <Row>
-                  {isImage(item) && (
-                    <Image
-                      imageref={item as ImageRefSchema}
-                      className="p-0 img-fluid"
-                    />
-                  )}{" "}
-                  {/* Render image */}
-                  {isVideo(item) && <Video videoref={item as VideoRefSchema} />}
-                  {/* Render video */}
+                  <MediaComponent media={item} />
                 </Row>
               </Col>
             ))

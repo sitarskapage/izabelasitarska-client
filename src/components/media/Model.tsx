@@ -1,23 +1,13 @@
 import "@google/model-viewer";
-import { RGBA } from "@google/model-viewer";
+import { ThreedRef } from "@jakubkanna/labguy-front-schema";
 import { useState, useEffect } from "react";
 
-export interface ModelSchema {
-  src: string;
-  backgroundColor?: RGBA;
-  exposure?: string;
-  autoplay: boolean;
-}
-
-export default function Model() {
-  const [src, setSrc] = useState<string>(
-    `${
-      import.meta.env.BASE_URL
-    }/models/intenstine/michelin-intenstine_jakubkanna.gltf`
-  );
+export default function Model({ threedref }: { threedref: ThreedRef }) {
+  const [src, setSrc] = useState<string | undefined>(threedref?.url);
   const [valid, setIsValid] = useState<boolean>(true);
 
   useEffect(() => {
+    console.log("src", src);
     if (src) {
       // Validate the image URL
       fetch(src)
@@ -44,9 +34,11 @@ export default function Model() {
         autoplay
         onError={(e: unknown) => console.error("Error loading model:", e)}
         alt={""}
-        style={{ backgroundColor: "blue" }}
-        camera-controls
-        poster=""
+        style={{
+          backgroundColor: threedref.backgroundColor,
+          minHeight: "800px",
+        }}
+        poster={threedref.poster?.url as string}
         exposure="0.75"
       ></model-viewer>
     )

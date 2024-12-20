@@ -14,7 +14,6 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import useIsMobile from "../hooks/useIsMobile";
 import { useFetchData } from "../hooks/useFetch";
-import Model from "../components/media/Model";
 
 export interface Work extends WorkSchema {
   general: GeneralSectionSchema & { tags?: TagSchema[] };
@@ -104,17 +103,6 @@ export default function Works() {
 
             {/* Work Cards */}
             <Row className="position-relative">
-              <div
-                className="p-0 border-dark bg-black ratio ratio-16x9"
-                style={{
-                  boxSizing: "border-box",
-                  width: isMobile ? "100%" : "33.333%",
-                  height: "auto",
-                }}
-              >
-                <Model></Model>{" "}
-              </div>
-
               {filteredWorks.map((item, i) =>
                 item.general.published ? (
                   <div

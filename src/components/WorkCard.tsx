@@ -2,9 +2,11 @@ import Image from "./media/Image";
 import { Link } from "react-router-dom";
 import { Work } from "../pages/Works";
 import Video from "./media/Video";
-import { isImage, MediaRef, isVideo } from "../utils/helpers";
+import { isImage, isVideo, is3d } from "../utils/helpers";
 import { useState } from "react";
 import useIsMobile from "../hooks/useIsMobile";
+import Model from "./media/Model";
+import { ImageRefSchema } from "@jakubkanna/labguy-front-schema";
 
 interface CardProps {
   work: Work;
@@ -19,8 +21,9 @@ export default function WorkCard({ work }: CardProps) {
 
   if (!media) return;
 
-  const image = isImage(media[0] as MediaRef) && (media[0] as MediaRef);
-  const video = isVideo(media[0] as MediaRef) && (media[0] as MediaRef);
+  const image = isImage(media[0]) && media[0];
+  const video = isVideo(media[0]) && media[0];
+  const threed = is3d(media[0]) && media[0];
 
   return (
     <Link
@@ -44,6 +47,15 @@ export default function WorkCard({ work }: CardProps) {
             <div className="z-1 w-100 h-100 position-absolute top-0"></div>
           </>
         )}
+        {threed &&
+          (threed.poster ? (
+            <Image
+              imageref={threed.poster as ImageRefSchema}
+              className="z-0 h-100 mw-100 position-absolute top-0 start-50 translate-middle-x"
+            />
+          ) : (
+            <Model threedref={threed} />
+          ))}
         {!isMobile && (
           <div className="position-absolute bottom-0 start-50 translate-middle-x text-outline">
             <div className="text-decoration-none text-center">
