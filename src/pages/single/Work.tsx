@@ -47,7 +47,9 @@ export default function Work() {
             media.map((item) => (
               <Col xs={12} key={item?.etag}>
                 <Row>
-                  <MediaComponent media={item} />
+                  <Col className="p-0 border-bottom border-dark">
+                    <MediaComponent media={item} />
+                  </Col>
                 </Row>
               </Col>
             ))

@@ -10,9 +10,7 @@ interface MediaProps {
 
 export default function MediaComponent({ media, className }: MediaProps) {
   // Early return if no media is provided
-  if (!media || media.length === 0) {
-    return <p>No media available.</p>;
-  }
+  if (!media || media.length === 0) return;
 
   switch (true) {
     case isImage(media):

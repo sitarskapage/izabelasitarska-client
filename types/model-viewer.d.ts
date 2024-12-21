@@ -68,6 +68,7 @@ export interface ModelViewerElement
   ref?: React.MutableRefObject<ModelViewer | undefined>;
   // Control render exposure
   exposure?: string;
+  class?: string;
 }
 
 export interface ModelViewer extends ModelViewerElement {
