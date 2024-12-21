@@ -3,7 +3,7 @@ import Image from "./media/Image";
 import { Link } from "react-router-dom";
 
 import { Project } from "../pages/Projects";
-import { isImage, isVideo, MediaRef } from "../utils/helpers";
+import { isImage, isVideo } from "../utils/helpers";
 import Video from "./media/Video";
 
 interface CardProps {
@@ -16,8 +16,8 @@ export default function ProjectCard({ project }: CardProps) {
   const { title, slug, description } = general;
   if (!media) return;
 
-  const image = isImage(media[0] as MediaRef) && (media[0] as MediaRef);
-  const video = isVideo(media[0] as MediaRef) && (media[0] as MediaRef);
+  const image = isImage(media[0]) && media[0];
+  const video = isVideo(media[0]) && media[0];
 
   return (
     <Row>
