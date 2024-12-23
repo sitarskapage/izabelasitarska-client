@@ -9,6 +9,7 @@ import MediaComponent from "../../components/Media";
 export default function Work() {
   const { slug } = useParams();
   const { data } = useFetchData<WorkSchema>(`works/${slug}`);
+
   if (!data) return null;
 
   const { general, dimensions, medium, year, media, urls } = data;
