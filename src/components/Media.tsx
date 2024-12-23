@@ -18,7 +18,7 @@ export default function MediaComponent({ media, className }: MediaProps) {
     case isVideo(media):
       return <Video videoref={media} />;
     case is3d(media):
-      return <Model threedref={media} />;
+      return <Model threedref={media} controls />;
     default:
       return <p>Unsupported media type.</p>;
   }

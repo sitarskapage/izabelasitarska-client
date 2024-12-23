@@ -2,16 +2,23 @@ import "@google/model-viewer";
 import { ThreedRef } from "@jakubkanna/labguy-front-schema";
 import { useState, useEffect, useRef } from "react";
 import { ModelViewer } from "../../../types/model-viewer";
+import { OverlayTrigger, Tooltip } from "react-bootstrap";
 
-export default function Model({ threedref }: { threedref: ThreedRef }) {
+export default function Model({
+  threedref,
+  controls: enableControls,
+}: {
+  threedref: ThreedRef;
+  controls?: true;
+}) {
   const [src, setSrc] = useState<string | undefined>(threedref?.url);
   const [valid, setIsValid] = useState<boolean>(true);
   const [controls, setControls] = useState<boolean>(false);
+  const [fullscreen, setFullscreen] = useState<boolean>(false);
   const [progress, setProgress] = useState<number>(0);
   const modelViewerRef = useRef<ModelViewer | undefined>(undefined);
 
   useEffect(() => {
-    console.log("src", src);
     if (src) {
       // Validate the image URL
       fetch(src)
@@ -67,15 +74,34 @@ export default function Model({ threedref }: { threedref: ThreedRef }) {
     const modelViewer = modelViewerRef.current;
     if (modelViewer) {
       if (document.fullscreenElement) {
+        setFullscreen(false);
         setControls(false);
         document.exitFullscreen();
       } else if ((modelViewer as unknown as HTMLElement).requestFullscreen) {
+        setFullscreen(true);
         setControls(true);
         (modelViewer as unknown as HTMLElement).requestFullscreen();
       }
     }
   };
 
+  const handleControls = () => {
+    setControls(!controls);
+  };
+
+  const tooltip = (
+    <Tooltip id="tooltip">
+      <span className="font-monospace">
+        {!controls ? "Enable controls" : "Disable controls"}
+      </span>
+    </Tooltip>
+  );
+
+  const tooltip2 = (
+    <Tooltip id="tooltip">
+      {!controls ? "Enable fullscreen" : "Disable fullscreen"}
+    </Tooltip>
+  );
   return (
     valid && (
       <div>
@@ -104,11 +130,32 @@ export default function Model({ threedref }: { threedref: ThreedRef }) {
               }}
             ></div>
           </div>
-          <div className="position-absolute bottom-0 end-0 m-2 d-flex">
-            <button onClick={handleFullscreen} className="">
-              <i className="bi bi-arrows-fullscreen"></i>
-            </button>
-          </div>
+          {enableControls && (
+            <div
+              className="position-absolute bottom-0 end-0 m-2 d-flex gap-2"
+              id="model-controls"
+            >
+              <OverlayTrigger placement="top" overlay={tooltip}>
+                <button onClick={handleControls} className="">
+                  <i
+                    className={`bi bi bi-arrows-move ${
+                      controls ? "bg-kanna" : ""
+                    }`}
+                  ></i>
+                </button>
+              </OverlayTrigger>
+
+              <OverlayTrigger placement="top" overlay={tooltip2}>
+                <button onClick={handleFullscreen} className="">
+                  <i
+                    className={`bi bi bi-arrows-fullscreen ${
+                      fullscreen ? "bg-kanna" : ""
+                    }`}
+                  ></i>
+                </button>
+              </OverlayTrigger>
+            </div>
+          )}
         </model-viewer>
       </div>
     )
