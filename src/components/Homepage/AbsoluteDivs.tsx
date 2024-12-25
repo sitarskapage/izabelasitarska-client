@@ -5,6 +5,9 @@ import { Col, Container, Row } from "react-bootstrap";
 const AbsoluteDivs = () => {
   const div2Ref = useRef<HTMLDivElement | null>(null);
   const [div2Height, setDiv2Height] = useState("auto");
+  const [hidden0, setHidden0] = useState(false);
+  const [hidden1, setHidden1] = useState(false);
+  const [hidden2, setHidden2] = useState(false);
 
   useEffect(() => {
     if (div2Ref.current) setDiv2Height(div2Ref.current.offsetHeight + "px");
@@ -27,6 +30,8 @@ const AbsoluteDivs = () => {
       className:
         "position-absolute w-100 border border-dark top-0 start-0 z-3 bg-kanna display-2 font-times pt-2 ps-3",
       content: <span>Latest:</span>,
+      hidden: hidden0,
+      onClick: () => setHidden0(true),
     },
     {
       id: "absoluteDiv2",
@@ -37,7 +42,7 @@ const AbsoluteDivs = () => {
       style: { top: "calc(33.3333%)" },
       delayMultiplier: 1,
       className:
-        "position-absolute w-100 border border-dark start-0 z-3 bg-kanna ps-3",
+        "position-absolute w-100 border-top border-bottom border-dark start-0 z-3 bg-kanna ps-3",
       content: (
         <div ref={div2Ref} className="pt-2">
           <span className="font-monospace">Post:</span>
@@ -53,8 +58,8 @@ const AbsoluteDivs = () => {
     {
       id: "absoluteDiv3",
       key: "absoluteDiv3",
-      initial: { y: "-100%", x: "-100dvw" },
-      animate: { y: -1, x: "0" },
+      initial: { y: -99, x: "-100dvw" },
+      animate: { y: 0, x: "0" },
       exit: {
         y: "100%",
         x: "100dvw",
@@ -70,10 +75,15 @@ const AbsoluteDivs = () => {
       },
       style: { top: "calc(33.3333%)" },
       delayMultiplier: 2,
-      className:
-        "position-absolute w-100 border border-dark start-0 z-3 bg-kanna ps-3",
+      className: "position-absolute w-100 start-0 z-3 bg-kanna",
       content: (
-        <Container fluid style={{ height: div2Height }}>
+        <Container
+          fluid
+          style={{ height: div2Height }}
+          hidden={hidden1}
+          onClick={() => setHidden1(true)}
+          className="border-bottom border-dark  ps-3"
+        >
           <Row className="h-100">
             <Col xs={10}></Col>
             <Col
@@ -81,7 +91,9 @@ const AbsoluteDivs = () => {
               className="border-start border-dark pt-2 px-0 h-100 overflow-hidden d-flex flex-column justify-content-center"
             >
               <img
-                src={`${import.meta.env.BASE_URL}/images/exodus-walker_jakubkanna.png`}
+                src={`${
+                  import.meta.env.BASE_URL
+                }/images/exodus-walker_jakubkanna.png`}
                 className="w-100 object-fit-cover"
                 style={{ mixBlendMode: "multiply" }}
               ></img>
@@ -93,13 +105,13 @@ const AbsoluteDivs = () => {
     {
       id: "absoluteDiv4",
       key: "absoluteDiv4",
-      initial: { x: "-100dvw", y: "0px" },
-      animate: { x: 0, y: "0px" },
-      exit: { x: "100dvw", y: "0px", transition: exitTransition },
+      initial: { x: "-100dvw", y: 0 },
+      animate: { x: 0, y: 0 },
+      exit: { x: "100dvw", y: 0, transition: exitTransition },
       style: { bottom: "calc(33.333%)" },
       delayMultiplier: 3,
       className:
-        "position-absolute w-100 border border-dark start-0 z-3 bg-kanna ps-3",
+        "position-absolute w-100 border-bottom border-top border-dark start-0 z-3 bg-kanna ps-3",
       content: (
         <div className="pt-2">
           <span className="font-monospace">Work:</span>
@@ -115,8 +127,8 @@ const AbsoluteDivs = () => {
     {
       id: "absoluteDiv5",
       key: "absoluteDiv5",
-      initial: { y: "-100%", x: "-100dvw" },
-      animate: { y: -1, x: "0" },
+      initial: { y: -99, x: "-100dvw" },
+      animate: { y: 0, x: 0 },
       exit: {
         y: "100%",
         x: "100dvw",
@@ -132,10 +144,15 @@ const AbsoluteDivs = () => {
         delay: 0.25,
         y: { delay: 1.2, ease: "linear" },
       },
-      className:
-        "position-absolute w-100 border border-dark start-0 z-3 bg-kanna ps-3",
+      className: "position-absolute w-100 start-0 z-3 bg-kanna",
       content: (
-        <Container fluid style={{ height: div2Height }}>
+        <Container
+          fluid
+          style={{ height: div2Height }}
+          hidden={hidden2}
+          onClick={() => setHidden2(true)}
+          className="border-bottom border-dark ps-3"
+        >
           <Row className="h-100">
             <Col xs={10}></Col>
             <Col
@@ -168,6 +185,8 @@ const AbsoluteDivs = () => {
           content,
           delayMultiplier,
           transition,
+          hidden,
+          onClick,
         }) => (
           <motion.div
             key={key}
@@ -185,6 +204,8 @@ const AbsoluteDivs = () => {
             className={className}
             id={id}
             style={style}
+            hidden={hidden}
+            onClick={onClick}
           >
             {content}
           </motion.div>

@@ -1,6 +1,7 @@
 import { ReactNode, useState, useMemo, useEffect } from "react";
 import LoadingPage from "../../pages/Loading";
 import { GeneralContext, Preferences } from "../GeneralContext";
+import Fallback from "../../components/Fallback";
 
 interface GeneralProviderProps {
   children: ReactNode;
@@ -11,6 +12,7 @@ export const GeneralProvider: React.FC<GeneralProviderProps> = ({
 }) => {
   const [preferences, setPreferences] = useState<Preferences | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
+  const [status, setStatus] = useState<number | null>(null);
 
   const fetchPreferences = useMemo(() => {
     const fetchPreferencesFromServer = async () => {
@@ -20,6 +22,8 @@ export const GeneralProvider: React.FC<GeneralProviderProps> = ({
       try {
         const response = await fetch(apiUrl);
         if (!response.ok) {
+          response.status === 429 && setStatus(429);
+        } else if (!response.ok) {
           throw new Error(`Error fetching preferences: ${response.statusText}`);
         }
         const data = await response.json();
@@ -42,7 +46,13 @@ export const GeneralProvider: React.FC<GeneralProviderProps> = ({
     <GeneralContext.Provider
       value={{ preferences, setPreferences, loading, setLoading }}
     >
-      {preferences ? children : <LoadingPage />}
+      {loading ? (
+        <LoadingPage />
+      ) : status === 429 ? (
+        <>Please try again later.</>
+      ) : (
+        children
+      )}
     </GeneralContext.Provider>
   );
 };

@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import useIsMobile from "../../hooks/useIsMobile";
 import { ScrollContext } from "../../contexts/ScrollContext";
 import { AnimatePresence, motion } from "framer-motion";
+import useIsHome from "../../hooks/useIsHome";
 
 export default function Footer({
   setFooterHeight,
@@ -20,7 +21,7 @@ export default function Footer({
   const [open, setOpen] = useState(false);
   const [contentHeight, setContentHeight] = useState<number | null>(null);
   const contentRef = useRef<HTMLDivElement | null>(null);
-
+  const isHome = useIsHome();
   const menuItems = [
     { label: "Bio", path: "bio" },
     { label: "Blog", path: "blog" },
@@ -43,13 +44,15 @@ export default function Footer({
   // Measure content height when it is rendered
   useEffect(() => {
     if (contentRef.current) {
-      setContentHeight(contentRef.current.scrollHeight);
+      setContentHeight(contentRef.current.clientHeight);
     }
   }, [open]);
 
   return (
     <footer
-      className={`container-fluid position-fixed bottom-0 start-0 bg-kanna w-100 border-top border-dark mh-100 z-3 overflow-auto ${
+      className={`container-fluid ${
+        isHome ? "position-fixed " : "position-sticky "
+      } bottom-0 start-0 bg-kanna w-100 border-top border-dark mh-100 z-3 overflow-auto ${
         isMobile && "py-2"
       }`}
       ref={footerRef}
@@ -77,7 +80,7 @@ export default function Footer({
           <motion.div
             initial={{ height: 0 }}
             animate={{ height: contentHeight || "auto" }}
-            exit={{ height: 0 }}
+            exit={{ height: 0, transition: { ease: "linear" } }}
             transition={{ duration: 0.33 }}
             ref={contentRef}
           >

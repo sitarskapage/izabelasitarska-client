@@ -4,14 +4,14 @@ import {
   PostSchema,
 } from "@jakubkanna/labguy-front-schema";
 import { Outlet, useParams } from "react-router-dom";
-import { Col } from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
 import { isImage } from "../utils/helpers";
 import { Link } from "react-router-dom";
 import Image from "../components/media/Image";
 import Layout from "../components/layout/Layout";
 import useIsMobile from "../hooks/useIsMobile";
 import { useFetchData } from "../hooks/useFetch";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 export interface Post extends PostSchema {
   general: GeneralSectionSchema;
@@ -21,10 +21,6 @@ export default function Posts() {
   const { data } = useFetchData<Post[]>("posts");
   const { slug } = useParams();
   const isMobile = useIsMobile();
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
 
   const PostItem = ({ post }: { post: Post; isLast: boolean }) => {
     //
@@ -46,11 +42,15 @@ export default function Posts() {
       <Link
         to={post.general.slug || "#"}
         className="row text-decoration-none border-bottom border-dark"
-        key={post.general.slug}
-        onMouseOver={handleMouseOver}
-        onMouseOut={handleMouseOut}
       >
-        <Col xs={12} md={9} className="py-3 px-4 position-relative">
+        <Col
+          xs={12}
+          md={9}
+          className="py-3 px-4 position-relative"
+          key={post.general.slug}
+          onMouseOver={handleMouseOver}
+          onMouseOut={handleMouseOut}
+        >
           <h2 className="h4">{post.general.title}</h2>
           <small className="font-monospace">{post.general.createdAt}</small>
           <i
@@ -90,7 +90,7 @@ export default function Posts() {
     <Outlet />
   ) : (
     <Layout title="Blog">
-      <Col>
+      <Col xs={12}>
         {!data || data.length === 0 ? <p>No posts yet.</p> : <PostsList />}
       </Col>
     </Layout>

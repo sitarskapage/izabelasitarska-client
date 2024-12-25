@@ -13,7 +13,14 @@ export default function Router() {
   const location = useLocation();
 
   return (
-    <AnimatePresence mode="wait">
+    <AnimatePresence
+      mode="wait"
+      onExitComplete={() => {
+        if (typeof window !== "undefined") {
+          window.scrollTo({ top: 0, behavior: "instant" });
+        }
+      }}
+    >
       <Routes key={location.pathname} location={location}>
         {/* Root Route */}
         <Route path="/" element={<Homepage />} />
