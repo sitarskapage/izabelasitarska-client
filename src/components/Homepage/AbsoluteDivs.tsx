@@ -1,4 +1,4 @@
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
@@ -25,7 +25,10 @@ const AbsoluteDivs = () => {
       key: "absoluteDiv1",
       initial: { x: "-100dvw" },
       animate: { x: 0 },
-      exit: { x: "100dvw", transition: exitTransition },
+      exit: {
+        x: "100dvw",
+        transition: { ...exitTransition, ...sharedExitSettings },
+      },
       style: { cursor: "pointer" },
       delayMultiplier: 0,
       className:
@@ -183,46 +186,44 @@ const AbsoluteDivs = () => {
 
   return (
     <>
-      <AnimatePresence>
-        {divSettings.map(
-          ({
-            id,
-            key,
-            initial,
-            animate,
-            exit,
-            style,
-            className,
-            content,
-            delayMultiplier,
-            transition,
-            hidden,
-            onClick,
-          }) =>
-            !hidden && (
-              <motion.div
-                key={key}
-                initial={initial}
-                animate={animate}
-                exit={exit}
-                transition={
-                  transition
-                    ? transition
-                    : {
-                        ...initialTransition,
-                        delay: delayMultiplier * baseDelay,
-                      }
-                }
-                className={className}
-                id={id}
-                style={style}
-                onClick={onClick}
-              >
-                {content}
-              </motion.div>
-            )
-        )}
-      </AnimatePresence>
+      {divSettings.map(
+        ({
+          id,
+          key,
+          initial,
+          animate,
+          exit,
+          style,
+          className,
+          content,
+          delayMultiplier,
+          transition,
+          hidden,
+          onClick,
+        }) =>
+          !hidden && (
+            <motion.div
+              key={key}
+              initial={initial}
+              animate={animate}
+              exit={exit}
+              transition={
+                transition
+                  ? transition
+                  : {
+                      ...initialTransition,
+                      delay: delayMultiplier * baseDelay,
+                    }
+              }
+              className={className}
+              id={id}
+              style={style}
+              onClick={onClick}
+            >
+              {content}
+            </motion.div>
+          )
+      )}
     </>
   );
 };

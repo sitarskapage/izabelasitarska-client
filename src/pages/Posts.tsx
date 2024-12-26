@@ -12,6 +12,7 @@ import Layout from "../components/layout/Layout";
 import useIsMobile from "../hooks/useIsMobile";
 import { useFetchData } from "../hooks/useFetch";
 import { useState } from "react";
+import { ArrowUpRight } from "react-bootstrap-icons";
 
 export interface Post extends PostSchema {
   general: GeneralSectionSchema;
@@ -53,10 +54,10 @@ export default function Posts() {
         >
           <h2 className="h4">{post.general.title}</h2>
           <small className="font-monospace">{post.general.createdAt}</small>
-          <i
-            className="bi bi-arrow-up-right position-absolute end-0 bottom-0 pb-1 px-3 font-weight-bold "
+          <ArrowUpRight
+            className="position-absolute end-0 bottom-0 pb-1 px-3 font-weight-bold "
             style={arrowStyle}
-          ></i>
+          ></ArrowUpRight>
         </Col>
         <Col
           xs={12}

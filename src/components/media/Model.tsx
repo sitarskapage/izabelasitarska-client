@@ -3,6 +3,7 @@ import { ThreedRef } from "@jakubkanna/labguy-front-schema";
 import { useState, useEffect, useRef } from "react";
 import { ModelViewer } from "../../../types/model-viewer";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
+import { ArrowsFullscreen, ArrowsMove } from "react-bootstrap-icons";
 
 export default function Model({
   threedref,
@@ -137,21 +138,17 @@ export default function Model({
             >
               <OverlayTrigger placement="top" overlay={tooltip}>
                 <button onClick={handleControls} className="">
-                  <i
-                    className={`bi bi bi-arrows-move ${
-                      controls ? "bg-kanna" : ""
-                    }`}
-                  ></i>
+                  <ArrowsMove
+                    className={`${controls ? "bg-kanna" : ""}`}
+                  ></ArrowsMove>
                 </button>
               </OverlayTrigger>
 
               <OverlayTrigger placement="top" overlay={tooltip2}>
                 <button onClick={handleFullscreen} className="">
-                  <i
-                    className={`bi bi bi-arrows-fullscreen ${
-                      fullscreen ? "bg-kanna" : ""
-                    }`}
-                  ></i>
+                  <ArrowsFullscreen
+                    className={` ${fullscreen ? "bg-kanna" : ""}`}
+                  ></ArrowsFullscreen>
                 </button>
               </OverlayTrigger>
             </div>
