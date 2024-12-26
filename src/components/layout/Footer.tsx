@@ -6,6 +6,7 @@ import useIsMobile from "../../hooks/useIsMobile";
 import { ScrollContext } from "../../contexts/ScrollContext";
 import { AnimatePresence, motion } from "framer-motion";
 import useIsHome from "../../hooks/useIsHome";
+import { List } from "react-bootstrap-icons";
 
 export default function Footer({
   setFooterHeight,
@@ -72,7 +73,7 @@ export default function Footer({
           className="p-0 flex-grow-1 d-flex justify-content-end"
           variant="link"
         >
-          <i className="bi bi-list fs-2 text-dark"></i>
+          <List className="fs-1" />
         </Button>
       </nav>
 

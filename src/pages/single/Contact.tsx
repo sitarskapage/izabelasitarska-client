@@ -4,6 +4,16 @@ import { Col, Container, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useFetchData } from "../../hooks/useFetch";
 import useIsMobile from "../../hooks/useIsMobile";
+import * as Icons from "react-bootstrap-icons";
+import { Paypal } from "react-bootstrap-icons";
+
+const getIconComponent = (iconName: string) => {
+  const pascalCase = iconName
+    .toLowerCase()
+    .replace(/(?:^|\s)\w/g, (match) => match.toUpperCase())
+    .replace(/\s+/g, "");
+  return Icons[pascalCase as keyof typeof Icons] || null;
+};
 
 export default function Contact() {
   const { data } = useFetchData<ProfileSchema>("profile/1");
@@ -34,24 +44,23 @@ export default function Contact() {
                 </Row>
                 <Row>
                   <Col>
-                    {c.socialmedia?.map((sm, i) => (
-                      <div className="d-inline-block" key={i}>
-                        <Link
-                          to={sm.profileUrl || "#"}
-                          target="_blank"
-                          style={{ display: "flex", gap: "0.25rem" }}
-                        >
-                          <i
-                            className={
-                              "bi " +
-                                "bi-" +
-                                sm.platform?.toLocaleLowerCase() || ""
-                            }
-                          ></i>
-                          {sm.username}
-                        </Link>
-                      </div>
-                    ))}
+                    {c.socialmedia?.map((sm, i) => {
+                      const IconComponent = sm.platform
+                        ? getIconComponent(sm.platform)
+                        : null;
+                      return (
+                        <div className="d-inline-block" key={i}>
+                          <Link
+                            to={sm.profileUrl || "#"}
+                            target="_blank"
+                            style={{ display: "flex", gap: "0.25rem" }}
+                          >
+                            {IconComponent && <IconComponent />}
+                            {sm.username}
+                          </Link>
+                        </div>
+                      );
+                    })}
                   </Col>
                 </Row>
               </Col>
@@ -65,7 +74,8 @@ export default function Contact() {
                 target="_blank"
                 className="ms-auto d-flex gap-1"
               >
-                <i className="bi bi-paypal"></i>Donate
+                <Paypal />
+                Donate
               </a>
             </Col>
           </Row>

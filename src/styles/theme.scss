@@ -29,7 +29,6 @@ a,
   cursor: pointer;
   color: $dark;
   &:hover {
-    color: black;
     background-color: $kanna;
     border-radius: 0.25rem;
     padding: 0;
@@ -80,6 +79,7 @@ table {
 #Tables col:nth-child(4) {
   display: none;
 }
+
 #Tables {
   h3 {
     padding: 1rem;
@@ -111,6 +111,10 @@ $utilities: (
   color: $kanna;
   -webkit-text-stroke: 1px black;
   font-weight: 600;
+}
+
+::selection {
+  background: blue;
 }
 
 @import "./scrollbar.scss";

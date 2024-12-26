@@ -1,4 +1,3 @@
-import "bootstrap-icons/font/bootstrap-icons.css";
 import "./styles/theme.scss";
 import { createRoot } from "react-dom/client";
 import App from "./App";

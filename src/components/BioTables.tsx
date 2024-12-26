@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import { ProfileSchema } from "@jakubkanna/labguy-front-schema";
 import { renderSingleItem } from "../hooks/useArrayRender";
@@ -7,6 +7,8 @@ import useCalculatePadding from "../hooks/useCalculatePadding";
 import useIsMobile from "../hooks/useIsMobile";
 import { motion } from "framer-motion";
 import { containerSizeMiddle } from "../utils/framerMotionVariants";
+import { Link45deg, Link as LinkIcon } from "react-bootstrap-icons";
+import { createRoot } from "react-dom/client";
 
 export default function BioTables({ profile }: { profile: ProfileSchema }) {
   const [publicId, setPublicId] = useState<string | null>(null);
@@ -45,6 +47,45 @@ export default function BioTables({ profile }: { profile: ProfileSchema }) {
       });
     };
   }, []);
+
+  const renderIcon = (value: string) => {
+    const isExternal = value.startsWith("http");
+    return isExternal ? (
+      <Link45deg className="fs-4" />
+    ) : (
+      <LinkIcon className="fs-4" />
+    );
+  };
+
+  const processTable = useCallback(() => {
+    const tables = containerRef.current?.querySelectorAll("table");
+
+    tables?.forEach((table) => {
+      const rows = table.querySelectorAll("tr");
+      rows?.forEach((row, index) => {
+        // Skip the header row (index 0)
+        if (index === 0) return;
+
+        const linkCell = row.querySelector("td:nth-child(5)");
+        const linkValue = linkCell?.textContent?.trim();
+        if (linkValue) {
+          const isExternal = linkValue.startsWith("http");
+          const icon = renderIcon(linkValue);
+          linkCell!.innerHTML = "";
+          const root = createRoot(linkCell!);
+          root.render(
+            <a href={linkValue} target={isExternal ? "_blank" : "_self"}>
+              {icon}
+            </a>
+          );
+        }
+      });
+    });
+  }, []);
+
+  useEffect(() => {
+    processTable();
+  }, [processTable, profile]);
 
   return (
     <Container fluid className="border-dark border-top" ref={containerRef}>
