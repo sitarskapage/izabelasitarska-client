@@ -52,13 +52,15 @@ export default function Footer({
     <footer
       className={`container-fluid ${
         isHome ? "position-fixed " : "position-sticky "
-      } bottom-0 start-0 bg-kanna w-100 border-top border-dark mh-100 z-3 overflow-auto ${
-        isMobile && "py-2"
+      } bottom-0 start-0 bg-kanna w-100 border-top border-dark mh-100 z-3 ${
+        isMobile && "overflow-auto py-2"
       }`}
       ref={footerRef}
     >
       {/* HIDDEN */}
-      <nav className={"d-flex justify-content-between align-items-center"}>
+      <nav
+        className={"d-flex justify-content-between align-items-center bg-kanna"}
+      >
         <Navbar.Brand className="text-uppercase">
           <Link to={"/"} onClick={() => setOpen(false)}>
             {artists_name}
@@ -84,7 +86,7 @@ export default function Footer({
             transition={{ duration: 0.33 }}
             ref={contentRef}
           >
-            <Row>
+            <Row className="bg-kanna">
               {menuItems.map((item, index) => (
                 <Col
                   key={index}
@@ -104,7 +106,7 @@ export default function Footer({
                 </Col>
               ))}
             </Row>
-            <Row>
+            <Row className="bg-kanna">
               <Col className="font-monospace pt-2 border-dark d-flex justify-content-end">
                 <small>
                   © {currentYear} {artists_name}

@@ -4,7 +4,7 @@ import {
   PostSchema,
 } from "@jakubkanna/labguy-front-schema";
 import { Outlet, useParams } from "react-router-dom";
-import { Col, Row } from "react-bootstrap";
+import { Col } from "react-bootstrap";
 import { isImage } from "../utils/helpers";
 import { Link } from "react-router-dom";
 import Image from "../components/media/Image";

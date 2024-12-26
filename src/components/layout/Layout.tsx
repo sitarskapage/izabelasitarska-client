@@ -64,9 +64,11 @@ export default function Layout({
         style={{ marginBottom: "-1px" }}
         onAnimationStart={() => {
           document.body.classList.add("disable-hover-animations");
+          document.body.classList.add("overflow-hidden");
         }}
         onAnimationComplete={() => {
           document.body.classList.remove("disable-hover-animations");
+          document.body.classList.remove("overflow-hidden");
         }}
       >
         <Col xs={12}>

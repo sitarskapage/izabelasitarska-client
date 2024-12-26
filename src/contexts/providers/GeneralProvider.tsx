@@ -1,7 +1,6 @@
 import { ReactNode, useState, useMemo, useEffect } from "react";
 import LoadingPage from "../../pages/Loading";
 import { GeneralContext, Preferences } from "../GeneralContext";
-import Fallback from "../../components/Fallback";
 
 interface GeneralProviderProps {
   children: ReactNode;

@@ -1,6 +1,7 @@
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 import { Col, Container, Row } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 const AbsoluteDivs = () => {
   const div2Ref = useRef<HTMLDivElement | null>(null);
@@ -25,10 +26,10 @@ const AbsoluteDivs = () => {
       initial: { x: "-100dvw" },
       animate: { x: 0 },
       exit: { x: "100dvw", transition: exitTransition },
-      style: {},
+      style: { cursor: "pointer" },
       delayMultiplier: 0,
       className:
-        "position-absolute w-100 border border-dark top-0 start-0 z-3 bg-kanna display-2 font-times pt-2 ps-3",
+        "position-absolute w-100 border-bottom border-dark top-0 start-0 z-3 bg-kanna display-2 font-times pt-2 ps-3",
       content: <span>Latest:</span>,
       hidden: hidden0,
       onClick: () => setHidden0(true),
@@ -39,20 +40,22 @@ const AbsoluteDivs = () => {
       initial: { x: "-100dvw", y: "-100%" },
       animate: { x: 0, y: "-100%" },
       exit: { x: "100dvw", y: "-100%", transition: exitTransition },
-      style: { top: "calc(33.3333%)" },
+      style: { top: "calc(33.3333%)", cursor: "pointer" },
       delayMultiplier: 1,
       className:
         "position-absolute w-100 border-top border-bottom border-dark start-0 z-3 bg-kanna ps-3",
       content: (
-        <div ref={div2Ref} className="pt-2">
-          <span className="font-monospace">Post:</span>
-          <span
-            className="display-5 font-times ps-3 d-block pb-2"
-            style={{ lineHeight: 1 }}
-          >
-            Title
-          </span>
-        </div>
+        <Link to="#" className="d-block" style={{ textDecoration: "none" }}>
+          <div ref={div2Ref} className="pt-2">
+            <span className="font-monospace">Post:</span>
+            <span
+              className="display-5 font-times ps-3 d-block pb-2"
+              style={{ lineHeight: 1 }}
+            >
+              Title
+            </span>
+          </div>
+        </Link>
       ),
     },
     {
@@ -73,7 +76,7 @@ const AbsoluteDivs = () => {
         delay: 0.25,
         y: { delay: 0.8, ease: "linear" },
       },
-      style: { top: "calc(33.3333%)" },
+      style: { top: "calc(33.3333%)", cursor: "pointer" },
       delayMultiplier: 2,
       className: "position-absolute w-100 start-0 z-3 bg-kanna",
       content: (
@@ -101,6 +104,8 @@ const AbsoluteDivs = () => {
           </Row>
         </Container>
       ),
+      hidden: hidden1,
+      onClick: () => setHidden1(true),
     },
     {
       id: "absoluteDiv4",
@@ -108,20 +113,22 @@ const AbsoluteDivs = () => {
       initial: { x: "-100dvw", y: 0 },
       animate: { x: 0, y: 0 },
       exit: { x: "100dvw", y: 0, transition: exitTransition },
-      style: { bottom: "calc(33.333%)" },
+      style: { bottom: "calc(33.333%)", cursor: "pointer" },
       delayMultiplier: 3,
       className:
         "position-absolute w-100 border-bottom border-top border-dark start-0 z-3 bg-kanna ps-3",
       content: (
-        <div className="pt-2">
-          <span className="font-monospace">Work:</span>
-          <span
-            className="display-5 font-times ps-3 d-block pb-2"
-            style={{ lineHeight: 1 }}
-          >
-            Title
-          </span>
-        </div>
+        <Link to="#" className="d-block" style={{ textDecoration: "none" }}>
+          <div className="pt-2">
+            <span className="font-monospace">Work:</span>
+            <span
+              className="display-5 font-times ps-3 d-block pb-2"
+              style={{ lineHeight: 1 }}
+            >
+              Title
+            </span>
+          </div>
+        </Link>
       ),
     },
     {
@@ -137,7 +144,7 @@ const AbsoluteDivs = () => {
           y: { delay: 0.65, ...sharedExitSettings },
         },
       },
-      style: { top: "calc(66.6666%)" },
+      style: { top: "calc(66.6666%)", cursor: "pointer" },
       delayMultiplier: 3,
       transition: {
         duration: 0.25,
@@ -145,6 +152,7 @@ const AbsoluteDivs = () => {
         y: { delay: 1.2, ease: "linear" },
       },
       className: "position-absolute w-100 start-0 z-3 bg-kanna",
+
       content: (
         <Container
           fluid
@@ -168,49 +176,53 @@ const AbsoluteDivs = () => {
           </Row>
         </Container>
       ),
+      hidden: hidden2,
+      onClick: () => setHidden2(true),
     },
   ];
 
   return (
     <>
-      {divSettings.map(
-        ({
-          id,
-          key,
-          initial,
-          animate,
-          exit,
-          style,
-          className,
-          content,
-          delayMultiplier,
-          transition,
-          hidden,
-          onClick,
-        }) => (
-          <motion.div
-            key={key}
-            initial={initial}
-            animate={animate}
-            exit={exit}
-            transition={
-              transition
-                ? transition
-                : {
-                    ...initialTransition,
-                    delay: delayMultiplier * baseDelay,
-                  }
-            }
-            className={className}
-            id={id}
-            style={style}
-            hidden={hidden}
-            onClick={onClick}
-          >
-            {content}
-          </motion.div>
-        )
-      )}
+      <AnimatePresence>
+        {divSettings.map(
+          ({
+            id,
+            key,
+            initial,
+            animate,
+            exit,
+            style,
+            className,
+            content,
+            delayMultiplier,
+            transition,
+            hidden,
+            onClick,
+          }) =>
+            !hidden && (
+              <motion.div
+                key={key}
+                initial={initial}
+                animate={animate}
+                exit={exit}
+                transition={
+                  transition
+                    ? transition
+                    : {
+                        ...initialTransition,
+                        delay: delayMultiplier * baseDelay,
+                      }
+                }
+                className={className}
+                id={id}
+                style={style}
+                onClick={onClick}
+              >
+                {content}
+              </motion.div>
+            )
+        )}
+      </AnimatePresence>
     </>
   );
 };

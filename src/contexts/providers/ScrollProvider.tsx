@@ -27,7 +27,7 @@ export default function ScrollProvider({ children }: { children: ReactNode }) {
         }
 
         // Update isBottom state after scroll count reaches threshold
-        if (scrollCount >= 0) {
+        if (scrollCount >= 1) {
           setIsBottom(true);
         }
         if (scrollCount <= 0) {
@@ -57,11 +57,11 @@ export default function ScrollProvider({ children }: { children: ReactNode }) {
 
   // Check if the page is full-height and update state
   const checkIfFullPage = () => {
+    console.log(window.innerHeight, document.body.offsetHeight);
     setIsFullPage(window.innerHeight === document.body.offsetHeight);
   };
 
   useEffect(() => {
-    checkIfFullPage();
     window.addEventListener("resize", checkIfFullPage);
     return () => {
       window.removeEventListener("resize", checkIfFullPage);
@@ -70,6 +70,8 @@ export default function ScrollProvider({ children }: { children: ReactNode }) {
 
   // Reset scroll states on route change
   useEffect(() => {
+    checkIfFullPage();
+
     setIsBottom(false);
     setScrollCount(0);
   }, [pathname]);
