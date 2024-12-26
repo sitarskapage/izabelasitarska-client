@@ -1,70 +1,69 @@
-import React, { useState, useEffect, useCallback, memo } from "react";
+import React, { useState, useEffect } from "react";
 
 interface AnimatedTitleProps {
   title: string;
 }
 
-const AnimatedTitle: React.FC<AnimatedTitleProps> = memo(({ title }) => {
-  const [displayState, setDisplayState] = useState({
-    oldTitle: "",
-    displayedTitle: [] as string[],
-  });
+const AnimatedTitle: React.FC<AnimatedTitleProps> = ({ title }) => {
+  const [oldTitle, setOldTitle] = useState<string>("");
+  const [displayedTitle, setDisplayedTitle] = useState<string[]>([]);
 
-  const getRandomLetter = useCallback(() => {
-    const isUppercase = Math.random() > 0.5;
-    const charCodeStart = isUppercase ? 65 : 97;
-    const charCodeEnd = isUppercase ? 90 : 122;
-    return String.fromCharCode(
+  // Generate a random letter
+
+  const getRandomLetter = () => {
+    const isUppercase = Math.random() > 0.5; // Randomly choose between uppercase and lowercase
+    const charCodeStart = isUppercase ? 65 : 97; // 65 is 'A', 97 is 'a'
+    const charCodeEnd = isUppercase ? 90 : 122; // 90 is 'Z', 122 is 'z'
+
+    const randomCharCode =
       Math.floor(Math.random() * (charCodeEnd - charCodeStart + 1)) +
-        charCodeStart
-    );
-  }, []);
+      charCodeStart;
+    return String.fromCharCode(randomCharCode);
+  };
 
+  // Handle updates to the title and trigger animation
   useEffect(() => {
-    if (title === displayState.oldTitle) return;
+    if (title !== oldTitle) {
+      // Update oldTitle to the new title
+      setOldTitle(title);
 
-    const timeouts: NodeJS.Timeout[] = [];
-    const maxRandomSteps = 3;
-    const letterDelay = 50;
-    const randomLetterDelay = 50;
+      // Initialize displayedTitle with empty strings
+      const initialDisplayedTitle = oldTitle.split("");
+      setDisplayedTitle(initialDisplayedTitle);
 
-    setDisplayState(() => ({
-      oldTitle: title,
-      displayedTitle: Array(title.length).fill(""),
-    }));
+      // Animate each letter in the title
+      title.split("").forEach((char, index) => {
+        // Set the timeout for each letter to animate it
+        setTimeout(() => {
+          // Show a sequence of random letters before showing the correct letter
+          let currentLetter = getRandomLetter();
+          const maxRandomSteps = 3;
 
-    title.split("").forEach((char, index) => {
-      const mainTimeout = setTimeout(() => {
-        for (let i = 0; i < maxRandomSteps; i++) {
-          const randomTimeout = setTimeout(() => {
-            setDisplayState((prev) => {
-              const newTitle = [...prev.displayedTitle];
-              newTitle[index] = getRandomLetter();
-              return { ...prev, displayedTitle: newTitle };
+          for (let i = 0; i < maxRandomSteps; i++) {
+            setTimeout(() => {
+              currentLetter = getRandomLetter();
+              setDisplayedTitle((prevTitle) => {
+                const updatedTitle = [...prevTitle];
+                updatedTitle[index] = currentLetter;
+                return updatedTitle;
+              });
+            }, i * 50); //  delay between each random letter
+          }
+
+          // Finally, reveal the correct letter after the random ones
+          setTimeout(() => {
+            setDisplayedTitle((prevTitle) => {
+              const updatedTitle = [...prevTitle];
+              updatedTitle[index] = char; // Set the final correct character
+              return updatedTitle;
             });
-          }, i * randomLetterDelay);
-          timeouts.push(randomTimeout);
-        }
+          }, maxRandomSteps * 100);
+        }, index * 50); //  delay for each letter to start animating
+      });
+    }
+  }, [title, oldTitle]);
 
-        const finalTimeout = setTimeout(() => {
-          setDisplayState((prev) => {
-            const newTitle = [...prev.displayedTitle];
-            newTitle[index] = char;
-            return { ...prev, displayedTitle: newTitle };
-          });
-        }, maxRandomSteps * randomLetterDelay);
-        timeouts.push(finalTimeout);
-      }, index * letterDelay);
-
-      timeouts.push(mainTimeout);
-    });
-
-    return () => timeouts.forEach(clearTimeout);
-  }, [title, getRandomLetter, displayState.oldTitle]);
-
-  return <>{displayState.displayedTitle.join("")}</>;
-});
-
-AnimatedTitle.displayName = "AnimatedTitle";
+  return <>{displayedTitle.join("")}</>;
+};
 
 export default AnimatedTitle;
