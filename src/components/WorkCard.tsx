@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Work } from "../pages/Works";
 import Video from "./media/Video";
 import { isImage, isVideo, is3d } from "../utils/helpers";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import useIsMobile from "../hooks/useIsMobile";
 import Model from "./media/Model";
 import { ImageRefSchema } from "@jakubkanna/labguy-front-schema";
@@ -18,6 +18,8 @@ export default function WorkCard({ work }: CardProps) {
   const { title, slug } = general;
   const [fontSizeClass, setFontSizeClass] = useState("");
   const isMobile = useIsMobile();
+  const handleMouseOver = useCallback(() => setFontSizeClass("fw-bolder"), []);
+  const handleMouseOut = useCallback(() => setFontSizeClass(""), []);
 
   if (!media) return;
 
@@ -29,8 +31,8 @@ export default function WorkCard({ work }: CardProps) {
     <Link
       to={"/works/" + slug}
       className={fontSizeClass + ` bg-black`}
-      onMouseOver={() => setFontSizeClass("fw-bolder")}
-      onMouseOut={() => setFontSizeClass("")}
+      onMouseOver={handleMouseOver}
+      onMouseOut={handleMouseOut}
     >
       <div className="h-100">
         {image && (

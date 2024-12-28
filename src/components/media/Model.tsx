@@ -121,13 +121,17 @@ export default function Model({
           poster={threedref.poster?.url as string}
           exposure="0.75"
         >
-          <div slot="progress-bar" className="custom-progress-bar">
+          <div
+            slot="progress-bar"
+            className="custom-progress-bar d-flex justify-content-center"
+          >
             <div
               className="progress-bar-inner bg-dark"
               style={{
-                width: `${progress * 100}%`,
+                width: `${progress * 66}%`,
                 height: "2px",
                 display: `${progress == 1 ? "none" : "block"}`,
+                marginTop: "1rem",
               }}
             ></div>
           </div>

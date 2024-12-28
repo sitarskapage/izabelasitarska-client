@@ -20,8 +20,8 @@ export const GeneralProvider: React.FC<GeneralProviderProps> = ({
 
       try {
         const response = await fetch(apiUrl);
-        if (!response.ok) {
-          response.status === 429 && setStatus(429);
+        if (!response.ok && response.status === 429) {
+          setStatus(429);
         } else if (!response.ok) {
           throw new Error(`Error fetching preferences: ${response.statusText}`);
         }
@@ -48,7 +48,9 @@ export const GeneralProvider: React.FC<GeneralProviderProps> = ({
       {loading ? (
         <LoadingPage />
       ) : status === 429 ? (
-        <>Please try again later.</>
+        <p className="font-monospace">
+          You have been timed-out. Please try again later.
+        </p>
       ) : (
         children
       )}

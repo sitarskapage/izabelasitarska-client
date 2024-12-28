@@ -5,8 +5,7 @@ import { renderSingleItem } from "../hooks/useArrayRender";
 import Image from "./media/Image";
 import useCalculatePadding from "../hooks/useCalculatePadding";
 import useIsMobile from "../hooks/useIsMobile";
-import { motion } from "framer-motion";
-import { containerSizeMiddle } from "../utils/framerMotionVariants";
+
 import { Link45deg, Link as LinkIcon } from "react-bootstrap-icons";
 import { createRoot } from "react-dom/client";
 
@@ -105,26 +104,20 @@ export default function BioTables({ profile }: { profile: ProfileSchema }) {
             className="border-dark border-start px-0 position-relative d-flex flex-column justify-content-center"
           >
             {publicId ? (
-              <motion.div
-                key={publicId}
-                initial="initial"
-                animate="animate"
-                exit="exit"
-                variants={containerSizeMiddle}
-                transition={{ duration: 0.66 }}
+              <div
+                className="ratio ratio-4x3"
                 style={{
                   position: "sticky",
                   bottom: `calc(${paddingBottom}px + 1rem)`,
                   marginTop: "1rem",
                   top: "1rem",
                 }}
-                className="border-top border-bottom border-dark ratio ratio-4x3"
               >
                 <Image
                   imageref={{ public_id: publicId }}
-                  className="w-100 object-fit-cover h-100"
+                  className="object-fit-cover w-100 h-100  border-top border-bottom border-dark"
                 />
-              </motion.div>
+              </div>
             ) : (
               <p className="text-center font-monospace">
                 {
