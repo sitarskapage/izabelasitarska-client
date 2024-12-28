@@ -64,7 +64,7 @@ const AbsoluteDivs = () => {
     {
       id: "absoluteDiv3",
       key: "absoluteDiv3",
-      initial: { y: -99, x: "-100dvw" },
+      initial: { y: "-100%", x: "-100dvw" },
       animate: { y: 0, x: "0" },
       exit: {
         y: "100%",
@@ -137,7 +137,7 @@ const AbsoluteDivs = () => {
     {
       id: "absoluteDiv5",
       key: "absoluteDiv5",
-      initial: { y: -99, x: "-100dvw" },
+      initial: { y: "-100%", x: "-100dvw" },
       animate: { y: 0, x: 0 },
       exit: {
         y: "100%",

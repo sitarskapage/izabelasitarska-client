@@ -3,8 +3,8 @@ import {
   ImageRefSchema,
   PostSchema,
 } from "@jakubkanna/labguy-front-schema";
-import { Outlet, useParams } from "react-router-dom";
-import { Col } from "react-bootstrap";
+import { Outlet, useNavigate, useParams } from "react-router-dom";
+import { Button, Col, Row } from "react-bootstrap";
 import { isImage } from "../utils/helpers";
 import { Link } from "react-router-dom";
 import Image from "../components/media/Image";
@@ -12,7 +12,7 @@ import Layout from "../components/layout/Layout";
 import useIsMobile from "../hooks/useIsMobile";
 import { useFetchData } from "../hooks/useFetch";
 import { useState } from "react";
-import { ArrowUpRight } from "react-bootstrap-icons";
+import { ArrowUpRight, Bell } from "react-bootstrap-icons";
 
 export interface Post extends PostSchema {
   general: GeneralSectionSchema;
@@ -22,6 +22,7 @@ export default function Posts() {
   const { data } = useFetchData<Post[]>("posts");
   const { slug } = useParams();
   const isMobile = useIsMobile();
+  const navigate = useNavigate();
 
   const PostItem = ({ post }: { post: Post; isLast: boolean }) => {
     //
@@ -42,7 +43,7 @@ export default function Posts() {
     return (
       <Link
         to={post.general.slug || "#"}
-        className="row text-decoration-none border-bottom border-dark"
+        className="row text-decoration-none border-top border-dark"
       >
         <Col
           xs={12}
@@ -87,11 +88,22 @@ export default function Posts() {
     );
   };
 
+  const navigateToNotifications = () => {
+    navigate("/notifications");
+  };
+
   return slug ? (
     <Outlet />
   ) : (
     <Layout title="Blog">
       <Col xs={12}>
+        <Row className="py-3">
+          <Col>
+            <Button variant="outline-dark" onClick={navigateToNotifications}>
+              Get notifications <Bell />
+            </Button>
+          </Col>
+        </Row>
         {!data || data.length === 0 ? <p>No posts yet.</p> : <PostsList />}
       </Col>
     </Layout>

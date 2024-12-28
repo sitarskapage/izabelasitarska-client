@@ -80,7 +80,7 @@ export default function Post() {
           className={
             isMobile
               ? "p-0"
-              : "d-flex flex-column border-start border-end border-dark px-0"
+              : "d-flex flex-column border-start border-end border-dark px-0 h-100"
           }
         >
           {renderPostContent(content)}

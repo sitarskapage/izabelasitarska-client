@@ -20,3 +20,9 @@
 .collapsible-content.open {
   max-height: 300px; /* Adjust this value based on the height of your content */
 }
+
+nav button {
+  :hover {
+    color: blue !important;
+  }
+}

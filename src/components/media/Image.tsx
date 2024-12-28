@@ -11,8 +11,6 @@ interface ImageProps {
 export default function Image({ imageref, className }: ImageProps) {
   const [imgSrc, setImgSrc] = useState<string | undefined>("");
   const [isImageValid, setIsImageValid] = useState<boolean>(true);
-  // const [loading, setLoading] = useState(true);
-  // const { height, width } = imageref;
 
   const { src, srcSet, sizes, alt } = imageref
     ? getImageAttributes(imageref)
@@ -24,7 +22,6 @@ export default function Image({ imageref, className }: ImageProps) {
       fetch(src)
         .then((response) => {
           if (response.ok) {
-            // If the response is OK, set the image source
             setImgSrc(src);
             setIsImageValid(true);
           } else {
@@ -43,18 +40,11 @@ export default function Image({ imageref, className }: ImageProps) {
 
   return (
     <>
-      {/* {loading && (
-        <img height={height} width={width} className="img-fluid"></img>
-      )} */}
       <img
         src={imgSrc}
         srcSet={srcSet}
         sizes={sizes}
         alt={alt}
-        // style={!loading ? {} : { display: `none` }}
-        // onLoad={() => {
-        //   setLoading(false);
-        // }}
         className={className || "img-fluid"}
         loading="lazy"
       />

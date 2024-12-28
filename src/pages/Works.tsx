@@ -170,7 +170,7 @@ export default function Works() {
             {tags.length > 0 && (
               <Row className="py-3 border-bottom border-dark">
                 <div className="d-flex flex-wrap align-items-center gap-2">
-                  <span>Display by:</span>
+                  <span className="font-monospace">Display by:</span>
                   {tags.map(
                     (tag, index) =>
                       tag && (
@@ -198,11 +198,7 @@ export default function Works() {
             )}
 
             {/* Active Tag Title */}
-            <Row
-              className={
-                activeTags.length > 0 ? "border-bottom border-dark" : ""
-              }
-            >
+            <Row>
               <AnimatePresence mode="wait">
                 {descriptions
                   .filter((desc) => activeTags.includes(desc.tag))

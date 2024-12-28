@@ -51,9 +51,9 @@ export default function BioTables({ profile }: { profile: ProfileSchema }) {
   const renderIcon = (value: string) => {
     const isExternal = value.startsWith("http");
     return isExternal ? (
-      <Link45deg className="fs-4" />
+      <Link45deg className="fs-2 p-1 pb-2" />
     ) : (
-      <LinkIcon className="fs-4" />
+      <LinkIcon className="fs-2 p-1  pb-2" />
     );
   };
 
@@ -92,7 +92,7 @@ export default function BioTables({ profile }: { profile: ProfileSchema }) {
       <Row id="Tables">
         <Col className="p-0" md={6}>
           <div
-            className={`border-start border-end border-dark ${
+            className={`border-start border-end border-dark mw-100 overflow-auto ${
               !isMobile ? "mx-5" : ""
             }`}
           >

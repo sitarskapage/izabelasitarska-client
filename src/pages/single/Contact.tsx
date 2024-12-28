@@ -43,7 +43,7 @@ export default function Contact() {
                   <Col>{c.email}</Col>
                 </Row>
                 <Row>
-                  <Col>
+                  <Col className="d-flex flex-column">
                     {c.socialmedia?.map((sm, i) => {
                       const IconComponent = sm.platform
                         ? getIconComponent(sm.platform)
@@ -53,7 +53,8 @@ export default function Contact() {
                           <Link
                             to={sm.profileUrl || "#"}
                             target="_blank"
-                            style={{ display: "flex", gap: "0.25rem" }}
+                            style={{ gap: "0.25rem" }}
+                            className="d-flex align-items-center"
                           >
                             {IconComponent && <IconComponent />}
                             {sm.username}
@@ -72,7 +73,7 @@ export default function Contact() {
               <a
                 href="https://www.paypal.com/paypalme/jakubkanna"
                 target="_blank"
-                className="ms-auto d-flex gap-1"
+                className="ms-auto d-flex gap-1 align-items-center"
               >
                 <Paypal />
                 Donate
