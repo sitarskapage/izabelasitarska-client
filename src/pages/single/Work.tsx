@@ -20,7 +20,7 @@ export default function Work() {
     <Layout title={general.title}>
       <Col xs={12}>
         {year && (
-          <Row className="border-bottom border-dark">
+          <Row>
             <Col className="p-4">
               <h3 id="Details">
                 {dimensions && <span>{dimensions} (cm), </span>}
@@ -43,12 +43,12 @@ export default function Work() {
           </Row>
         )}
         {/* Display Images */}
-        <Row className="border-bottom border-dark">
+        <Row>
           {media && media.length > 0 ? (
             media.map((item) => (
               <Col xs={12} key={item?.etag}>
                 <Row>
-                  <Col className="p-0 border-bottom border-dark">
+                  <Col className="p-0 border-top border-dark">
                     <MediaComponent media={item} />
                   </Col>
                 </Row>

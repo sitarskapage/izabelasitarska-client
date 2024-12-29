@@ -14,6 +14,7 @@ import { Col, Container } from "react-bootstrap";
 import { useFetchData } from "../../hooks/useFetch";
 import useIsMobile from "../../hooks/useIsMobile";
 import NotFoundPage from "../404";
+import { isLastItem } from "../../utils/helpers";
 
 interface Post extends PostSchema {
   general: GeneralSectionSchema;
@@ -23,10 +24,17 @@ function renderPostContent(content: Content | undefined) {
   if (!content) return;
 
   return content.map((block, index) => {
+    const isLast = isLastItem(index, content.length);
+
     if ("text" in block) {
       // Handle Text block
       return (
-        <div key={index} className="border-bottom border-dark p-3">
+        <div
+          key={index}
+          className={`p-3 ${
+            isLast ? "border-dark" : "border-bottom border-dark"
+          }`}
+        >
           {HTMLReactParser(block.text as string)}
         </div>
       );
@@ -36,9 +44,11 @@ function renderPostContent(content: Content | undefined) {
       // Handle Image block
       const images = block.images as ImageRefSchema[];
       return images.map((image, i) => (
-        <div className="border-bottom border-dark">
-          {" "}
-          <ImageComponent key={`${index}-${i}`} imageref={image} />
+        <div
+          key={`${index}-${i}`}
+          className={isLast ? "border-dark" : "border-bottom border-dark"}
+        >
+          <ImageComponent imageref={image} />
         </div>
       ));
     }
@@ -47,9 +57,11 @@ function renderPostContent(content: Content | undefined) {
       // Handle Video block
       const videos = block.videos as VideoRefSchema[];
       return videos.map((video, i) => (
-        <div className="border-bottom border-dark">
-          {" "}
-          <VideoComponent key={`${index}-${i}`} videoref={video} />
+        <div
+          key={`${index}-${i}`}
+          className={isLast ? "border-dark" : "border-bottom border-dark"}
+        >
+          <VideoComponent videoref={video} />
         </div>
       ));
     }

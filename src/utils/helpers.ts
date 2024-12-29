@@ -74,4 +74,7 @@ function parseDate(dateObj: { [k: string]: unknown } | null | undefined) {
   } ${year ? year : ""}${time ? ", " + time : ""}`;
 }
 
-export { isVideo, isImage, isUpcoming, isCurrent, parseDate, is3d };
+const isLastItem = (index: number, arrayLength: number) =>
+  index === arrayLength - 1;
+
+export { isVideo, isImage, isUpcoming, isCurrent, parseDate, is3d, isLastItem };

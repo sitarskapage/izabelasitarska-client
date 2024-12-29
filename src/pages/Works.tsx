@@ -209,7 +209,7 @@ export default function Works() {
                       animate={{ height: "auto" }}
                       exit={{ height: 0 }}
                       transition={{ duration: 0.5 }}
-                      className="overflow-hidden"
+                      className="border-bottom border-dark overflow-hidden"
                     >
                       <Description title={desc.title}>
                         {desc.content}
