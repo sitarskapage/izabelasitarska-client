@@ -9,7 +9,6 @@ import { isImage } from "../utils/helpers";
 import { Link } from "react-router-dom";
 import Image from "../components/media/Image";
 import Layout from "../components/layout/Layout";
-import useIsMobile from "../hooks/useIsMobile";
 import { useFetchData } from "../hooks/useFetch";
 import { useState } from "react";
 import { ArrowUpRight, Bell } from "react-bootstrap-icons";
@@ -21,8 +20,9 @@ export interface Post extends PostSchema {
 export default function Posts() {
   const { data } = useFetchData<Post[]>("posts");
   const { slug } = useParams();
-  const isMobile = useIsMobile();
+  // const isMobile = useIsMobile();
   const navigate = useNavigate();
+  // const [mobile] = useState(isMobile);
 
   const PostItem = ({ post }: { post: Post; isLast: boolean }) => {
     //
@@ -60,11 +60,7 @@ export default function Posts() {
             style={arrowStyle}
           ></ArrowUpRight>
         </Col>
-        <Col
-          xs={12}
-          md={3}
-          className={isMobile ? "p-0" : "border-start border-dark p-0"}
-        >
+        <Col xs={12} md={3} className={"border-start border-dark p-0"}>
           <div className="ratio ratio-1x1">
             {image && (
               <Image imageref={image} className="img-fluid object-fit-cover" />
