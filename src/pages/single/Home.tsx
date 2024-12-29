@@ -49,8 +49,6 @@ function Homepage() {
         // Ensure value stays between 0 and 1
         newProgress = preventOverflow(newProgress);
 
-        console.log("Progress:", newProgress);
-
         // Handle row transition logic (move to next or previous row)
         if (newProgress >= 0.99 && activeRow < 2) {
           setActiveRow(activeRow + 1);
@@ -107,8 +105,6 @@ function Homepage() {
     },
     [updateScrollProgress]
   );
-
-  useEffect(() => console.log("ACTIVEROW:", activeRow), [activeRow]);
 
   useEffect(() => {
     const wheelListener = (event: WheelEvent) => handleWheel(event);
