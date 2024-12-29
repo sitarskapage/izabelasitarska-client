@@ -57,7 +57,7 @@ export default function Layout({
         key={title}
         initial={{ y: "100dvh", filter: "url(#halftone)" }}
         animate={{ y: 0, filter: "" }}
-        exit={{ y: "-100dvh", filter: "url(#halftone)" }}
+        exit={{ y: "-100dvh", filter: "url(#halftone)", visibility: "hidden" }}
         id="SingePageBody"
         transition={{ duration: containerTransDuration }}
         className="row flex-grow-1 border-bottom border-dark border-top"
