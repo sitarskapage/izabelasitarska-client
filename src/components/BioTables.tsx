@@ -92,7 +92,7 @@ export default function BioTables({ profile }: { profile: ProfileSchema }) {
         <Col className="p-0" md={6}>
           <div
             className={`border-start border-end border-dark mw-100 overflow-auto ${
-              !isMobile ? "mx-5" : ""
+              !isMobile ? "mx-3" : ""
             }`}
           >
             {renderSingleItem(profile.additional, 1)}

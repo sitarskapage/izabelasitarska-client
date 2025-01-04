@@ -49,7 +49,7 @@ export default function Work() {
               <Col xs={12} key={item?.etag}>
                 <Row>
                   <Col className="p-0 border-top border-dark">
-                    <MediaComponent media={item} />
+                    <MediaComponent media={item} className="img-fluid w-100" />
                   </Col>
                 </Row>
               </Col>

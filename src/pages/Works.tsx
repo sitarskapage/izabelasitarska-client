@@ -58,7 +58,8 @@ export default function Works() {
     new Set(
       data
         .flatMap((work) => work.general.tags ?? [])
-        .map((tag: TagSchema) => tag.title)
+        .map((tag: TagSchema) => tag.title as string)
+        .sort((a, b) => a.localeCompare(b))
     )
   );
 
