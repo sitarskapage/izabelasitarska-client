@@ -21,7 +21,3 @@
 
 ## Todo
 
-- Homepage fix/finish touch
-  
-- Add Vimeo, Soundcloud
-
