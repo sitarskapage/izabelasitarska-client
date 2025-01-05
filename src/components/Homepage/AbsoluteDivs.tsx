@@ -138,9 +138,7 @@ const AbsoluteDivs = () => {
               className="border-start border-dark pt-2 px-0 h-100 overflow-hidden d-flex flex-column justify-content-center"
             >
               <img
-                src={`${
-                  import.meta.env.BASE_URL
-                }/images/exodus-walker_jakubkanna.png`}
+                src={`/images/exodus-walker_jakubkanna.png`}
                 className="w-100 object-fit-cover"
                 style={{ mixBlendMode: "multiply" }}
               ></img>
@@ -219,7 +217,7 @@ const AbsoluteDivs = () => {
               className="border-start border-dark pt-2 px-0 h-100 overflow-hidden d-flex flex-column justify-content-center"
             >
               <img
-                src={`${import.meta.env.BASE_URL}/images/exodus-eyes.png`}
+                src={`images/exodus-eyes.png`}
                 className="w-100 object-fit-cover"
                 style={{ mixBlendMode: "multiply" }}
               ></img>
