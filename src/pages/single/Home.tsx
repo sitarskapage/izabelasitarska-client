@@ -118,7 +118,7 @@ function Homepage() {
   }, [handleWheel, handleTouchStart]);
 
   // Sentence data
-  const sentence1 = ["Where", "are", "we", "going?"];
+  const sentence1 = ["How", "to", "find", "my", "way?"];
   const sentence2 = ["What", "is", "adrenaline", "today?"];
   const sentence3 = ["Can", "riding", "a bike", "be an art?"];
 
