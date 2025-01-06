@@ -57,7 +57,6 @@ export default function ScrollProvider({ children }: { children: ReactNode }) {
 
   // Check if the page is full-height and update state
   const checkIfFullPage = () => {
-    console.log(window.innerHeight, document.body.offsetHeight);
     setIsFullPage(window.innerHeight === document.body.offsetHeight);
   };
 
