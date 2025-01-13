@@ -32,9 +32,9 @@ function getSrcSet(public_id: string) {
 
 // Get Image attributes based on Cloudinary availability
 export function getImageAttributes(image: ImageRefSchema) {
-  const { cld_url, public_id } = image;
+  const { public_id } = image;
 
-  if (cld_url && public_id) {
+  if (public_id) {
     return {
       src: getCldUrl(public_id, sizes.MEDIUM),
       srcSet: getSrcSet(public_id),
@@ -51,3 +51,30 @@ export function getImageAttributes(image: ImageRefSchema) {
     alt: "",
   };
 }
+export interface Padding {
+  paddingTop: number;
+  paddingBottom: number;
+}
+
+export const getPadding = (): Padding => {
+  const getElementHeight = (element: HTMLElement | null): number => {
+    if (!element) return 0;
+
+    const style = window.getComputedStyle(element);
+    return (
+      element.clientHeight +
+      parseFloat(style.marginTop) +
+      parseFloat(style.marginBottom) +
+      parseFloat(style.paddingTop) +
+      parseFloat(style.paddingBottom)
+    );
+  };
+
+  const header = document.querySelector("header");
+  const footer = document.querySelector("footer");
+
+  return {
+    paddingTop: getElementHeight(header),
+    paddingBottom: getElementHeight(footer),
+  };
+};

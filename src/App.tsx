@@ -1,22 +1,23 @@
-import { Container } from "react-bootstrap";
+import { ErrorBoundary } from "react-error-boundary";
 import Footer from "./components/layout/Footer";
 import Header from "./components/layout/Header";
 import Main from "./components/layout/Main";
-import { Outlet } from "react-router-dom";
-import { ErrorBoundary } from "react-error-boundary";
+import { ReactNode, useState } from "react";
 import Fallback from "./components/Fallback";
+import ScrollProvider from "./contexts/providers/ScrollProvider";
 
-function App() {
+function App({ children }: { children: ReactNode }) {
+  const [footerHeight, setFooterHeight] = useState(0);
   return (
-    <Container fluid className="">
-      <Header />
-      <Main>
+    <>
+      <ScrollProvider>
         <ErrorBoundary FallbackComponent={Fallback}>
-          <Outlet />
+          <Header />
+          <Main footerHeight={footerHeight}>{children}</Main>
+          <Footer setFooterHeight={setFooterHeight} />
         </ErrorBoundary>
-      </Main>
-      <Footer />
-    </Container>
+      </ScrollProvider>
+    </>
   );
 }
 

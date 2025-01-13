@@ -1,22 +1,125 @@
-@import "../../node_modules/bootstrap/scss/functions";
-@import "../../node_modules/bootstrap/scss/variables";
+@import "../../node_modules/bootstrap/scss/bootstrap";
 
-$dark: #1e2724;
-$light: #d2efe8;
+$dark: #1e1e27;
+$light: rgb(233, 233, 228);
+$kanna: #eeff87;
+
+:root {
+  --light-color: #{$light};
+  font-size: 18px;
+}
 
 html,
 body {
-  font-family: "Times New Roman", Times, serif;
-  color: $dark;
+  font-family: "Helvetica", "Arial", sans-serif;
+  color: $dark !important;
+  background-color: $light;
+  min-height: 100%;
+  position: relative;
+  overscroll-behavior: none;
 }
 
-a {
-  color: blue;
-  text-decoration: none;
+#root {
+  min-height: 100%;
+  position: relative;
+}
+
+a,
+.btn-link {
+  cursor: pointer;
+  color: $dark;
   &:hover {
-    color: darkblue;
+    background-color: $kanna;
+    border-radius: 0.25rem;
+    padding: 0;
   }
+}
+.link {
+  @extend a;
+}
+
+.bg-kanna {
+  background-color: $kanna;
+}
+.bg-light {
+  background-color: $light !important;
+}
+
+table {
+  @extend .table, .table-hover;
+}
+
+.table {
+  --bs-table-bg: rgba(255, 255, 255, 0.2);
+  --bs-table-border-color: $dark;
+  border-color: $dark;
+  border: none;
+  border-top: 1px solid;
+  td {
+    padding-left: 2rem;
+  }
+  &:last-child {
+    margin: 0;
+    tbody tr:last-child {
+      td {
+        border-bottom: none;
+      }
+    }
+  }
+}
+
+.text-outline {
+  color: white;
+  -webkit-text-stroke: 0.5px black;
+  font-weight: 600;
+}
+
+#Tables td:nth-child(4),
+#Tables table th:nth-child(4),
+#Tables col:nth-child(4) {
+  display: none;
+}
+
+#Tables {
+  h3 {
+    padding: 1rem;
+  }
+}
+.min-vh-25 {
+  height: 25vh;
+}
+
+$utilities: (
+  "min-viewport-height": (
+    property: min-height,
+    class: min-vh,
+    values: (
+      25: 25vh,
+      100: 100vh,
+    ),
+  ),
+);
+
+.disable-hover-animations * {
+  pointer-events: none !important;
+  animation: none !important;
+  transition: none !important;
+}
+
+.font-times {
+  font-family: "Times New Roman", Times, serif;
+  color: $kanna;
+  -webkit-text-stroke: 1px black;
+  font-weight: 600;
+}
+
+::selection {
+  background: blue;
+  color: white;
 }
 
 @import "./scrollbar.scss";
 @import "./btn.scss";
+@import "./navbar.scss";
+@import "./model-viewer.scss";
+@import "./home.scss";

@@ -1,45 +1,51 @@
 import HTMLReactParser from "html-react-parser/lib/index";
-import Layout from "../../components/layout/Layout.";
-import { ProfileSchema } from "@jakubkanna/labguy-front-schema";
-import { useLoaderData } from "react-router-dom";
+import Layout from "../../components/layout/Layout";
 import { useContext } from "react";
 import { GeneralContext } from "../../contexts/GeneralContext";
 import PortfolioButton from "../../components/PortfolioButton";
+import { renderSingleItem } from "../../hooks/useArrayRender";
+import BioTables from "../../components/BioTables";
+import { Col, Container, Row } from "react-bootstrap";
+import { useFetchData } from "../../hooks/useFetch";
+import { ProfileSchema } from "@jakubkanna/labguy-front-schema";
+import useIsMobile from "../../hooks/useIsMobile";
 
 export default function Bio() {
-  const data = (useLoaderData() as ProfileSchema) || null;
   const { preferences } = useContext(GeneralContext);
+  const { data } = useFetchData<ProfileSchema>("profile/1");
+
+  const isMobile = useIsMobile();
 
   if (!data) return null;
 
   const { statement, additional } = data;
 
-  const arrayToHtml = (arr: unknown) => {
-    const array = Array.isArray(arr) ? arr : [];
-
-    return array.map((item, index) => (
-      <div id={`Additional-${index}`} key={index}>
-        {item?.html && HTMLReactParser(item.html)}
-      </div>
-    ));
-  };
-
   return (
-    <Layout title="Bio" description={statement || undefined}>
-      <div id="Statement">
-        <h2>Statement</h2>
-        <div>{statement && HTMLReactParser(statement)}</div>
-      </div>
-      <div id="Additional">
-        <h2>Additional</h2>
-        {arrayToHtml(additional)}
-      </div>
-      {preferences?.enable_portfolio_pdf && (
-        <div id="Portfolio">
-          <h2>Portfolio</h2>
-          <PortfolioButton url={data.portfolio_pdf_url} />
-        </div>
-      )}
+    <Layout
+      title="Bio"
+      description={statement || undefined}
+      footer={<BioTables profile={data} />}
+    >
+      <Col>
+        <Container
+          className={isMobile ? "p-0" : "border-start border-end border-dark"}
+        >
+          <Row id="Statement">
+            <Col className="p-2">{statement && HTMLReactParser(statement)}</Col>
+          </Row>
+          <Row id="Additional" className="border-dark border-top">
+            <Col className="p-4">{renderSingleItem(additional, 0)}</Col>
+          </Row>
+          {preferences?.enable_portfolio_pdf && (
+            <Row id="Portfolio" className="border-dark border-top p-4">
+              <Col>
+                <h2>Portfolio</h2>
+                <PortfolioButton url={data.portfolio_pdf_url} />
+              </Col>
+            </Row>
+          )}
+        </Container>
+      </Col>
     </Layout>
   );
 }

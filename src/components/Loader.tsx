@@ -39,12 +39,12 @@ const AsciiLoader: React.FC<AsciiLoaderProps> = ({ className }) => {
   }, []);
 
   return (
-    <div
+    <span
       style={{ fontSize: "2rem", fontFamily: "monospace" }}
       className={className}
     >
       {showLoader && frames[currentFrame]}
-    </div>
+    </span>
   );
 };
 
