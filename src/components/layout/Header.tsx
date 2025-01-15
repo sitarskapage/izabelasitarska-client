@@ -78,6 +78,7 @@ export default function Header({
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="ms-auto gap-2">
               <Link to="bio">Bio</Link>
+              <Link to="posts">Posts</Link>
               <Link to="projects">Projects</Link>
               <Link to="works">Works</Link>
               <Link to="contact">Contact</Link>

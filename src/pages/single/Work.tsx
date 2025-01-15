@@ -1,17 +1,10 @@
 import { useParams } from "react-router-dom";
 import { Col, Container, Row } from "react-bootstrap";
-
 import { Link } from "react-router-dom";
-import { isImage, isVideo } from "../../utils/helpers";
-import {
-  ImageRefSchema,
-  VideoRefSchema,
-} from "@jakubkanna/labguy-front-schema";
-import Layout from "../../components/layout/Layout";
-import Video from "../../components/media/Video";
-import Image from "../../components/media/Image";
 import { useFetchData } from "../../hooks/useFetch";
 import { Work as WorkSchema } from "../../../types/Work";
+import MediaComponent from "../../components/Media";
+import Layout from "../../components/layout/Layout";
 
 export default function Work() {
   const { slug } = useParams();
@@ -34,6 +27,7 @@ export default function Work() {
               {year && <span>{year}</span>}
               {urls && (
                 <>
+                  <br />
                   <span>Links: </span>
 
                   {urls.map((url, index) => (
@@ -52,12 +46,7 @@ export default function Work() {
           {media && media.length > 0 ? (
             media.map((item) => (
               <Col xs={12} key={item?.etag}>
-                {isImage(item) && <Image imageref={item as ImageRefSchema} />}{" "}
-                {/* Render image */}
-                {isVideo(item) && (
-                  <Video videoref={item as VideoRefSchema} />
-                )}{" "}
-                {/* Render video */}
+                <MediaComponent media={item} />
               </Col>
             ))
           ) : (
