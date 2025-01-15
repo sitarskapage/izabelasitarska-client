@@ -1,14 +1,14 @@
 import HTMLReactParser from "html-react-parser/lib/index";
-import Layout from "../../components/layout/Layout.";
 import { ProfileSchema } from "@jakubkanna/labguy-front-schema";
-import { useLoaderData } from "react-router-dom";
 import { useContext } from "react";
 import { GeneralContext } from "../../contexts/GeneralContext";
 import PortfolioButton from "../../components/PortfolioButton";
+import Layout from "../../components/layout/Layout";
+import { useFetchData } from "../../hooks/useFetch";
 
 export default function Bio() {
-  const data = (useLoaderData() as ProfileSchema) || null;
   const { preferences } = useContext(GeneralContext);
+  const { data } = useFetchData<ProfileSchema>("profile/1");
 
   if (!data) return null;
 

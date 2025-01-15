@@ -9,8 +9,20 @@ function getVideoUrl(videoRef: VideoRefSchema): string | null {
   return null;
 }
 
-export default function Video({ videoref }: { videoref: VideoRefSchema }) {
+export default function Video({
+  videoref,
+  playerProps = { playing: false, muted: false, controls: true, light: false },
+}: {
+  videoref: VideoRefSchema;
+  playerProps?: {
+    playing?: boolean;
+    muted?: boolean;
+    controls?: boolean;
+    light?: boolean;
+  };
+}) {
   const videoUrl = getVideoUrl(videoref);
+  const { playing, muted, controls, light } = playerProps;
 
   if (!videoUrl) return null;
 
@@ -34,10 +46,14 @@ export default function Video({ videoref }: { videoref: VideoRefSchema }) {
     <div style={playerWrapperStyle}>
       <ReactPlayer
         url={videoUrl}
-        controls
         width={"100%"}
         height={"100%"}
         style={playerStyle}
+        playing={playing}
+        muted={muted}
+        controls={controls}
+        light={light}
+        playIcon={<></>}
       />
     </div>
   );

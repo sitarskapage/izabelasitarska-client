@@ -1,5 +1,4 @@
-@import "../../node_modules/bootstrap/scss/functions";
-@import "../../node_modules/bootstrap/scss/variables";
+@import "../../node_modules/bootstrap/scss/bootstrap";
 
 $dark: #1e2724;
 $light: #d2efe8;
@@ -8,8 +7,13 @@ html,
 body {
   font-family: "Times New Roman", Times, serif;
   color: $dark;
+  min-height: 100%;
+  position: relative;
 }
-
+#root {
+  min-height: 100%;
+  position: relative;
+}
 a {
   color: blue;
   text-decoration: none;
@@ -18,5 +22,4 @@ a {
   }
 }
 
-@import "./scrollbar.scss";
 @import "./btn.scss";

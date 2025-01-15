@@ -1,10 +1,10 @@
 import { useContext } from "react";
-import Layout from "../../components/layout/Layout.";
 import { GeneralContext } from "../../contexts/GeneralContext";
 import { Col, ListGroup, Row } from "react-bootstrap";
 import { UrlSchema } from "@jakubkanna/labguy-front-schema";
 import { Link } from "react-router-dom";
 import Background from "../../components/Background";
+import Layout from "../../components/layout/Layout";
 
 export default function Homepage() {
   const { preferences } = useContext(GeneralContext);

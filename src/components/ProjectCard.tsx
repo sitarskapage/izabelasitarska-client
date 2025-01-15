@@ -1,10 +1,9 @@
 import { Col, Row } from "react-bootstrap";
-import Image from "./Image";
+import Image from "./media/Image";
 import { Link } from "react-router-dom";
-
-import { Project } from "../pages/Projects";
-import { isImage, isVideo, MediaRef } from "../utils/helpers";
-import Video from "./Video";
+import { isImage, isVideo } from "../utils/helpers";
+import Video from "./media/Video";
+import { Project } from "../../types/Project";
 
 interface CardProps {
   project: Project;
@@ -12,12 +11,11 @@ interface CardProps {
 }
 
 export default function ProjectCard({ project }: CardProps) {
-  const { general, media } = project;
+  const { general, cover } = project;
   const { title, slug, description } = general;
-  if (!media) return;
 
-  const image = isImage(media[0] as MediaRef) && (media[0] as MediaRef);
-  const video = isVideo(media[0] as MediaRef) && (media[0] as MediaRef);
+  const image = isImage(cover) && cover;
+  const video = isVideo(cover) && cover;
 
   return (
     <Row>

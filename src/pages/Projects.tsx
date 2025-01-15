@@ -1,28 +1,15 @@
-import { useLoaderData, useParams, Outlet } from "react-router-dom";
-import {
-  GeneralSectionSchema,
-  ProjectSchema,
-  UrlSchema,
-} from "@jakubkanna/labguy-front-schema";
-import Layout from "../components/layout/Layout.";
+import { useParams, Outlet } from "react-router-dom";
 import ProjectCard from "../components/ProjectCard";
 import { Container } from "react-bootstrap";
-import { Work } from "./Works";
-import { MediaRef } from "../utils/helpers";
-
-export interface Project extends ProjectSchema {
-  general: GeneralSectionSchema;
-  media: MediaRef[];
-  urls: UrlSchema[];
-  works: Work[];
-}
+import Layout from "../components/layout/Layout";
+import { useFetchData } from "../hooks/useFetch";
+import { Project } from "../../types/Project";
 
 export default function Projects() {
-  const data = (useLoaderData() as Project[]) || null;
+  const { data } = useFetchData<Project[]>("projects");
   const { slug } = useParams();
 
   if (!data) return null;
-
   return (
     <>
       {slug ? (

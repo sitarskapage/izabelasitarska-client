@@ -1,20 +1,13 @@
-import { Outlet, useLoaderData, useParams } from "react-router-dom";
-import {
-  GeneralSectionSchema,
-  WorkSchema,
-} from "@jakubkanna/labguy-front-schema";
-import Layout from "../components/layout/Layout.";
+import { Outlet, useParams } from "react-router-dom";
 import WorkCard from "../components/WorkCard";
-import { Col } from "react-bootstrap";
-import { MediaRef } from "../utils/helpers";
-
-export interface Work extends WorkSchema {
-  general: GeneralSectionSchema;
-  media?: MediaRef[];
-}
+import { Row, Col, Container } from "react-bootstrap"; // Add Container and Row
+import Layout from "../components/layout/Layout";
+import { useFetchData } from "../hooks/useFetch";
+import { Work } from "../../types/Work";
 
 export default function Works() {
-  const data = (useLoaderData() as Work[]) || null;
+  const { data } = useFetchData<Work[]>("works?unique=true");
+
   const { slug } = useParams();
 
   if (!data) return null;
@@ -25,12 +18,20 @@ export default function Works() {
         <Outlet />
       ) : (
         <Layout title={"Works"}>
-          <Col xs={12} md={6} lg={3}>
-            {data.map(
-              (item, i) =>
-                item.general.published && <WorkCard work={item} key={i} />
-            )}
-          </Col>
+          <Container>
+            <Row>
+              {data.map(
+                (item, i) =>
+                  item.general.published && (
+                    <Col key={i} xs={12} md={6} lg={4}>
+                      {" "}
+                      {/* Adjusted to create a 3-column layout */}
+                      <WorkCard work={item} />
+                    </Col>
+                  )
+              )}
+            </Row>
+          </Container>
         </Layout>
       )}
     </>

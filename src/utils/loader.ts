@@ -1,10 +1,10 @@
 import handleFetchError from "./handleFetchError";
 
-export const fetchData = async (path: string) => {
+export const fetchData = async <T>(path: string): Promise<T> => {
   const response = await fetch(
     `${import.meta.env.VITE_SERVER_API_URL}/${path}`
   );
-  if (!response.ok) return handleFetchError(response.status);
-  const data = await response.json();
+  if (!response.ok) handleFetchError(response.status);
+  const data: T = await response.json();
   return data;
 };

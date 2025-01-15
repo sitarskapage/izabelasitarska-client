@@ -1,16 +1,16 @@
-import { useLoaderData } from "react-router-dom";
 import { Col, Container, Row } from "react-bootstrap";
-import { Project as ProjectSchema } from "../Projects";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import WorkCard from "../../components/WorkCard";
 import HTMLReactParser from "html-react-parser/lib/index";
-import Layout from "../../components/layout/Layout.";
-
 import MediaComponent from "../../components/Media";
 import { parseDate } from "../../utils/helpers";
+import Layout from "../../components/layout/Layout";
+import { useFetchData } from "../../hooks/useFetch";
+import { Project as ProjectSchema } from "../../../types/Project";
 
 export default function Project() {
-  const data = useLoaderData() as ProjectSchema;
+  const { slug } = useParams();
+  const { data } = useFetchData<ProjectSchema>(`projects/${slug}`);
 
   if (!data) return null;
 
@@ -64,7 +64,11 @@ export default function Project() {
         {/* Render media (images or videos) */}
         <Row className="gap-3">
           <Col xs={12}>
-            <MediaComponent media={media} />
+            {media && media.length > 0 ? (
+              media.map((m) => <MediaComponent media={m} />)
+            ) : (
+              <p>No media available for this project.</p>
+            )}
           </Col>
         </Row>
 

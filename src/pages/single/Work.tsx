@@ -1,22 +1,24 @@
-import { useLoaderData } from "react-router-dom";
-import Layout from "../../components/layout/Layout.";
+import { useParams } from "react-router-dom";
 import { Col, Container, Row } from "react-bootstrap";
-import { Work as WorkSchema } from "../Works";
-import Image from "../../components/Image";
-import Video from "../../components/Video";
+
 import { Link } from "react-router-dom";
 import { isImage, isVideo } from "../../utils/helpers";
 import {
   ImageRefSchema,
   VideoRefSchema,
 } from "@jakubkanna/labguy-front-schema";
+import Layout from "../../components/layout/Layout";
+import Video from "../../components/media/Video";
+import Image from "../../components/media/Image";
+import { useFetchData } from "../../hooks/useFetch";
+import { Work as WorkSchema } from "../../../types/Work";
 
 export default function Work() {
-  const data = (useLoaderData() as WorkSchema) || null;
-
+  const { slug } = useParams();
+  const { data } = useFetchData<WorkSchema>(`works/${slug}`);
   if (!data) return null;
 
-  const { general, dimensions, medium, year, media } = data;
+  const { general, dimensions, medium, year, media, urls } = data;
 
   if (!general.published) return "This page is private.";
 
@@ -30,6 +32,18 @@ export default function Work() {
               {dimensions && <span>{dimensions} (cm), </span>}
               {medium && <span>{medium}, </span>}
               {year && <span>{year}</span>}
+              {urls && (
+                <>
+                  <span>Links: </span>
+
+                  {urls.map((url, index) => (
+                    <>
+                      <a href={url.url}>{url.title}</a>
+                      {index < urls.length - 1 && <span>, </span>}
+                    </>
+                  ))}
+                </>
+              )}
             </p>
           </Col>
         </Row>

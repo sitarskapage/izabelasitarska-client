@@ -1,17 +1,35 @@
-import { useContext } from "react";
+import { useContext, useEffect, useRef } from "react";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
-import { LinkContainer } from "react-router-bootstrap"; // Ensure correct import
 import { GeneralContext } from "../../contexts/GeneralContext";
 import { Helmet } from "react-helmet";
+import { Link } from "react-router-dom";
+import useIsMobile from "../../hooks/useIsMobile";
 
-function Header() {
+export default function Header({
+  setHeaderHeight,
+}: {
+  setHeaderHeight: React.Dispatch<React.SetStateAction<number>>;
+}) {
   const { preferences } = useContext(GeneralContext);
   const artists_name = preferences ? preferences.artists_name : "";
+  const headerRef = useRef<HTMLDivElement | null>(null);
+  const isMobile = useIsMobile();
+
+  // Measure content height when it is rendered
+  useEffect(() => {
+    if (headerRef.current) {
+      const height = headerRef.current.clientHeight;
+      if (height) setHeaderHeight(height);
+    }
+  }, [setHeaderHeight, isMobile]);
 
   return (
-    <header>
+    <header
+      className="container-fluid position-absolute top-0 start-0"
+      ref={headerRef}
+    >
       <Helmet>
         <title>{preferences?.artists_name}</title>
         <meta name="author" content={preferences?.artists_name} />
@@ -53,24 +71,16 @@ function Header() {
       </Helmet>
       <Navbar expand="lg">
         <Container>
-          <LinkContainer to="/">
+          <Link to="/">
             <Navbar.Brand>{artists_name}</Navbar.Brand>
-          </LinkContainer>
+          </Link>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="me-auto">
-              <LinkContainer to="bio">
-                <Nav.Link>Bio</Nav.Link>
-              </LinkContainer>
-              <LinkContainer to="projects">
-                <Nav.Link>Projects</Nav.Link>
-              </LinkContainer>
-              <LinkContainer to="works">
-                <Nav.Link>Works</Nav.Link>
-              </LinkContainer>
-              <LinkContainer to="contact">
-                <Nav.Link>Contact</Nav.Link>
-              </LinkContainer>
+            <Nav className="ms-auto gap-2">
+              <Link to="bio">Bio</Link>
+              <Link to="projects">Projects</Link>
+              <Link to="works">Works</Link>
+              <Link to="contact">Contact</Link>
             </Nav>
           </Navbar.Collapse>
         </Container>
@@ -78,5 +88,3 @@ function Header() {
     </header>
   );
 }
-
-export default Header;

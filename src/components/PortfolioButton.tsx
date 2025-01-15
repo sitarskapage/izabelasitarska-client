@@ -1,4 +1,3 @@
-import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
 const PortfolioButton = ({ url }: { url?: string | null }) => {
@@ -15,9 +14,9 @@ const PortfolioButton = ({ url }: { url?: string | null }) => {
   }
 
   return (
-    <Button onClick={handleClick} variant="labguy">
+    <span className="link" onClick={handleClick}>
       {url ? "Download (PDF)" : "Request PDF"}
-    </Button>
+    </span>
   );
 };
 

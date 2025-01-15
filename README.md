@@ -21,4 +21,3 @@
 
 ## Todo
 
-- Add Vimdeo, Soundcloud, 3D support

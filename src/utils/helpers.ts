@@ -1,5 +1,6 @@
 import {
   ImageRefSchema,
+  ThreedRef,
   VideoRefSchema,
 } from "@jakubkanna/labguy-front-schema";
 import { Project } from "../pages/Projects";
@@ -12,6 +13,9 @@ function isVideo(media: MediaRef | null): media is VideoRefSchema {
 }
 function isImage(media: MediaRef | null): media is ImageRefSchema {
   return media?.mediaType === "IMAGE";
+}
+function is3d(media: MediaRef | null): media is ThreedRef {
+  return media?.mediaType === "THREE_D";
 }
 function isUpcoming(project: Project) {
   if (!project.start_date) return true;
@@ -70,8 +74,7 @@ function parseDate(dateObj: { [k: string]: unknown } | null | undefined) {
   } ${year ? year : ""}${time ? ", " + time : ""}`;
 }
 
-function isMobile() {
-  return window.innerWidth < 768;
-}
+const isLastItem = (index: number, arrayLength: number) =>
+  index === arrayLength - 1;
 
-export { isVideo, isImage, isUpcoming, isCurrent, parseDate, isMobile };
+export { isVideo, isImage, isUpcoming, isCurrent, parseDate, is3d, isLastItem };

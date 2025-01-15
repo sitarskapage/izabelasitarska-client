@@ -1,25 +1,16 @@
-export default function handleFetchError(code: number): void {
-  let errorMessage: string;
-
+export default function handleFetchError(code: number): string {
   switch (code) {
     case 404:
-      errorMessage = "Not found.";
-      break;
+      return "Not found.";
     case 500:
-      errorMessage = "Server error.";
-      break;
+      return "Server error.";
     case 401:
-      errorMessage = "Unauthorized.";
-      break;
+      return "Unauthorized.";
     case 403:
-      errorMessage = "Forbidden.";
-      break;
+      return "Forbidden.";
     case 429:
-      errorMessage = "Too many requests. Please come back later.";
-      break;
+      return "Too many requests. Please come back later.";
     default:
-      errorMessage = "Error.";
+      return "An unexpected error occurred.";
   }
-
-  throw new Error(errorMessage);
 }
