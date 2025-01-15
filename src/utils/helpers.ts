@@ -3,8 +3,8 @@ import {
   ThreedRef,
   VideoRefSchema,
 } from "@jakubkanna/labguy-front-schema";
-import { Project } from "../pages/Projects";
 import dayjs from "dayjs";
+import { Project } from "../../types/Project";
 
 export type MediaRef = ImageRefSchema | VideoRefSchema | null;
 
