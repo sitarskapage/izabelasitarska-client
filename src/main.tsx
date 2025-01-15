@@ -8,6 +8,7 @@ import { GeneralProvider } from "./contexts/providers/GeneralProvider";
 
 createRoot(document.getElementById("root")!).render(
   <GeneralProvider>
+    {/* Using BrowserRouter because of newer react-rouer compatibility issues with Framer Motion */}
     <BrowserRouter basename={import.meta.env.BASE_URL}>
       <App>
         <Router />
