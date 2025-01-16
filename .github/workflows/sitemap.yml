@@ -12,26 +12,26 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Checkout the repository
       - name: Checkout Repository
         uses: actions/checkout@v3
 
-      # Set up Node.js environment
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: 18
           cache: "npm"
 
-      # Install dependencies
       - name: Install Dependencies
         run: npm install
 
-      # Run sitemap script
+      - name: Create .env file for build
+        run: |
+          echo "VITE_SERVER_API_URL=${{ secrets.VITE_SERVER_API_URL }}" >> .env
+          echo "VITE_CLD_CLOUD_NAME=${{ secrets.VITE_CLD_CLOUD_NAME }}" >> .env
+
       - name: Generate Sitemap
         run: npm run sitemap
 
-      # Commit and push the updated sitemap
       - name: Commit and Push Changes
         run: |
           git config --global user.name "github-actions[bot]"
