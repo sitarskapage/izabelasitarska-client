@@ -1,4 +1,4 @@
-name: Sync with Template
+name: Generate Sitemap
 
 on:
   # Trigger this workflow once a month at midnight on the 1st day
