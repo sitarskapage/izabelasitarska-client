@@ -1,0 +1,41 @@
+name: Sync with Template
+
+on:
+  # Trigger this workflow once a month at midnight on the 1st day
+  schedule:
+    - cron: "0 0 1 * *"
+  # Allow manual triggers
+  workflow_dispatch:
+
+jobs:
+  sync-template:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the repository
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      # Set up Node.js environment
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: "npm"
+
+      # Install dependencies
+      - name: Install Dependencies
+        run: npm install
+
+      # Run sitemap script
+      - name: Generate Sitemap
+        run: npm run sitemap
+
+      # Commit and push the updated sitemap
+      - name: Commit and Push Changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add public/sitemap.xml
+          git commit -m "Update sitemap via GitHub Actions" || echo "No changes to commit"
+          git push
