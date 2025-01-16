@@ -1,4 +1,4 @@
-name: Sync with Template
+name: Generate Sitemap
 
 on:
   # Trigger this workflow once a month at midnight on the 1st day
@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  sync-template:
+  generate-sitemap:
     runs-on: ubuntu-latest
 
     steps:
