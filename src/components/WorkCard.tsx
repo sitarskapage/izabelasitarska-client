@@ -15,7 +15,7 @@ export default function WorkCard({ work }: CardProps) {
   const { general, dimensions, year, media } = work;
   const { title, slug } = general;
 
-  if (!media) return;
+  if (!media) return <p>No media</p>;
 
   const image = isImage(media[0]) && media[0];
   const video = isVideo(media[0]) && media[0];
