@@ -16,7 +16,9 @@ export default function MediaComponent({ media, className }: MediaProps) {
     case isImage(media):
       return <Image imageref={media} className={className} />;
     case isVideo(media):
-      return <Video videoref={media} />;
+      return (
+        <Video videoref={media} playerProps={{ playing: true, muted: true }} />
+      );
     case is3d(media):
       return <Model threedref={media} controls />;
     default:

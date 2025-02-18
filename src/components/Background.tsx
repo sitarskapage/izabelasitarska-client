@@ -1,10 +1,5 @@
-import Image from "./media/Image";
-import Video from "./media/Video";
-import { isImage, isVideo, MediaRef } from "../utils/helpers";
-import {
-  ImageRefSchema,
-  VideoRefSchema,
-} from "@jakubkanna/labguy-front-schema";
+import { MediaRef } from "../utils/helpers";
+import MediaComponent from "./Media";
 
 interface BackgroundProps {
   media?: MediaRef;
@@ -13,20 +8,11 @@ interface BackgroundProps {
 const Background: React.FC<BackgroundProps> = ({ media }) => {
   if (!media) return null;
 
-  if (isImage(media)) {
-    return (
-      <Image
-        className="w-100 h-100 object-fit-cover"
-        imageref={media as ImageRefSchema}
-      />
-    );
-  }
-
-  if (isVideo(media)) {
-    return <Video videoref={media as VideoRefSchema} />;
-  }
-
-  return null;
+  return (
+    <div className="position-absolute top-0 start-0 w-100 h-100 z-n1 p-0">
+      <MediaComponent media={media} />
+    </div>
+  );
 };
 
 export default Background;

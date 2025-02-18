@@ -1,11 +1,11 @@
 @import "../../node_modules/bootstrap/scss/bootstrap";
-
+@import url("https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100..900;1,100..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=block");
 $dark: #1e2724;
 $light: #d2efe8;
 
 html,
 body {
-  font-family: "Times New Roman", Times, serif;
+  font-family: "Archivo", serif;
   color: $dark;
   min-height: 100%;
   position: relative;
