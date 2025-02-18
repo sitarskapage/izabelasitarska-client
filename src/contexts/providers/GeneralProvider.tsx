@@ -27,7 +27,10 @@ export const GeneralProvider: React.FC<GeneralProviderProps> = ({
         }
         const data = await response.json();
         setPreferences(data);
-        setLoading(false);
+
+        document.fonts.ready.then(() => {
+          setLoading(false);
+        });
       } catch (error) {
         console.error(error);
       }

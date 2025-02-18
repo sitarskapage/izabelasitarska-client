@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { ReactNode } from "react";
 
 export default function Main({
@@ -11,10 +12,10 @@ export default function Main({
 }) {
   return (
     <main
-      className={`container d-flex flex-column`}
+      className={`container-fluid d-flex flex-column`}
       style={{
         minHeight: "100dvh",
-        paddingTop: `${headerHeight}px`,
+        // paddingTop: `${headerHeight}px`,
         paddingBottom: `${footerHeight}px`,
         height: "100%",
       }}
