@@ -18,6 +18,7 @@ export default function Video({
     light: false,
     loop: false,
   },
+  className,
 }: {
   videoref: VideoRefSchema;
   playerProps?: {
@@ -27,6 +28,7 @@ export default function Video({
     light?: boolean;
     loop?: boolean;
   };
+  className?: string;
 }) {
   const videoUrl = getVideoUrl(videoref);
   const { playing, muted, controls, light, loop } = playerProps;
@@ -50,7 +52,7 @@ export default function Video({
   };
 
   return (
-    <div style={playerWrapperStyle}>
+    <div style={playerWrapperStyle} className={className}>
       <ReactPlayer
         url={videoUrl}
         width={"100%"}

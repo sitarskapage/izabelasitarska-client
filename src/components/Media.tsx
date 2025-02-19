@@ -20,6 +20,7 @@ export default function MediaComponent({ media, className }: MediaProps) {
         <Video
           videoref={media}
           playerProps={{ playing: true, muted: true, loop: true }}
+          className={className}
         />
       );
     case is3d(media):

@@ -14,8 +14,6 @@ export default function EduArtContent() {
   const { data } = useFetchData<Work[]>("works?unique=true");
   const [array, setArray] = useState<Object[]>([]);
 
-  // const imagesPerLayer = 4;
-  // const totalLayers = 4;
   const maxImages = 16;
   const delay = 12000;
 
@@ -38,8 +36,8 @@ export default function EduArtContent() {
   );
 
   const getRandomPosition = () => ({
-    top: `${Math.random() * 80 + 10}%`, // Randomly position between 10% and 90% (80% range)
-    left: `${Math.random() * 80 + 10}%`, // Randomly position between 10% and 90% (80% range)
+    top: `${Math.random() * 80 + 10}%`,
+    left: `${Math.random() * 80 + 10}%`,
   });
 
   const onComplete = (obj: Object) => {
@@ -82,7 +80,7 @@ export default function EduArtContent() {
       timeoutIds.push(timeoutId);
     });
 
-    return () => timeoutIds.forEach((id) => clearTimeout(id)); // Cleanup timeouts on unmount
+    return () => timeoutIds.forEach((id) => clearTimeout(id));
   }, [getData]);
 
   return (
@@ -107,7 +105,6 @@ export default function EduArtContent() {
             }}
             onAnimationComplete={() => onComplete(obj)}
           >
-            {" "}
             <motion.div
               initial={{ scale: 1 }}
               animate={{ scale: 2 }}

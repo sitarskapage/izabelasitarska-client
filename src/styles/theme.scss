@@ -1,11 +1,13 @@
 @import "../../node_modules/bootstrap/scss/bootstrap";
 @import url("https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100..900;1,100..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=block");
+@import url("https://fonts.googleapis.com/css2?family=Archivo+Narrow:ital,wght@0,400..700;1,400..700&family=Archivo:ital,wght@0,100..900;1,100..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+
 $dark: #1e2724;
 $light: #d2efe8;
 
 html,
 body {
-  font-family: "Archivo", serif;
+  font-family: "Archivo", sans-serif;
   color: $dark;
   min-height: 100%;
   position: relative;
@@ -15,11 +17,21 @@ body {
   position: relative;
 }
 a {
-  color: blue;
-  text-decoration: none;
+  color: white;
+  text-transform: uppercase;
   &:hover {
-    color: darkblue;
+    color: lightblue;
   }
 }
-
+.archivo-narrow {
+  font-family: "Archivo Narrow", sans-serif;
+}
+.text-elipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  line-clamp: 5;
+  -webkit-line-clamp: 5;
+  -webkit-box-orient: vertical;
+}
 @import "./btn.scss";
