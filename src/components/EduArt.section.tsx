@@ -8,9 +8,9 @@ import { AnimatePresence, motion } from "motion/react";
 export default function EduArtContent() {
   const { data } = useFetchData<Work[]>("works?unique=true");
 
-  const imagesPerLayer = 4;
-  const totalLayers = 4;
-  const maxImages = imagesPerLayer * totalLayers;
+  // const imagesPerLayer = 4;
+  // const totalLayers = 4;
+  const maxImages = 16;
   const delay = 3500;
 
   const limitedData = useMemo(
@@ -31,10 +31,29 @@ export default function EduArtContent() {
     [limitedData]
   );
 
-  const [array, setArray] = useState<{ media: MediaRef; key: string }[]>([]);
+  const getRandomPosition = () => ({
+    top: `${Math.random() * 80 + 10}%`, // Randomly position between 10% and 90% (80% range)
+    left: `${Math.random() * 80 + 10}%`, // Randomly position between 10% and 90% (80% range)
+  });
+
+  const getRandomCorner = () => {
+    const corners = [
+      { top: "0%", left: "0%" }, // Top-left
+      { top: "0%", left: "100%" }, // Top-right
+      { top: "100%", left: "0%" }, // Bottom-left
+      { top: "100%", left: "100%" }, // Bottom-right
+    ];
+    return corners[Math.floor(Math.random() * corners.length)];
+  };
+
+  const [array, setArray] = useState<
+    { media: MediaRef; key: string; position: { top: string; left: string } }[]
+  >([]);
 
   useEffect(() => {
-    setArray(getData()); // Initialize the array
+    setArray(
+      getData().map((item) => ({ ...item, position: getRandomPosition() }))
+    );
   }, [getData]);
 
   useEffect(() => {
@@ -47,7 +66,10 @@ export default function EduArtContent() {
 
         // Add it back after 1 second (allow exit animation to play)
         setTimeout(() => {
-          setArray((curr) => [removedItem!, ...curr]);
+          setArray((curr) => [
+            { ...removedItem!, position: getRandomPosition() },
+            ...curr,
+          ]);
         }, 1000);
 
         return newArray;
@@ -74,6 +96,12 @@ export default function EduArtContent() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 1 }}
+            style={{
+              top: obj.position.top,
+              left: obj.position.left,
+              transform: "translate(-50%, -50%)",
+              maxWidth: "20%",
+            }}
           >
             <MediaComponent media={obj.media} />
           </motion.div>
