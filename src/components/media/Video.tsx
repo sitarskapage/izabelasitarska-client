@@ -11,7 +11,13 @@ function getVideoUrl(videoRef: VideoRefSchema): string | null {
 
 export default function Video({
   videoref,
-  playerProps = { playing: false, muted: false, controls: true, light: false },
+  playerProps = {
+    playing: false,
+    muted: false,
+    controls: true,
+    light: false,
+    loop: false,
+  },
 }: {
   videoref: VideoRefSchema;
   playerProps?: {
@@ -19,10 +25,11 @@ export default function Video({
     muted?: boolean;
     controls?: boolean;
     light?: boolean;
+    loop?: boolean;
   };
 }) {
   const videoUrl = getVideoUrl(videoref);
-  const { playing, muted, controls, light } = playerProps;
+  const { playing, muted, controls, light, loop } = playerProps;
 
   if (!videoUrl) return null;
 
@@ -53,6 +60,7 @@ export default function Video({
         muted={muted}
         controls={controls}
         light={light}
+        loop={loop}
         playIcon={<></>}
       />
     </div>
