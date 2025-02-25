@@ -77,4 +77,15 @@ function parseDate(dateObj: { [k: string]: unknown } | null | undefined) {
 const isLastItem = (index: number, arrayLength: number) =>
   index === arrayLength - 1;
 
-export { isVideo, isImage, isUpcoming, isCurrent, parseDate, is3d, isLastItem };
+const artists_name = import.meta.env.VITE_ARTISTS_NAME || "";
+
+export {
+  isVideo,
+  isImage,
+  isUpcoming,
+  isCurrent,
+  parseDate,
+  is3d,
+  isLastItem,
+  artists_name,
+};

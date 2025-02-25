@@ -1,4 +1,4 @@
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import React, { useContext } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import { GeneralContext } from "../contexts/GeneralContext";
@@ -29,10 +29,12 @@ interface SectionHeadProps {
 
 function Head({ subtitle, footer }: SectionHeadProps) {
   const { preferences } = useContext(GeneralContext);
-
   const { scrollY } = useScroll();
+
+  const smoothScrollY = useSpring(scrollY, { stiffness: 100, damping: 20 });
+
   const fontSize = useTransform(
-    scrollY,
+    smoothScrollY,
     [0, window.innerHeight / 2],
     ["15vw", "5vw"]
   );

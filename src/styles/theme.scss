@@ -17,7 +17,7 @@ body {
   position: relative;
 }
 a {
-  color: white;
+  color: inherit;
   text-transform: uppercase;
   &:hover {
     color: lightblue;
@@ -34,4 +34,14 @@ a {
   -webkit-line-clamp: 5;
   -webkit-box-orient: vertical;
 }
+
+.bg-mist {
+  background-color: rgb(0, 255, 0);
+  opacity: 0.5;
+}
+
+.bg-iza {
+  background-color: #efb5ff;
+}
+
 @import "./btn.scss";
