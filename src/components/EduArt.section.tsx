@@ -4,6 +4,9 @@ import { useFetchData } from "../hooks/useFetch";
 import { MediaRef } from "../utils/helpers";
 import MediaComponent from "./Media";
 import { AnimatePresence, motion } from "motion/react";
+import { Col, Row } from "react-bootstrap";
+import AnimatedButton from "./AnimatedButton";
+
 type Object = {
   media: MediaRef;
   key: Key;
@@ -13,8 +16,11 @@ type Object = {
 export default function EduArtContent() {
   const { data } = useFetchData<Work[]>("works?unique=true");
   const [array, setArray] = useState<Object[]>([]);
+  const [hoverDirection, setHoverDirection] = useState<"left" | "right" | null>(
+    null
+  );
 
-  const maxImages = 16;
+  const maxImages = 8;
   const delay = 12000;
 
   const limitedData = useMemo(
@@ -62,6 +68,7 @@ export default function EduArtContent() {
     });
   };
 
+  // Lifecycle
   useEffect(() => {
     const items = getData();
     const timeoutIds: NodeJS.Timeout[] = [];
@@ -84,22 +91,70 @@ export default function EduArtContent() {
   }, [getData]);
 
   return (
-    <div className="position-relative w-100 h-100 overflow-hidden">
+    <div
+      className="position-relative w-100 h-100 overflow-hidden"
+      style={{
+        backgroundColor: hoverDirection
+          ? hoverDirection !== "left"
+            ? "blue"
+            : "rgb(0, 255, 0)"
+          : "transparent",
+        transition: "background-color 0.3s ease-in-out",
+      }}
+    >
+      {/* overlay */}
+      <Row className="position-absolute z-2 w-100 h-100">
+        <Col
+          id="Art"
+          className="text-center d-flex justify-content-center align-items-center"
+          onMouseEnter={() => setHoverDirection("right")}
+          onMouseLeave={() => setHoverDirection(null)}
+        >
+          <AnimatedButton label="Art" />
+        </Col>
+        <Col
+          id="Education"
+          className="text-center d-flex justify-content-center align-items-center"
+          onMouseEnter={() => setHoverDirection("left")}
+          onMouseLeave={() => setHoverDirection(null)}
+        >
+          <AnimatedButton label="Education" />
+        </Col>
+      </Row>
+
+      <div
+        id="Backdrop"
+        className="w-100 h-100  opacity-50 z-1 position-absolute"
+        style={{
+          backgroundColor: hoverDirection
+            ? hoverDirection !== "left"
+              ? "blue"
+              : "rgb(0, 255, 0)"
+            : "transparent",
+          transition: "background-color 0.3s ease-in-out",
+        }}
+      ></div>
+
+      {/* background */}
       <AnimatePresence>
         {array.map((obj) => (
           <motion.div
             key={obj.key}
             className="position-absolute"
-            initial={{
-              opacity: 0,
-            }}
+            initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ opacity: { duration: 1, ease: "easeInOut" } }}
             style={{
               top: obj.position.top,
               left: obj.position.left,
-              transform: "translate(-50%, -50%)",
+              transform: `translate(-50%, -50%) ${
+                hoverDirection === "right"
+                  ? "translateX(-200%)"
+                  : hoverDirection === "left"
+                    ? "translateX(200%)"
+                    : ""
+              }`,
               width: "500px",
               height: "auto",
             }}
@@ -114,7 +169,7 @@ export default function EduArtContent() {
                 height: "auto",
               }}
             >
-              <MediaComponent media={obj.media} />{" "}
+              <MediaComponent media={obj.media} />
             </motion.div>
           </motion.div>
         ))}
