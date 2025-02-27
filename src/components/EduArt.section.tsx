@@ -6,6 +6,7 @@ import MediaComponent from "./Media";
 import { AnimatePresence, motion } from "motion/react";
 import { Col, Row } from "react-bootstrap";
 import AnimatedButton from "./AnimatedButton";
+import { useNavigate } from "react-router-dom";
 
 type Object = {
   media: MediaRef;
@@ -19,6 +20,7 @@ export default function EduArtContent() {
   const [hoverDirection, setHoverDirection] = useState<"left" | "right" | null>(
     null
   );
+  const navigate = useNavigate();
 
   const maxImages = 8;
   const delay = 12000;
@@ -90,6 +92,10 @@ export default function EduArtContent() {
     return () => timeoutIds.forEach((id) => clearTimeout(id));
   }, [getData]);
 
+  const handleClick = (label: "art" | "education") => {
+    navigate(label);
+  };
+
   return (
     <div
       className="position-relative w-100 h-100 overflow-hidden"
@@ -110,7 +116,7 @@ export default function EduArtContent() {
           onMouseEnter={() => setHoverDirection("right")}
           onMouseLeave={() => setHoverDirection(null)}
         >
-          <AnimatedButton label="Art" />
+          <AnimatedButton label="Art" onClick={() => handleClick("art")} />
         </Col>
         <Col
           id="Education"
@@ -118,7 +124,10 @@ export default function EduArtContent() {
           onMouseEnter={() => setHoverDirection("left")}
           onMouseLeave={() => setHoverDirection(null)}
         >
-          <AnimatedButton label="Education" />
+          <AnimatedButton
+            label="Education"
+            onClick={() => handleClick("education")}
+          />
         </Col>
       </Row>
 

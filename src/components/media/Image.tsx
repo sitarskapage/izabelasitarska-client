@@ -32,9 +32,7 @@ const ImageComp = ({ imageref, className }: ImageProps) => {
       };
     }
   }, [src]); // Re-run the effect when `src` changes
-  useEffect(() => {
-    console.log("image render");
-  }, []);
+
   if (!isImageValid) {
     return (
       <div
