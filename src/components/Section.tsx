@@ -1,5 +1,5 @@
 import { motion, useScroll, useSpring, useTransform } from "framer-motion";
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import { GeneralContext } from "../contexts/GeneralContext";
 import Background from "./Background";
@@ -10,7 +10,7 @@ interface SectionProps {
   children?: React.ReactNode;
 }
 
-function Section({ id, children }: SectionProps) {
+export function Section({ id, children }: SectionProps) {
   return (
     <section
       id={id}
@@ -26,21 +26,24 @@ interface SectionHeadProps {
   footer?: React.ReactNode;
   subtitle?: React.ReactNode;
 }
-
-function Head({ subtitle, footer }: SectionHeadProps) {
-  const { preferences } = useContext(GeneralContext);
+function ScrollEffects() {
   const { scrollY } = useScroll();
-
   const smoothScrollY = useSpring(scrollY, { stiffness: 100, damping: 20 });
 
-  const fontSize = useTransform(
+  return useTransform(
     smoothScrollY,
     [0, window.innerHeight / 2],
     ["15vw", "5vw"]
   );
+}
+export function Head({ subtitle, footer }: SectionHeadProps) {
+  const { preferences } = useContext(GeneralContext);
 
+  const fontSize = ScrollEffects();
+  useEffect(() => console.log("RERENDERED"));
   if (!preferences) return null;
   const { homepage_media } = preferences;
+
   return (
     <Container
       className="d-flex flex-column py-5 gap-5"
@@ -83,8 +86,3 @@ function Head({ subtitle, footer }: SectionHeadProps) {
     </Container>
   );
 }
-
-// Attach the Head subcomponent to Section
-Section.Head = Head;
-
-export default Section;
