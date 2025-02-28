@@ -1,22 +1,21 @@
-import { useNavigate } from "react-router-dom";
+import AnimatedButton from "./AnimatedButton";
 
 const PortfolioButton = ({ url }: { url?: string | null }) => {
-  const navigate = useNavigate();
-
   function handleClick() {
     if (url) {
       // If a portfolio PDF URL is available, open it in a new tab
       window.open(url, "_blank");
     } else {
       // If no PDF is available, navigate to the contact tab
-      navigate("/contact");
+      window.open("mailto:sitarskapage@gmail.com", "_blank");
     }
   }
 
   return (
-    <span className="link" onClick={handleClick}>
-      {url ? "Download (PDF)" : "Request PDF"}
-    </span>
+    <AnimatedButton
+      label={url ? "Download (PDF)" : "Request PDF"}
+      onClick={handleClick}
+    />
   );
 };
 

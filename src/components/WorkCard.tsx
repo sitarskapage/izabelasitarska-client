@@ -1,58 +1,41 @@
 import { Col, Container, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { is3d, isImage, isVideo } from "../utils/helpers";
-import Image from "./media/Image";
-import Video from "./media/Video";
 import { Work } from "../../types/Work";
-import { ImageRefSchema } from "@jakubkanna/labguy-front-schema";
-import Model from "./media/Model";
+import MediaComponent from "./Media";
+
 interface CardProps {
   work: Work;
   onClick?: () => void;
 }
 
 export default function WorkCard({ work }: CardProps) {
-  const { general, dimensions, year, media } = work;
+  const { general, media } = work;
   const { title, slug } = general;
 
   if (!media) return <p>No media</p>;
 
-  const image = isImage(media[0]) && media[0];
-  const video = isVideo(media[0]) && media[0];
-  const threed = is3d(media[0]) && media[0];
-
   return (
-    <Link to={"/works/" + slug}>
+    <Link to={"/" + slug}>
       <Container>
         <Row className="gap-3 p-2">
-          <Col xs={12}>
-            {image && <Image imageref={image}></Image>}
-            {video && (
-              <Video videoref={video} playerProps={{ light: true }}></Video>
-            )}
-            {threed &&
-              (threed.poster ? (
-                <Image
-                  imageref={threed.poster as ImageRefSchema}
-                  className="img-fluid"
-                />
-              ) : (
-                <Model threedref={threed} />
-              ))}
+          <Col
+            xs={12}
+            className="position-relative bg-dark p-0"
+            style={{ height: "75dvh" }}
+          >
+            {/*  title */}
+            <div className="position-absolute z-3 text-center top-50 start-50 translate-middle">
+              <span className="display-4 fw-bolder">{title}</span>
+            </div>
+            {/* backdrop */}
+            <div className="position-absolute start-0 top-0 bg-dark opacity-50 z-2 w-100 h-100"></div>
+            {/* media */}
+            <MediaComponent
+              media={media[0]}
+              className="w-100 h-100 object-fit-cover"
+            />
           </Col>
         </Row>
-        <Row className="text-center">
-          <span style={{ textDecoration: "none" }}>
-            <span style={{ fontStyle: "italic" }}>{title}</span>
-            {dimensions && (
-              <>
-                {", " + dimensions + " "}
-                <span style={{ fontSize: "0.8em" }}>(cm)</span>
-              </>
-            )}
-            {year && <>{", " + year}</>}{" "}
-          </span>
-        </Row>{" "}
       </Container>
     </Link>
   );

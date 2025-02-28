@@ -33,6 +33,7 @@ export default function Layout({
       {/* meta */}
       <Helmet>
         <title>{metadata.title}</title>
+        <meta name="title" content={metadata.title} />
         <meta name="description" content={metadata.description} />
         <meta name="author" content={metadata.name} />
       </Helmet>
@@ -41,7 +42,7 @@ export default function Layout({
       {title && (
         <Row
           id="SinglePageHeader"
-          className={`py-4 z-1 ${header.className || ""}`.trim()}
+          className={`py-4 z-1 text-center font-imperial ${header.className || ""}`.trim()}
           style={{ marginBottom: "-1px" }}
         >
           {header.node || <h1 className="display-1 fw-normal mb-0">{title}</h1>}

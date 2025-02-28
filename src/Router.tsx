@@ -6,12 +6,13 @@ import { fetchData } from "./utils/loader";
 import EduArtContent from "./components/EduArt.section";
 import { AnimatePresence } from "motion/react";
 import { useFetchData } from "./hooks/useFetch";
-import { Work } from "../types/Work";
+import { Work as WorkType } from "../types/Work";
 import EduOrArt from "./pages/single/EduOrArt";
+import Work from "./pages/single/Work";
 
 export default function Router() {
   const location = useLocation();
-  const { data } = useFetchData<Work[]>("works?unique=true");
+  const { data } = useFetchData<WorkType[]>("works?unique=true");
   if (!data) return null;
 
   return (
@@ -39,6 +40,8 @@ export default function Router() {
           element={<Bio />}
           loader={() => fetchData("profile/1")}
         />
+        {/* work route */}
+        <Route path=":slug" element={<Work />} />
 
         {/* Catch-All for Not Found */}
         <Route path="*" element={<NotFoundPage />} />

@@ -12,6 +12,7 @@ export default function Header() {
   const { preferences } = useContext(GeneralContext);
   const headerRef = useRef<HTMLDivElement | null>(null);
   const currentYear = new Date().getFullYear();
+  const [email, setEmail] = useState("MAIL");
 
   // Measure content height when it is rendered
   // useEffect(() => {
@@ -55,10 +56,15 @@ export default function Header() {
     );
   };
 
+  const change = () => {
+    setEmail("sitarskapage@gmail.com");
+  };
+
   return (
     <header
-      className="container-fluid position-fixed bottom-0 start-0 z-3 bg-iza"
+      className="container-fluid position-fixed bottom-0 start-0 bg-iza"
       ref={headerRef}
+      style={{ zIndex: 1000 }}
     >
       <Helmet>
         <title>{preferences?.artists_name}</title>
@@ -115,8 +121,15 @@ export default function Header() {
               </div>
 
               <div id="Contact" className="ps-2 d-flex gap-2">
-                <Link to="mail">Mail</Link>
-                <Link to="instagram">IG</Link>
+                <a className="link" onClick={change}>
+                  {email}
+                </a>
+                <a
+                  href="https://www.instagram.com/izabela_sitarska_fashion_dog/"
+                  target="_blank"
+                >
+                  IG
+                </a>
               </div>
               <div id="Copyrights" className="ms-auto">
                 <small className="d-flex gap-1">

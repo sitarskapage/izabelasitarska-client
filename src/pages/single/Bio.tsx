@@ -3,8 +3,8 @@ import { ProfileSchema } from "@jakubkanna/labguy-front-schema";
 import { useContext } from "react";
 import { GeneralContext } from "../../contexts/GeneralContext";
 import PortfolioButton from "../../components/PortfolioButton";
-import Layout from "../../components/layout/Layout";
 import { useFetchData } from "../../hooks/useFetch";
+import { Container } from "react-bootstrap";
 
 export default function Bio() {
   const { preferences } = useContext(GeneralContext);
@@ -25,13 +25,14 @@ export default function Bio() {
   };
 
   return (
-    <Layout title="Bio" description={statement || undefined}>
-      <div id="Statement">
-        <h2>Statement</h2>
+    <Container className="py-5 my-5">
+      <h1 className="display-1 text-center font-imperial">Bio</h1>
+      <div id="Statement" className="py-4">
+        {/* <h2>Statement</h2> */}
         <div>{statement && HTMLReactParser(statement)}</div>
       </div>
       <div id="Additional">
-        <h2>Additional</h2>
+        {/* <h2>Additional</h2> */}
         {arrayToHtml(additional)}
       </div>
       {preferences?.enable_portfolio_pdf && (
@@ -40,6 +41,6 @@ export default function Bio() {
           <PortfolioButton url={data.portfolio_pdf_url} />
         </div>
       )}
-    </Layout>
+    </Container>
   );
 }
