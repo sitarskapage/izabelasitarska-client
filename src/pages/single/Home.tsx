@@ -1,4 +1,4 @@
-import { Col, Row } from "react-bootstrap";
+import { Col, Container, Row } from "react-bootstrap";
 import Layout from "../../components/layout/Layout";
 import { Head, Section } from "../../components/Section";
 import { Outlet } from "react-router-dom";
@@ -19,11 +19,11 @@ export default function Homepage() {
               key={"edu-art"}
               style={{
                 minHeight: "90dvh",
-                display: "flex",
-                flexDirection: "column",
               }}
             >
-              <Outlet />
+              <Container fluid className="p-0">
+                <Outlet />
+              </Container>
             </Section>
           </Col>
         </Row>

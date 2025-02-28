@@ -1,6 +1,7 @@
 @import "../../node_modules/bootstrap/scss/bootstrap";
 @import url("https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100..900;1,100..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=block");
 @import url("https://fonts.googleapis.com/css2?family=Archivo+Narrow:ital,wght@0,400..700;1,400..700&family=Archivo:ital,wght@0,100..900;1,100..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Imperial+Script&display=swap");
 
 $dark: #1e2724;
 $light: #d2efe8;
@@ -20,7 +21,7 @@ a {
   color: inherit;
   text-transform: uppercase;
   &:hover {
-    color: lightblue;
+    color: lightblue !important;
   }
 }
 .archivo-narrow {
@@ -44,6 +45,14 @@ a {
 
 .bg-iza {
   background-color: #efb5ff;
+}
+
+.bg-dark {
+  background-color: black !important;
+}
+
+.font-imperial {
+  font-family: "Imperial Script", cursive;
 }
 
 @import "./btn.scss";
