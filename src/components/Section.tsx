@@ -8,13 +8,14 @@ import { Link } from "react-router-dom";
 interface SectionProps {
   id: string;
   children?: React.ReactNode;
+  style?: React.CSSProperties;
 }
 
-export function Section({ id, children }: SectionProps) {
+export function Section({ id, children, style }: SectionProps) {
   return (
     <section
       id={id}
-      style={{ height: "90dvh" }}
+      style={style}
       className="overflow-hidden position-relative"
     >
       {children}

@@ -1,6 +1,5 @@
 import { useMemo, useCallback, useState, useEffect, Key } from "react";
 import { Work } from "../../types/Work";
-import { useFetchData } from "../hooks/useFetch";
 import { MediaRef } from "../utils/helpers";
 import MediaComponent from "./Media";
 import { AnimatePresence, motion } from "motion/react";
@@ -14,12 +13,12 @@ type Object = {
   position: { top: string; left: string };
 };
 
-export default function EduArtContent() {
-  const { data } = useFetchData<Work[]>("works?unique=true");
+export default function EduArtContent({ data }: { data: Work[] }) {
   const [array, setArray] = useState<Object[]>([]);
   const [hoverDirection, setHoverDirection] = useState<"left" | "right" | null>(
     null
   );
+
   const navigate = useNavigate();
 
   const maxImages = 8;
@@ -98,7 +97,7 @@ export default function EduArtContent() {
 
   return (
     <div
-      className="position-relative w-100 h-100 overflow-hidden"
+      className="position-relative w-100  overflow-hidden"
       style={{
         backgroundColor: hoverDirection
           ? hoverDirection !== "left"
@@ -106,6 +105,7 @@ export default function EduArtContent() {
             : "rgb(0, 255, 0)"
           : "transparent",
         transition: "background-color 0.3s ease-in-out",
+        height: "90dvh",
       }}
     >
       {/* overlay */}

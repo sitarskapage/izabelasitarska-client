@@ -2,22 +2,23 @@ import { ReactNode, useContext } from "react";
 import { Col, Row } from "react-bootstrap";
 import { GeneralContext } from "../../contexts/GeneralContext";
 import { Helmet } from "react-helmet";
-
 import { ProfileSchema } from "@jakubkanna/labguy-front-schema";
 
 export default function Layout({
   children,
   title,
   description,
-  footer,
-  header,
+  header = {},
+  body = {},
+  footer = {},
 }: {
   children: ReactNode;
   title?: string;
   description?: string;
   profile?: ProfileSchema;
-  footer?: ReactNode;
-  header?: ReactNode;
+  header?: { className?: string; node?: ReactNode };
+  body?: { className?: string; node?: ReactNode };
+  footer?: { className?: string; node?: ReactNode };
 }) {
   const { preferences } = useContext(GeneralContext);
 
@@ -40,26 +41,26 @@ export default function Layout({
       {title && (
         <Row
           id="SinglePageHeader"
-          className="py-4 z-1"
+          className={`py-4 z-1 ${header.className || ""}`.trim()}
           style={{ marginBottom: "-1px" }}
         >
-          {header || <h1 className="display-1 fw-normal mb-0">{title}</h1>}
+          {header.node || <h1 className="display-1 fw-normal mb-0">{title}</h1>}
         </Row>
       )}
 
       {/* Body */}
-      <Row className=" flex-grow-1">
+      <Row className={`flex-grow-1 ${body.className || ""}`.trim()}>
         <Col xs={12}>
           <Row id="SinglePageContent" className="row flex-grow-1">
-            {children}
+            {body.node || children}
           </Row>
         </Col>
       </Row>
 
       {/* Footer */}
-      {footer && (
-        <Col xs={12} id="SinglePageFooter">
-          <Row>{footer}</Row>
+      {footer.node && (
+        <Col xs={12} id="SinglePageFooter" className={footer.className}>
+          <Row>{footer.node}</Row>
         </Col>
       )}
     </>

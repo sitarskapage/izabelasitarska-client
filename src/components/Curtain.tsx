@@ -24,7 +24,7 @@ export const Curtain = () => {
         initial={{ height: "200dvh", y: "-200dvh" }}
         animate={{ y: "200dvh" }}
         // exit={{ y: "100dvh" }}
-        transition={{ bounce: 0, duration: 0.55 }}
+        transition={{ bounce: 0, duration: 0.66 }}
         onAnimationComplete={() => setIsHidden(true)}
         hidden={isHidden}
       >

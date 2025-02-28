@@ -4,12 +4,15 @@ import Bio from "./pages/single/Bio";
 import NotFoundPage from "./pages/404";
 import { fetchData } from "./utils/loader";
 import EduArtContent from "./components/EduArt.section";
-import Art from "./pages/single/Art";
-import Edu from "./pages/single/Edu";
 import { AnimatePresence } from "motion/react";
+import { useFetchData } from "./hooks/useFetch";
+import { Work } from "../types/Work";
+import EduOrArt from "./pages/single/EduOrArt";
 
 export default function Router() {
   const location = useLocation();
+  const { data } = useFetchData<Work[]>("works?unique=true");
+  if (!data) return null;
 
   return (
     <AnimatePresence initial={false} mode="wait">
@@ -17,11 +20,17 @@ export default function Router() {
         {/* Root Route */}
         <Route path="/" element={<Homepage />}>
           {/* home */}
-          <Route path="" element={<EduArtContent />} />
+          <Route path="" element={<EduArtContent data={data} />} />
           {/* art */}
-          <Route path="art" element={<Art />} />
+          <Route
+            path="art"
+            element={<EduOrArt data={data} variant={"art"} />}
+          />
           {/* education */}
-          <Route path="education" element={<Edu />} />
+          <Route
+            path="education"
+            element={<EduOrArt data={data} variant="education" />}
+          />
         </Route>
 
         {/* Bio Route */}
