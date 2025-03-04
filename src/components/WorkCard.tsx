@@ -2,20 +2,50 @@ import { Col, Container, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { Work } from "../../types/Work";
 import MediaComponent from "./Media";
+import { Post } from "../pages/Posts";
+import { useEffect, useState } from "react";
+import { GeneralSectionSchema } from "@jakubkanna/labguy-front-schema";
+import { MediaRef } from "../utils/helpers";
 
 interface CardProps {
-  work: Work;
+  work: Work | Post;
+  variant: "art" | "edu";
   onClick?: () => void;
 }
 
-export default function WorkCard({ work }: CardProps) {
-  const { general, media } = work;
+export default function WorkCard({ work: item, variant = "art" }: CardProps) {
+  const [general, setGeneral] = useState<GeneralSectionSchema | null>(null);
+  const [media, setMedia] = useState<MediaRef[]>([]);
+
+  useEffect(() => {
+    if ("media" in item && Array.isArray(item.media) && item.media.length) {
+      console.log(item.general, item.media); // Logs correctly
+      setGeneral(item.general); // ✅ Updates state
+      setMedia(item.media);
+    } else if ("content" in item && Array.isArray(item.content)) {
+      const itemMedia = item.content
+        .filter(
+          (block) => "images" in block || "videos" in block || "models" in block
+        )
+        .flatMap((block) => [
+          ...(block.images ?? []),
+          ...(block.videos ?? []),
+          ...(block.models ?? []),
+        ]);
+
+      setGeneral(item.general);
+      setMedia(itemMedia);
+    }
+  }, [item]);
+
+  if (!general) return <p>Invalid content</p>;
+
   const { title, slug } = general;
 
-  if (!media) return <p>No media</p>;
+  if (!media.length) return <p>No media</p>;
 
   return (
-    <Link to={"/" + slug}>
+    <Link to={`/${variant}/${slug}`}>
       <Container>
         <Row className="gap-3 p-2">
           <Col

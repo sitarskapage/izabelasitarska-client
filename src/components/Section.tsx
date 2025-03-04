@@ -1,9 +1,10 @@
 import { motion, useScroll, useSpring, useTransform } from "framer-motion";
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import { GeneralContext } from "../contexts/GeneralContext";
 import Background from "./Background";
 import { Link } from "react-router-dom";
+import useIsMobile from "../hooks/useIsMobile";
 
 interface SectionProps {
   id: string;
@@ -39,9 +40,8 @@ function ScrollEffects() {
 }
 export function Head({ subtitle, footer }: SectionHeadProps) {
   const { preferences } = useContext(GeneralContext);
-
+  const isMobile = useIsMobile();
   const fontSize = ScrollEffects();
-  useEffect(() => console.log("RERENDERED"));
   if (!preferences) return null;
   const { homepage_media } = preferences;
 
@@ -70,12 +70,18 @@ export function Head({ subtitle, footer }: SectionHeadProps) {
       <Row className="flex-grow-1">
         <Col className="h-100 d-flex justify-content-center align-items-center text-light d-flex flex-column">
           <Background media={homepage_media} />
-          <p className="archivo-narrow text-center text-uppercase text-elipsis w-50">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus
-            expedita doloremque rem corporis consequatur delectus dolor
-            voluptates asperiores officia voluptate incidunt, temporibus, in
-            nulla neque sunt. Sequi ab nesciunt culpa.
-          </p>
+          {!isMobile && (
+            <p
+              className={
+                "archivo-narrow text-center text-uppercase w-50 text-ellipsis-5"
+              }
+            >
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus
+              expedita doloremque rem corporis consequatur delectus dolor
+              voluptates asperiores officia voluptate incidunt, temporibus, in
+              nulla neque sunt. Sequi ab nesciunt culpa.
+            </p>
+          )}
           <Link to={"/bio"}>read more</Link>
         </Col>
       </Row>

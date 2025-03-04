@@ -9,11 +9,17 @@ import { useFetchData } from "./hooks/useFetch";
 import { Work as WorkType } from "../types/Work";
 import EduOrArt from "./pages/single/EduOrArt";
 import Work from "./pages/single/Work";
+import { Post as PostType } from "./pages/Posts";
+import Post from "./pages/single/Post";
 
 export default function Router() {
   const location = useLocation();
-  const { data } = useFetchData<WorkType[]>("works?unique=true");
-  if (!data) return null;
+  const { data: works } = useFetchData<WorkType[]>("works?unique=true");
+  const { data: posts } = useFetchData<PostType[]>("posts");
+
+  const data = [...(works || []), ...(posts || [])];
+
+  if (!data || !works || !posts) return null;
 
   return (
     <AnimatePresence initial={false} mode="wait">
@@ -25,13 +31,10 @@ export default function Router() {
           {/* art */}
           <Route
             path="art"
-            element={<EduOrArt data={data} variant={"art"} />}
+            element={<EduOrArt data={works} variant={"art"} />}
           />
-          {/* education */}
-          <Route
-            path="education"
-            element={<EduOrArt data={data} variant="education" />}
-          />
+          {/* edu */}
+          <Route path="edu" element={<EduOrArt data={posts} variant="edu" />} />
         </Route>
 
         {/* Bio Route */}
@@ -41,7 +44,8 @@ export default function Router() {
           loader={() => fetchData("profile/1")}
         />
         {/* work route */}
-        <Route path=":slug" element={<Work />} />
+        <Route path="art/:slug" element={<Work />} />
+        <Route path="edu/:slug" element={<Post />} />
 
         {/* Catch-All for Not Found */}
         <Route path="*" element={<NotFoundPage />} />

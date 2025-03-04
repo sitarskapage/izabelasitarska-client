@@ -1,4 +1,5 @@
 import { useMemo, useCallback, useState, useEffect, Key } from "react";
+import { Post } from "../pages/Posts";
 import { Work } from "../../types/Work";
 import { MediaRef } from "../utils/helpers";
 import MediaComponent from "./Media";
@@ -6,6 +7,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { Col, Row } from "react-bootstrap";
 import AnimatedButton from "./AnimatedButton";
 import { useNavigate } from "react-router-dom";
+import { Image } from "@jakubkanna/labguy-front-schema/dist/Post.schema";
 
 type Object = {
   media: MediaRef;
@@ -13,7 +15,7 @@ type Object = {
   position: { top: string; left: string };
 };
 
-export default function EduArtContent({ data }: { data: Work[] }) {
+export default function EduArtContent({ data }: { data: (Work | Post)[] }) {
   const [array, setArray] = useState<Object[]>([]);
   const [hoverDirection, setHoverDirection] = useState<"left" | "right" | null>(
     null
@@ -29,18 +31,34 @@ export default function EduArtContent({ data }: { data: Work[] }) {
     [data, maxImages]
   );
 
-  const getData = useCallback(
-    () =>
-      limitedData.map(
-        (work) =>
-          work.general.published &&
-          work.media?.length && {
-            media: work.media[0],
-            key: work.general.title,
+  const getData = useCallback(() => {
+    return limitedData
+      .filter((item) => item.general?.published)
+      .map((item) => {
+        if ("media" in item && Array.isArray(item.media) && item.media.length) {
+          return {
+            media: item.media[0],
+            key: item.general.title,
+          };
+        } else if ("content" in item && Array.isArray(item.content)) {
+          const firstImageBlock = item.content.find(
+            (block) =>
+              "images" in block &&
+              Array.isArray(block.images) &&
+              block.images.length > 0
+          ) as Image | undefined;
+
+          if (firstImageBlock) {
+            return {
+              media: firstImageBlock?.images?.[0] as MediaRef, // Assuming images are compatible with MediaRef
+              key: `post-${item.generalId}`,
+            };
           }
-      ),
-    [limitedData]
-  );
+        }
+        return null;
+      })
+      .filter((item) => item !== null) as Object[];
+  }, [limitedData]);
 
   const getRandomPosition = () => ({
     top: `${Math.random() * 80 + 10}%`,
@@ -82,7 +100,7 @@ export default function EduArtContent({ data }: { data: Work[] }) {
             { ...item, position: getRandomPosition(), key: index + Date.now() },
           ]);
         },
-        index * Math.random() * 1000
+        index * Math.random() * 2000
       );
 
       timeoutIds.push(timeoutId);
@@ -91,7 +109,7 @@ export default function EduArtContent({ data }: { data: Work[] }) {
     return () => timeoutIds.forEach((id) => clearTimeout(id));
   }, [getData]);
 
-  const handleClick = (label: "art" | "education") => {
+  const handleClick = (label: "art" | "edu") => {
     navigate(label);
   };
 
@@ -126,7 +144,7 @@ export default function EduArtContent({ data }: { data: Work[] }) {
         >
           <AnimatedButton
             label="Education"
-            onClick={() => handleClick("education")}
+            onClick={() => handleClick("edu")}
           />
         </Col>
       </Row>
@@ -153,7 +171,7 @@ export default function EduArtContent({ data }: { data: Work[] }) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ opacity: { duration: 1, ease: "easeInOut" } }}
+            transition={{ opacity: { duration: 2, ease: "easeInOut" } }}
             style={{
               top: obj.position.top,
               left: obj.position.left,
