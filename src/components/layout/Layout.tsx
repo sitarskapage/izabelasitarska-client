@@ -42,10 +42,12 @@ export default function Layout({
       {title && (
         <Row
           id="SinglePageHeader"
-          className={`py-4 z-1 text-center font-imperial ${header.className || ""}`.trim()}
+          className={`py-4 z-1 text-center  ${header.className || ""}`.trim()}
           style={{ marginBottom: "-1px" }}
         >
-          {header.node || <h1 className="display-1 fw-normal mb-0">{title}</h1>}
+          {header.node || (
+            <h1 className="display-1 fw-normal mb-0 font-imperial">{title}</h1>
+          )}
         </Row>
       )}
 

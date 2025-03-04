@@ -5,14 +5,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 // Static routes (no dynamic slugs)
-const staticRoutes = [
-  "/",
-  "/bio",
-  "/contact",
-  "/calendar",
-  "/works",
-  "/projects",
-];
+const staticRoutes = ["/", "/bio", "/art", "/edu"];
 
 // Assuming you have a function to fetch dynamic slugs for posts, projects, etc.
 const fetchSlugs = async (routeType) => {
@@ -63,7 +56,7 @@ const fetchSlugs = async (routeType) => {
 const generateSitemap = async () => {
   // Get dynamic slugs
   const postSlugs = await fetchSlugs("post");
-  const projectSlugs = await fetchSlugs("project");
+  // const projectSlugs = await fetchSlugs("project");
   const workSlugs = await fetchSlugs("work");
 
   // Get the base URL from environment variables
@@ -80,17 +73,17 @@ const generateSitemap = async () => {
 
   // Add dynamic routes for posts
   postSlugs.forEach((slug) => {
-    sitemap += `  <url>\n    <loc>${baseUrl}/${slug}</loc>\n  </url>\n`;
+    sitemap += `  <url>\n    <loc>${baseUrl}/edu/${slug}</loc>\n  </url>\n`;
   });
 
   // Add dynamic routes for projects
-  projectSlugs.forEach((slug) => {
-    sitemap += `  <url>\n    <loc>${baseUrl}/projects/${slug}</loc>\n  </url>\n`;
-  });
+  // projectSlugs.forEach((slug) => {
+  //   sitemap += `  <url>\n    <loc>${baseUrl}/projects/${slug}</loc>\n  </url>\n`;
+  // });
 
   // Add dynamic routes for works
   workSlugs.forEach((slug) => {
-    sitemap += `  <url>\n    <loc>${baseUrl}/works/${slug}</loc>\n  </url>\n`;
+    sitemap += `  <url>\n    <loc>${baseUrl}/art/${slug}</loc>\n  </url>\n`;
   });
 
   // Close URL set
@@ -104,7 +97,7 @@ const generateSitemap = async () => {
     path.join(__dirname, "../../", "public", "sitemap.xml"),
     sitemap
   );
-  console.log("Sitemap generated: " + "public/sitemap.xml");
+  console.debug("Sitemap generated: " + "public/sitemap.xml");
 };
 
 // Call the function to generate the sitemap

@@ -26,13 +26,13 @@ export default class Queue {
   }
 
   print() {
-    console.log(this.items.join(" -> "));
+    console.debug(this.items.join(" -> "));
   }
 
   rotate() {
     if (this.isEmpty()) return;
     const lastItem = this.dequeue();
-    console.log("dequeue", lastItem);
+    console.debug("dequeue", lastItem);
     this.items.unshift(lastItem);
   }
 }

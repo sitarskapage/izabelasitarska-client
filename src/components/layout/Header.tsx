@@ -7,20 +7,14 @@ import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 import { motion } from "motion/react";
 import { artists_name } from "../../utils/helpers";
+import useIsMobile from "../../hooks/useIsMobile";
 
 export default function Header() {
   const { preferences } = useContext(GeneralContext);
   const headerRef = useRef<HTMLDivElement | null>(null);
   const currentYear = new Date().getFullYear();
   const [email, setEmail] = useState("MAIL");
-
-  // Measure content height when it is rendered
-  // useEffect(() => {
-  //   if (headerRef.current) {
-  //     const height = headerRef.current.clientHeight;
-  //     // if (height) setHeaderHeight(height);
-  //   }
-  // }, [setHeaderHeight, isMobile]);
+  const isMobile = useIsMobile();
 
   const MarqueeText = () => {
     const textRef = useRef<HTMLDivElement | null>(null);
@@ -32,10 +26,12 @@ export default function Header() {
       }
     }, []);
 
+    const marqueeWidth = 70;
+
     return (
       <div
         style={{
-          width: "35px",
+          width: marqueeWidth + "px",
           overflow: "hidden",
           whiteSpace: "nowrap",
           position: "relative",
@@ -43,7 +39,7 @@ export default function Header() {
       >
         <motion.div
           ref={textRef}
-          initial={{ x: "40px" }}
+          initial={{ x: marqueeWidth * 1.1 + "px" }}
           animate={{ x: `-${textWidth}px` }} // Move by actual content width
           transition={{ repeat: Infinity, duration: 8, ease: "linear" }}
           style={{ display: "inline-block" }}
@@ -106,10 +102,10 @@ export default function Header() {
         <link rel="manifest" href="/favicon/site.webmanifest" />
       </Helmet>
       <Navbar expand="lg" className="p-1" style={{ fontSize: "14.5px" }}>
-        <Container>
+        <Container className={isMobile ? "py-2" : ""}>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
-            <Nav id="Menu" className="w-100 gap-2">
+            <Nav id="Menu" className={"w-100" + (isMobile ? " py-3 fs-1" : "")}>
               <div id="Navigation" className="ps-2 d-flex gap-2">
                 <Link to="/">Home</Link>
                 <Link to="bio">Bio</Link>
@@ -117,7 +113,7 @@ export default function Header() {
 
               <div id="Content" className="ps-2 d-flex gap-2">
                 <Link to="art">Art</Link>
-                <Link to="education">Education</Link>
+                <Link to="edu">Education</Link>
               </div>
 
               <div id="Contact" className="ps-2 d-flex gap-2">
