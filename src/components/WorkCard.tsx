@@ -9,7 +9,7 @@ import { MediaRef } from "../utils/helpers";
 
 interface CardProps {
   work: Work | Post;
-  variant: "art" | "edu";
+  variant?: "art" | "edu";
   onClick?: () => void;
 }
 
