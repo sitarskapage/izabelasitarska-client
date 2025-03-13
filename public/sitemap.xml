@@ -1,42 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>http://localhost:5173/</loc>
+    <loc>undefined/</loc>
   </url>
   <url>
-    <loc>http://localhost:5173/bio</loc>
+    <loc>undefined/bio</loc>
   </url>
   <url>
-    <loc>http://localhost:5173/art</loc>
+    <loc>undefined/art</loc>
   </url>
   <url>
-    <loc>http://localhost:5173/edu</loc>
+    <loc>undefined/edu</loc>
   </url>
   <url>
-    <loc>http://localhost:5173/edu/first-post</loc>
+    <loc>undefined/edu/first-post</loc>
   </url>
   <url>
-    <loc>http://localhost:5173/art/first-work</loc>
-  </url>
-  <url>
-    <loc>http://localhost:5173/art/another-one</loc>
-  </url>
-  <url>
-    <loc>http://localhost:5173/art/something-that-has-been-a-work</loc>
-  </url>
-  <url>
-    <loc>http://localhost:5173/art/black-moon</loc>
-  </url>
-  <url>
-    <loc>http://localhost:5173/art/oranges-in-water</loc>
-  </url>
-  <url>
-    <loc>http://localhost:5173/art/yooooaaaaahh-some-work-title</loc>
-  </url>
-  <url>
-    <loc>http://localhost:5173/art/yes-sir</loc>
-  </url>
-  <url>
-    <loc>http://localhost:5173/art/ay</loc>
+    <loc>undefined/art/first-work</loc>
   </url>
 </urlset>
