@@ -7,7 +7,7 @@ import AnimatedButton from "../../components/AnimatedButton";
 import { Post } from "../Posts";
 
 export default function EduOrArt({
-  data: init,
+  data,
   variant = "edu",
 }: {
   data: Work[] | Post[];
@@ -15,9 +15,6 @@ export default function EduOrArt({
 }) {
   const isArt = variant == "art";
 
-  const data = init.filter((item) =>
-    item.general.tags.some((tag: { title: string }) => tag.title === variant)
-  );
   const navigate = useNavigate();
 
   return (

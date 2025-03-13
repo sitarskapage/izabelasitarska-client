@@ -5,6 +5,9 @@ import { GeneralContext } from "../contexts/GeneralContext";
 import Background from "./Background";
 import { Link } from "react-router-dom";
 import useIsMobile from "../hooks/useIsMobile";
+import { useFetchData } from "../hooks/useFetch";
+import { ProfileSchema } from "@jakubkanna/labguy-front-schema";
+import HTMLReactParser from "html-react-parser/lib/index";
 
 interface SectionProps {
   id: string;
@@ -40,10 +43,12 @@ function ScrollEffects() {
 }
 export function Head({ subtitle, footer }: SectionHeadProps) {
   const { preferences } = useContext(GeneralContext);
+  const { data: profile } = useFetchData<ProfileSchema>("profile/1");
   const isMobile = useIsMobile();
   const fontSize = ScrollEffects();
   if (!preferences) return null;
   const { homepage_media } = preferences;
+  const statement = profile?.statement && HTMLReactParser(profile.statement);
 
   return (
     <Container
@@ -76,10 +81,7 @@ export function Head({ subtitle, footer }: SectionHeadProps) {
                 "archivo-narrow text-center text-uppercase w-50 text-ellipsis-5"
               }
             >
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusamus
-              expedita doloremque rem corporis consequatur delectus dolor
-              voluptates asperiores officia voluptate incidunt, temporibus, in
-              nulla neque sunt. Sequi ab nesciunt culpa.
+              {statement}
             </p>
           )}
           <Link to={"/bio"}>read more</Link>
