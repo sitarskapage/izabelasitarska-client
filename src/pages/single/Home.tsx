@@ -11,7 +11,7 @@ export default function Homepage() {
   return (
     <Layout title="">
       <Col className="d-flex flex-column h-100">
-        <Row>
+        <Row className="bg-black">
           <Section
             id={"home"}
             key={"home"}
