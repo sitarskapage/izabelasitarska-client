@@ -6,9 +6,15 @@ import Video from "./media/Video";
 interface MediaProps {
   media: MediaRef;
   className?: string;
+  variant?: "loop" | false;
 }
 
-export default function MediaComponent({ media, className }: MediaProps) {
+export default function MediaComponent({
+  media,
+  className,
+  variant,
+}: MediaProps) {
+  const isLoop = variant == "loop";
   // Early return if no media is provided
   if (!media || media.length === 0) return;
 
@@ -19,7 +25,7 @@ export default function MediaComponent({ media, className }: MediaProps) {
       return (
         <Video
           videoref={media}
-          playerProps={{ playing: true, muted: true, loop: true }}
+          playerProps={isLoop ? { playing: true, muted: true, loop: true } : {}}
           className={className}
         />
       );
