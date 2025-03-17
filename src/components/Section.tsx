@@ -74,7 +74,7 @@ export function Head({ subtitle, footer }: SectionHeadProps) {
       </Row>
       <Row className="flex-grow-1">
         <Col className="h-100 d-flex justify-content-center align-items-center text-light d-flex flex-column">
-          <Background media={homepage_media} />
+          <Background media={homepage_media} isLoop />
           {!isMobile && (
             <p
               className={
