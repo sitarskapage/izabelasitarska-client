@@ -63,6 +63,7 @@ export default function WorkCard({ work: item, variant = "art" }: CardProps) {
             <MediaComponent
               media={media[0]}
               className="w-100 h-100 object-fit-cover"
+              variant="loop"
             />
           </Col>
         </Row>
