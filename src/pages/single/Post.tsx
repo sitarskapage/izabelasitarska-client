@@ -14,7 +14,6 @@ import { Col, Container } from "react-bootstrap";
 import { useFetchData } from "../../hooks/useFetch";
 import useIsMobile from "../../hooks/useIsMobile";
 import NotFoundPage from "../404";
-import { isLastItem } from "../../utils/helpers";
 
 interface Post extends PostSchema {
   general: GeneralSectionSchema;
@@ -24,8 +23,6 @@ function renderPostContent(content: Content | undefined) {
   if (!content) return;
 
   return content.map((block, index) => {
-    const isLast = isLastItem(index, content.length);
-
     if ("text" in block) {
       // Handle Text block
       return (
@@ -49,10 +46,7 @@ function renderPostContent(content: Content | undefined) {
       // Handle Video block
       const videos = block.videos as VideoRefSchema[];
       return videos.map((video, i) => (
-        <div
-          key={`${index}-${i}`}
-          className={isLast ? "border-dark" : "border-bottom border-dark"}
-        >
+        <div key={`${index}-${i}`}>
           <VideoComponent videoref={video} />
         </div>
       ));
@@ -83,8 +77,8 @@ export default function Post() {
           fluid={isMobile}
           className={
             isMobile
-              ? "p-0"
-              : "d-flex flex-column border-start border-end border-dark px-0 h-100"
+              ? "p-0 gap-2 pb-5"
+              : "d-flex flex-column px-0 h-100 gap-2 pb-5"
           }
         >
           {renderPostContent(content)}

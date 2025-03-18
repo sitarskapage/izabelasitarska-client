@@ -26,7 +26,7 @@ export default function Work() {
                 {dimensions && <span>{dimensions} (cm), </span>}
                 {medium && <span>{medium}, </span>}
                 {year && <span>{year}</span>}
-                {urls.length && (
+                {urls && urls.length > 0 && (
                   <>
                     <br />
                     <span>Links: </span>

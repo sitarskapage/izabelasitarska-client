@@ -25,7 +25,12 @@ export default function MediaComponent({
       return (
         <Video
           videoref={media}
-          playerProps={isLoop ? { playing: true, muted: true, loop: true } : {}}
+          playerProps={{
+            playing: isLoop,
+            muted: isLoop,
+            controls: !isLoop,
+            loop: isLoop,
+          }}
           className={className}
         />
       );
