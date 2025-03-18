@@ -23,7 +23,7 @@ export default function Work() {
           <Row>
             <Col xs={12}>
               <p id="Details" className="text-center">
-                {dimensions && <span>{dimensions} (cm), </span>}
+                {dimensions && <span>{dimensions}</span>}
                 {medium && <span>{medium}, </span>}
                 {year && <span>{year}</span>}
                 {urls && urls.length > 0 && (
