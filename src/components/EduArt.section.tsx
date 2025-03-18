@@ -196,7 +196,7 @@ export default function EduArtContent({ data }: { data: (Work | Post)[] }) {
                 height: "auto",
               }}
             >
-              <MediaComponent media={obj.media} />
+              <MediaComponent media={obj.media} variant="loop" />
             </motion.div>
           </motion.div>
         ))}
