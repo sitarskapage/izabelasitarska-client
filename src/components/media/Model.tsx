@@ -3,12 +3,10 @@ import { ThreedRef } from "@jakubkanna/labguy-front-schema";
 import { useState, useEffect, useRef } from "react";
 import { ModelViewer } from "../../../types/model-viewer";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
-import { ArrowsFullscreen, ArrowsMove } from "react-bootstrap-icons";
-import AnimatedButton from "../AnimatedButton";
+import { ArrowsMove } from "react-bootstrap-icons";
 
 export default function Model({
   threedref,
-  controls: enableControls,
 }: {
   threedref: ThreedRef;
   controls?: true;
@@ -16,8 +14,9 @@ export default function Model({
   const [src, setSrc] = useState<string | undefined>(threedref?.url);
   const [valid, setIsValid] = useState<boolean>(true);
   const [controls, setControls] = useState<boolean>(false);
-  const [fullscreen, setFullscreen] = useState<boolean>(false);
+  // const [fullscreen, setFullscreen] = useState<boolean>(false);
   const [progress, setProgress] = useState<number>(0);
+  const [tooltipVisible, setTooltipVisible] = useState<boolean>(true);
   const modelViewerRef = useRef<ModelViewer | undefined>(undefined);
 
   useEffect(() => {
@@ -72,100 +71,74 @@ export default function Model({
     }
   }, []);
 
-  const handleFullscreen = () => {
-    const modelViewer = modelViewerRef.current;
-    if (modelViewer) {
-      if (document.fullscreenElement) {
-        setFullscreen(false);
-        setControls(false);
-        document.exitFullscreen();
-      } else if ((modelViewer as unknown as HTMLElement).requestFullscreen) {
-        setFullscreen(true);
-        setControls(true);
-        (modelViewer as unknown as HTMLElement).requestFullscreen();
-      }
-    }
-  };
+  // const handleFullscreen = () => {
+  //   const modelViewer = modelViewerRef.current;
+  //   if (modelViewer) {
+  //     if (document.fullscreenElement) {
+  //       setFullscreen(false);
+  //       setControls(false);
+  //       document.exitFullscreen();
+  //     } else if ((modelViewer as unknown as HTMLElement).requestFullscreen) {
+  //       setFullscreen(true);
+  //       setControls(true);
+  //       (modelViewer as unknown as HTMLElement).requestFullscreen();
+  //     }
+  //   }
+  // };
 
   const handleControls = () => {
     setControls(!controls);
+    setTooltipVisible(false);
   };
 
   const tooltip = (
     <Tooltip id="tooltip">
-      <span className="font-monospace">
-        {!controls ? "Enable controls" : "Disable controls"}
+      <span className="small font-monospace">
+        Click to toggle <ArrowsMove />
       </span>
     </Tooltip>
   );
 
-  const tooltip2 = (
-    <Tooltip id="tooltip">
-      {!controls ? "Enable fullscreen" : "Disable fullscreen"}
-    </Tooltip>
-  );
+  // const tooltip2 = (
+  //   <Tooltip id="tooltip">
+  //     {!controls ? "Enable fullscreen" : "Disable fullscreen"}
+  //   </Tooltip>
+  // );
   return (
     valid && (
-      <div>
-        <model-viewer
-          ref={modelViewerRef}
-          src={src}
-          id={"model-viewer-" + threedref.public_id}
-          class="model-viewer"
-          autoplay
-          camera-controls={controls ? true : undefined}
-          onError={(e: unknown) => console.error("Error loading model:", e)}
-          alt={""}
-          style={{ backgroundColor: threedref.backgroundColor || "none" }}
-          poster={threedref.poster?.url as string}
-          exposure="0.75"
-        >
-          <div
-            slot="progress-bar"
-            className="custom-progress-bar d-flex justify-content-center"
+      <OverlayTrigger placement="auto" overlay={tooltip} show={tooltipVisible}>
+        <div>
+          <model-viewer
+            ref={modelViewerRef}
+            src={src}
+            id={"model-viewer-" + threedref.public_id}
+            class="model-viewer"
+            autoplay
+            camera-controls={controls ? true : undefined}
+            onError={(e: unknown) => console.error("Error loading model:", e)}
+            alt={""}
+            style={{ backgroundColor: threedref.backgroundColor || "none" }}
+            poster={threedref.poster?.url as string}
+            exposure="0.75"
+            onMouseUp={handleControls}
           >
             <div
-              className="progress-bar-inner bg-dark"
-              style={{
-                width: `${progress * 66}%`,
-                height: "2px",
-                display: `${progress == 1 ? "none" : "block"}`,
-                marginTop: "1rem",
-              }}
-            ></div>
-          </div>
-          {enableControls && (
-            <div
-              className="position-absolute bottom-0 end-0 m-2 d-flex gap-2"
-              id="model-controls"
+              slot="progress-bar"
+              className="custom-progress-bar d-flex justify-content-center"
             >
-              <OverlayTrigger placement="top" overlay={tooltip}>
-                <AnimatedButton
-                  onClick={handleControls}
-                  label={
-                    <ArrowsMove
-                      className={`${controls ? "bg-kanna" : ""}`}
-                    ></ArrowsMove>
-                  }
-                  variant={["small"]}
-                ></AnimatedButton>
-              </OverlayTrigger>
-
-              <OverlayTrigger placement="top" overlay={tooltip2}>
-                <AnimatedButton
-                  onClick={handleFullscreen}
-                  label={
-                    <ArrowsFullscreen
-                      className={` ${fullscreen ? "bg-kanna" : ""}`}
-                    ></ArrowsFullscreen>
-                  }
-                  variant={["small"]}
-                ></AnimatedButton>
-              </OverlayTrigger>
+              <div
+                className="progress-bar-inner bg-dark"
+                style={{
+                  width: `${progress * 66}%`,
+                  height: "2px",
+                  display: `${progress == 1 ? "none" : "block"}`,
+                  marginTop: "1rem",
+                }}
+              ></div>
             </div>
-          )}
-        </model-viewer>
-      </div>
+          </model-viewer>{" "}
+        </div>
+      </OverlayTrigger>
     )
   );
 }
