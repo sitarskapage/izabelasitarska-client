@@ -63,5 +63,10 @@ a {
 .font-imperial {
   font-family: "Imperial Script", cursive;
 }
+model-viewer {
+  height: auto;
+  aspect-ratio: 16 / 9;
+  width: 100% !important;
+}
 
 @import "./btn.scss";
