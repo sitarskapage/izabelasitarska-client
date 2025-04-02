@@ -15,6 +15,30 @@ export default function Work() {
 
   if (!general.published) return "This page is private.";
 
+  // Helper function to determine layout
+  const getMediaLayout = (media: typeof data.media) => {
+    if (!media || media.length === 0) return [];
+
+    const layout: { media: (typeof media)[0]; xs: number }[] = [];
+
+    for (let i = 0; i < media.length; i++) {
+      const current = media[i];
+      const next = media[i + 1];
+
+      // Check if the current and next images are vertical
+      if (current?.height > current?.width && next?.height > next?.width) {
+        layout.push({ media: current, xs: 6 });
+        layout.push({ media: next, xs: 6 });
+        i++; // Skip the next item since it's already paired
+      } else {
+        layout.push({ media: current, xs: 12 });
+      }
+    }
+    return layout;
+  };
+
+  const mediaLayout = media ? getMediaLayout(media) : [];
+
   return (
     <Layout title={general.title}>
       <Col>
@@ -23,8 +47,8 @@ export default function Work() {
           <Row>
             <Col xs={12}>
               <p id="Details" className="text-center">
-                {dimensions && <span>{dimensions}</span>}
                 {medium && <span>{medium}, </span>}
+                {dimensions && <span>{dimensions}, </span>}
                 {year && <span>{year}</span>}
                 {urls && urls.length > 0 && (
                   <>
@@ -45,11 +69,15 @@ export default function Work() {
           <Row>{description && HTMLReactParser(description)}</Row>
 
           {/* Display Images */}
-          <Row className="gap-3">
-            {media && media.length > 0 ? (
-              media.map((item) => (
-                <Col xs={12} key={item?.etag}>
-                  <MediaComponent media={item} />
+          <Row>
+            {mediaLayout.length > 0 ? (
+              mediaLayout.map((item, index) => (
+                <Col
+                  xs={item.xs}
+                  key={item.media?.etag || index}
+                  className="pb-3 px-2"
+                >
+                  <MediaComponent media={item.media} className="h-100 w-100" />
                 </Col>
               ))
             ) : (

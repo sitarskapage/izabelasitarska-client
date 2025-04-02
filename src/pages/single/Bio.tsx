@@ -5,6 +5,7 @@ import { GeneralContext } from "../../contexts/GeneralContext";
 import PortfolioButton from "../../components/PortfolioButton";
 import { useFetchData } from "../../hooks/useFetch";
 import { Container } from "react-bootstrap";
+import MediaComponent from "../../components/Media";
 
 export default function Bio() {
   const { preferences } = useContext(GeneralContext);
@@ -12,7 +13,7 @@ export default function Bio() {
 
   if (!data) return null;
 
-  const { statement, additional } = data;
+  const { statement, additional, picture } = data;
 
   const arrayToHtml = (arr: unknown) => {
     const array = Array.isArray(arr) ? arr : [];
@@ -30,6 +31,9 @@ export default function Bio() {
       <div id="Statement" className="py-4">
         {/* <h2>Statement</h2> */}
         <div>{statement && HTMLReactParser(statement)}</div>
+      </div>
+      <div id="ProfilePicture">
+        {picture && <MediaComponent media={picture} />}
       </div>
       <div id="Additional">
         {/* <h2>Additional</h2> */}
