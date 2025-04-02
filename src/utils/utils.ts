@@ -3,19 +3,12 @@ import { scale } from "@cloudinary/url-gen/actions/resize";
 import { ImageRefSchema } from "@jakubkanna/labguy-front-schema";
 
 // Global sizes for responsive images
-const sizes = {
-  SMALL: 400,
-  MEDIUM: 800,
-  BIG: 1600,
-  FULL: 2160,
-};
+const sizes = { SMALL: 400, MEDIUM: 800, BIG: 1600, FULL: 3840 };
 
 // Cloudinary URL generator with a specific width
 function getCldUrl(public_id: string, width: number) {
   const cld = new Cloudinary({
-    cloud: {
-      cloudName: import.meta.env.VITE_CLD_CLOUD_NAME,
-    },
+    cloud: { cloudName: import.meta.env.VITE_CLD_CLOUD_NAME },
   });
 
   const myImage = cld.image(public_id);
@@ -44,12 +37,7 @@ export function getImageAttributes(image: ImageRefSchema) {
   }
 
   // Non-Cloudinary image or missing data fallback
-  return {
-    src: "",
-    srcSet: "",
-    sizes: "",
-    alt: "",
-  };
+  return { src: "", srcSet: "", sizes: "", alt: "" };
 }
 export interface Padding {
   paddingTop: number;
