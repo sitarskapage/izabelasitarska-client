@@ -16,6 +16,7 @@ export default function MediaComponent({
 }: MediaProps) {
   const isLoop = variant == "loop";
   // Early return if no media is provided
+
   if (!media || media.length === 0) return;
 
   switch (true) {
