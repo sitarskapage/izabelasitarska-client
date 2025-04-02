@@ -8,6 +8,7 @@ import useIsMobile from "../hooks/useIsMobile";
 import { useFetchData } from "../hooks/useFetch";
 import { ProfileSchema } from "@jakubkanna/labguy-front-schema";
 import HTMLReactParser from "html-react-parser/lib/index";
+import { MediaRef } from "../utils/helpers";
 
 interface SectionProps {
   id: string;
@@ -74,15 +75,17 @@ export function Head({ subtitle, footer }: SectionHeadProps) {
       </Row>
       <Row className="flex-grow-1">
         <Col className="h-100 d-flex justify-content-center align-items-center text-light d-flex flex-column">
-          <Background media={homepage_media} isLoop />
+          {homepage_media && (
+            <Background media={homepage_media as MediaRef} isLoop />
+          )}
           {!isMobile && (
-            <p
+            <div
               className={
                 "archivo-narrow text-center text-uppercase w-50 text-ellipsis-5"
               }
             >
               {statement}
-            </p>
+            </div>
           )}
           <Link to={"/bio"}>read more</Link>
         </Col>
