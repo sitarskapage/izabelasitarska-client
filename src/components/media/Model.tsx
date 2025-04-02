@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import { ModelViewer } from "../../../types/model-viewer";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import { ArrowsFullscreen, ArrowsMove } from "react-bootstrap-icons";
+import AnimatedButton from "../AnimatedButton";
 
 export default function Model({
   threedref,
@@ -115,9 +116,7 @@ export default function Model({
           camera-controls={controls ? true : undefined}
           onError={(e: unknown) => console.error("Error loading model:", e)}
           alt={""}
-          style={{
-            backgroundColor: threedref.backgroundColor || "none",
-          }}
+          style={{ backgroundColor: threedref.backgroundColor || "none" }}
           poster={threedref.poster?.url as string}
           exposure="0.75"
         >
@@ -141,19 +140,27 @@ export default function Model({
               id="model-controls"
             >
               <OverlayTrigger placement="top" overlay={tooltip}>
-                <button onClick={handleControls} className="">
-                  <ArrowsMove
-                    className={`${controls ? "bg-kanna" : ""}`}
-                  ></ArrowsMove>
-                </button>
+                <AnimatedButton
+                  onClick={handleControls}
+                  label={
+                    <ArrowsMove
+                      className={`${controls ? "bg-kanna" : ""}`}
+                    ></ArrowsMove>
+                  }
+                  variant={["small"]}
+                ></AnimatedButton>
               </OverlayTrigger>
 
               <OverlayTrigger placement="top" overlay={tooltip2}>
-                <button onClick={handleFullscreen} className="">
-                  <ArrowsFullscreen
-                    className={` ${fullscreen ? "bg-kanna" : ""}`}
-                  ></ArrowsFullscreen>
-                </button>
+                <AnimatedButton
+                  onClick={handleFullscreen}
+                  label={
+                    <ArrowsFullscreen
+                      className={` ${fullscreen ? "bg-kanna" : ""}`}
+                    ></ArrowsFullscreen>
+                  }
+                  variant={["small"]}
+                ></AnimatedButton>
               </OverlayTrigger>
             </div>
           )}

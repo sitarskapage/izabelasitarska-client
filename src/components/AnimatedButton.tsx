@@ -5,7 +5,7 @@ export default function AnimatedButton({
   onClick,
   variant = [], // Default to an empty array if no variant is passed
 }: {
-  label: string;
+  label: string | JSX.Element;
   onClick: () => void;
   variant?: string[]; // Accept an array of variant names
 }) {
@@ -29,18 +29,10 @@ export default function AnimatedButton({
         className={`position-absolute ${
           isWhite ? "border-dark" : "border-light"
         } ${isWhite ? "bg-light" : "bg-dark"}`}
-        style={{
-          width: "100%",
-          height: "100%",
-          top: 0,
-          left: 0,
-        }}
+        style={{ width: "100%", height: "100%", top: 0, left: 0 }}
         initial={{ y: "-100%" }}
         variants={{
-          hover: {
-            y: 0,
-            transition: { duration: 0.4, ease: "easeInOut" },
-          },
+          hover: { y: 0, transition: { duration: 0.4, ease: "easeInOut" } },
         }}
       />
       {/* Button Text */}
