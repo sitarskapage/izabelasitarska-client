@@ -23,23 +23,27 @@ export default function EduArtContent({ data }: { data: (Work | Post)[] }) {
 
   const navigate = useNavigate();
 
-  const maxImages = 8;
+  const maxData = 8;
   const delay = 12000;
 
   const limitedData = useMemo(
-    () => data?.slice(0, maxImages) || [],
-    [data, maxImages]
+    () => data?.slice(0, maxData) || [],
+    [data, maxData]
   );
 
   const getData = useCallback(() => {
     return limitedData
       .filter((item) => item.general?.published)
-      .map((item) => {
+      .flatMap((item) => {
         if ("media" in item && Array.isArray(item.media) && item.media.length) {
-          return {
-            media: item.media[0],
-            key: item.general.title,
-          };
+          // Pick two random media items
+          const shuffledMedia = [...item.media].sort(() => 0.5 - Math.random());
+          const selectedMedia = shuffledMedia.slice(0, 2);
+
+          return selectedMedia.map((media, index) => ({
+            media,
+            key: `${item.general.title}-${index}`,
+          }));
         } else if ("content" in item && Array.isArray(item.content)) {
           const firstImageBlock = item.content.find(
             (block) =>
@@ -49,13 +53,19 @@ export default function EduArtContent({ data }: { data: (Work | Post)[] }) {
           ) as Image | undefined;
 
           if (firstImageBlock) {
-            return {
-              media: firstImageBlock?.images?.[0] as MediaRef, // Assuming images are compatible with MediaRef
-              key: `post-${item.generalId}`,
-            };
+            // Pick two random images
+            const shuffledImages = [...(firstImageBlock.images ?? [])].sort(
+              () => 0.5 - Math.random()
+            );
+            const selectedImages = shuffledImages.slice(0, 2);
+
+            return selectedImages.map((image, index) => ({
+              media: image as MediaRef, // Assuming images are compatible with MediaRef
+              key: `post-${item.generalId}-${index}`,
+            }));
           }
         }
-        return null;
+        return [];
       })
       .filter((item) => item !== null) as Object[];
   }, [limitedData]);
@@ -191,10 +201,7 @@ export default function EduArtContent({ data }: { data: (Work | Post)[] }) {
               initial={{ scale: 1 }}
               animate={{ scale: 2 }}
               transition={{ scale: { duration: delay / 1000, ease: "easeIn" } }}
-              style={{
-                width: "500px",
-                height: "auto",
-              }}
+              style={{ width: "500px", height: "auto" }}
             >
               <MediaComponent media={obj.media} variant="loop" />
             </motion.div>
