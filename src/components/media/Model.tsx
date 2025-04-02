@@ -16,7 +16,7 @@ export default function Model({
   const [controls, setControls] = useState<boolean>(false);
   // const [fullscreen, setFullscreen] = useState<boolean>(false);
   const [progress, setProgress] = useState<number>(0);
-  const [tooltipVisible, setTooltipVisible] = useState<boolean>(true);
+  const [tooltipVisible, setTooltipVisible] = useState<boolean>(false);
   const modelViewerRef = useRef<ModelViewer | undefined>(undefined);
 
   useEffect(() => {
@@ -121,6 +121,7 @@ export default function Model({
             poster={threedref.poster?.url as string}
             exposure="0.75"
             onMouseUp={handleControls}
+            onMouseOverCapture={() => setTooltipVisible(true)}
           >
             <div
               slot="progress-bar"
