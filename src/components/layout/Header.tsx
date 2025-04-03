@@ -107,7 +107,9 @@ export default function Header() {
         <meta property="og:type" content="website" />
         <meta
           property="og:image"
-          content="/favicon/android-chrome-512x512.png"
+          content={
+            import.meta.env.VITE_BASE_URL + "favicon/android-chrome-512x512.png"
+          }
         />
         <meta property="og:url" content={window.location.href} />
 
