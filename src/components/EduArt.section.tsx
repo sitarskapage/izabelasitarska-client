@@ -24,7 +24,7 @@ export default function EduArtContent({ data }: { data: (Work | Post)[] }) {
   const navigate = useNavigate();
 
   const maxData = 8;
-  const delay = 12000;
+  const delay = 15000;
 
   const limitedData = useMemo(
     () => data?.slice(0, maxData) || [],
@@ -167,7 +167,7 @@ export default function EduArtContent({ data }: { data: (Work | Post)[] }) {
             ? hoverDirection !== "left"
               ? "blue"
               : "rgb(0, 255, 0)"
-            : "transparent",
+            : "rgba(255,255,255,0.75)",
           transition: "background-color 0.3s ease-in-out",
         }}
       ></div>
@@ -181,7 +181,7 @@ export default function EduArtContent({ data }: { data: (Work | Post)[] }) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ opacity: { duration: 2, ease: "easeInOut" } }}
+            transition={{ opacity: { duration: 5, ease: "easeInOut" } }}
             style={{
               top: obj.position.top,
               left: obj.position.left,
