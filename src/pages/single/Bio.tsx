@@ -32,7 +32,7 @@ export default function Bio() {
         {/* <h2>Statement</h2> */}
         <div>{statement && HTMLReactParser(statement)}</div>
       </div>
-      <div id="ProfilePicture">
+      <div id="ProfilePicture" className="py-4">
         {picture && <MediaComponent media={picture} />}
       </div>
       <div id="Additional">

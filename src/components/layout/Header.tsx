@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import { motion } from "motion/react";
 import { artists_name } from "../../utils/helpers";
 import useIsMobile from "../../hooks/useIsMobile";
+import { Image } from "react-bootstrap";
 
 export default function Header() {
   const { preferences } = useContext(GeneralContext);
@@ -121,31 +122,53 @@ export default function Header() {
 
       <Navbar expand="lg" className="p-1" style={{ fontSize: "14.5px" }}>
         <Container className={isMobile ? "py-2" : ""}>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav id="Menu" className={"w-100" + (isMobile ? " py-3 fs-1" : "")}>
-              <div id="Navigation" className="ps-2 d-flex gap-2">
-                <Link to="/">Home</Link>
-                <Link to="bio">Bio</Link>
+          <Navbar.Toggle
+            aria-controls="basic-navbar-nav"
+            className="border-0"
+          />
+          <Navbar.Collapse id="basic-navbar-nav" className="w-100">
+            <Nav
+              id="Menu"
+              className={
+                "w-100 d-flex align-items-center justify-content-between" +
+                (isMobile ? " py-3 fs-1" : "")
+              }
+            >
+              <Image
+                src="/favicon/android-chrome-512x512.png"
+                alt="Logo"
+                width={isMobile ? 50 : 25}
+                className="py-1"
+              />
+              <div
+                className={
+                  "d-flex gap-3 w-100 flex-wrap justify-content-center " +
+                  (isMobile ? "py-5" : "")
+                }
+              >
+                <div id="Navigation" className="ps-2 d-flex gap-2">
+                  <Link to="/">Home</Link>
+                  <Link to="bio">Bio</Link>
+                </div>
+                <div id="Content" className="ps-2 d-flex gap-2">
+                  <Link to="art">Art</Link>
+                  <Link to="edu">Education</Link>
+                </div>
+                <div id="Links">
+                  <div id="Contact" className="ps-2 d-flex gap-2">
+                    <a className="link" onClick={change}>
+                      {email}
+                    </a>
+                    <a
+                      href="https://www.instagram.com/izabela_sitarska_fashion_dog/"
+                      target="_blank"
+                    >
+                      IG
+                    </a>
+                  </div>
+                </div>
               </div>
-
-              <div id="Content" className="ps-2 d-flex gap-2">
-                <Link to="art">Art</Link>
-                <Link to="edu">Education</Link>
-              </div>
-
-              <div id="Contact" className="ps-2 d-flex gap-2">
-                <a className="link" onClick={change}>
-                  {email}
-                </a>
-                <a
-                  href="https://www.instagram.com/izabela_sitarska_fashion_dog/"
-                  target="_blank"
-                >
-                  IG
-                </a>
-              </div>
-              <div id="Copyrights" className="ms-auto">
+              <div id="Copyrights">
                 <small className="d-flex gap-1">
                   <span>© </span>
                   <MarqueeText />
