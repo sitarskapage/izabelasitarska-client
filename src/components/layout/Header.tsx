@@ -134,12 +134,19 @@ export default function Header() {
                 (isMobile ? " py-3 fs-1" : "")
               }
             >
-              <Image
-                src="/favicon/android-chrome-512x512.png"
-                alt="Logo"
-                width={isMobile ? 50 : 25}
-                className="py-1"
-              />
+              {/* IMG */}
+
+              <Link to="/">
+                <Image
+                  src="/favicon/android-chrome-512x512.png"
+                  alt="Logo"
+                  width={isMobile ? 50 : 25}
+                  className="py-1"
+                />
+              </Link>
+
+              {/* MENU */}
+
               <div
                 className={
                   "d-flex gap-3 w-100 flex-wrap justify-content-center " +
@@ -168,6 +175,9 @@ export default function Header() {
                   </div>
                 </div>
               </div>
+
+              {/* COPYRIGHTS */}
+
               <div id="Copyrights">
                 <small className="d-flex gap-1">
                   <span>© </span>
