@@ -109,10 +109,6 @@ export default function Header() {
           content="/favicon/android-chrome-512x512.png"
         />
         <meta property="og:url" content={window.location.href} />
-        <meta
-          property="og:description"
-          content="Discover amazing art by talented artists."
-        />
 
         {/* Twitter Card Meta Tags */}
         <meta name="twitter:card" content="summary_large_image" />
@@ -120,10 +116,6 @@ export default function Header() {
         <meta
           name="twitter:image"
           content="/favicon/android-chrome-512x512.png"
-        />
-        <meta
-          name="twitter:description"
-          content="Explore the latest artwork and collections."
         />
       </Helmet>
 
