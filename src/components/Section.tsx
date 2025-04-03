@@ -65,10 +65,11 @@ export function Head({ subtitle, footer }: SectionHeadProps) {
               fontWeight: "900",
               fontStretch: "extra-condensed",
             }}
+            className="text-center"
           >
-            <span>IZABELA</span>
+            IZABELA
             <br />
-            <span>SITARSKA</span>
+            SITARSKA
           </motion.h1>
           {subtitle}
         </Col>
@@ -87,7 +88,7 @@ export function Head({ subtitle, footer }: SectionHeadProps) {
               {statement}
             </div>
           )}
-          <Link to={"/bio"}>read more</Link>
+          <Link to={"/bio"}>Bio</Link>
         </Col>
       </Row>
       {footer && (
