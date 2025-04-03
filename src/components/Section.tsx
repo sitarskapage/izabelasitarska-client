@@ -88,7 +88,7 @@ export function Head({ subtitle, footer }: SectionHeadProps) {
               {statement}
             </div>
           )}
-          <Link to={"/bio"}>Bio</Link>
+          <Link to={"/bio"}>Read more</Link>
         </Col>
       </Row>
       {footer && (
