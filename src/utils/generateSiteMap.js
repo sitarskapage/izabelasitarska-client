@@ -58,7 +58,7 @@ const generateSitemap = async () => {
   const workSlugs = await fetchSlugs("work");
 
   // Get the base URL from environment variables
-  const baseUrl = process.env.BASE_URL;
+  const baseUrl = process.env.VITE_BASE_URL;
 
   // Start sitemap structure
   let sitemap = '<?xml version="1.0" encoding="UTF-8"?>\n';
