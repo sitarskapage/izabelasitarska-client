@@ -42,7 +42,7 @@ export default function EduArtContent({ data }: { data: (Work | Post)[] }) {
 
           return selectedMedia.map((media, index) => ({
             media,
-            key: `${item.general.title}-${index}`,
+            key: `${item.general.title}-${index}-${Date.now()}-${Math.random()}`,
           }));
         } else if ("content" in item && Array.isArray(item.content)) {
           const firstImageBlock = item.content.find(
@@ -86,7 +86,7 @@ export default function EduArtContent({ data }: { data: (Work | Post)[] }) {
             {
               ...removedItem,
               position: getRandomPosition(),
-              key: (obj.media?.etag as string) + Date.now(),
+              key: `${obj.media?.etag}-${Date.now()}-${Math.random()}`,
             },
             ...curr,
           ]);
@@ -177,7 +177,7 @@ export default function EduArtContent({ data }: { data: (Work | Post)[] }) {
         {array.map((obj) => (
           <motion.div
             key={obj.key}
-            className="position-absolute"
+            className="position-absolute z-0"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}

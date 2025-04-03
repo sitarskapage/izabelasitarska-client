@@ -44,7 +44,6 @@ export default function Model({
       const handleProgress = ((
         event: CustomEvent<{ totalProgress: number }>
       ) => {
-        console.log("Progress event:", event.detail);
         const progress = event.detail.totalProgress || 0;
         setProgress(progress);
       }) as EventListener;

@@ -19,8 +19,7 @@ export default function WorkCard({ work: item, variant = "art" }: CardProps) {
 
   useEffect(() => {
     if ("media" in item && Array.isArray(item.media) && item.media.length) {
-      console.log(item.general, item.media); // Logs correctly
-      setGeneral(item.general); // ✅ Updates state
+      setGeneral(item.general);
       setMedia(item.media);
     } else if ("content" in item && Array.isArray(item.content)) {
       const itemMedia = item.content
