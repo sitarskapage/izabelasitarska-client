@@ -100,7 +100,33 @@ export default function Header() {
 
         {/* Optional: Web App Manifest for Android */}
         <link rel="manifest" href="/favicon/site.webmanifest" />
+
+        {/* Open Graph Meta Tags for Social Media */}
+        <meta property="og:title" content={preferences?.artists_name} />
+        <meta property="og:type" content="website" />
+        <meta
+          property="og:image"
+          content="/favicon/android-chrome-512x512.png"
+        />
+        <meta property="og:url" content={window.location.href} />
+        <meta
+          property="og:description"
+          content="Discover amazing art by talented artists."
+        />
+
+        {/* Twitter Card Meta Tags */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={preferences?.artists_name} />
+        <meta
+          name="twitter:image"
+          content="/favicon/android-chrome-512x512.png"
+        />
+        <meta
+          name="twitter:description"
+          content="Explore the latest artwork and collections."
+        />
       </Helmet>
+
       <Navbar expand="lg" className="p-1" style={{ fontSize: "14.5px" }}>
         <Container className={isMobile ? "py-2" : ""}>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
