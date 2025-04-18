@@ -5,8 +5,13 @@ export const Curtain = ({ hidden = false }) => {
 
   useEffect(() => {
     if (hidden) {
-      console.log("set timeout!");
-      const timer = setTimeout(() => setVisible(false), 5000);
+      document.body.className = "overflow-hidden";
+
+      const timer = setTimeout(() => {
+        document.body.className = "";
+
+        setVisible(false);
+      }, 5000);
       return () => clearTimeout(timer);
     }
   }, [hidden]);
