@@ -27,7 +27,7 @@ export default function Router() {
         {/* Root Route */}
         <Route path="/" element={<Homepage />}>
           {/* home */}
-          <Route path="" element={<EduArtContent data={data} />} />
+          <Route path="" element={<EduArtContent />} />
           {/* art */}
           <Route
             path="art"

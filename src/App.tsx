@@ -5,7 +5,6 @@ import { ReactNode, useState } from "react";
 import Fallback from "./components/Fallback";
 import { ErrorBoundary } from "react-error-boundary";
 import Header from "./components/layout/Header";
-import { Curtain } from "./components/Curtain";
 
 function App({ children }: { children: ReactNode }) {
   const [footerHeight, setFooterHeight] = useState(0);
@@ -13,7 +12,6 @@ function App({ children }: { children: ReactNode }) {
   return (
     <>
       <ErrorBoundary FallbackComponent={Fallback}>
-        <Curtain />
         <Header />
         <Main footerHeight={footerHeight}>{children}</Main>
         <Footer setFooterHeight={setFooterHeight} />

@@ -19,9 +19,38 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: {
-          three: ["three"],
-          "model-viewer": ["@google/model-viewer"],
+          // Core React and React DOM
+          react: ["react", "react-dom"],
+
+          // React Router
+          router: ["react-router-dom", "react-router-bootstrap"],
+
+          // UI Libraries
+          bootstrap: ["react-bootstrap", "bootstrap", "bootstrap-icons"],
+          icons: ["react-bootstrap-icons"],
+
+          // Cloudinary
+          cloudinary: ["@cloudinary/react", "@cloudinary/url-gen"],
+
+          // Helmet for meta tags
+          helmet: ["react-helmet"],
+
+          // Motion
           motion: ["motion"],
+
+          // 3D Model Viewer
+          "model-viewer": ["@google/model-viewer"],
+
+          // Utilities
+          utils: [
+            "dayjs",
+            "html-react-parser",
+            "dotenv",
+            "@react-hook/window-size",
+          ],
+
+          // Video Player
+          player: ["react-player"],
         },
       },
     },

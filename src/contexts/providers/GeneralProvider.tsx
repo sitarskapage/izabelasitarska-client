@@ -1,7 +1,7 @@
 import { ReactNode, useState, useEffect } from "react";
-import LoadingPage from "../../pages/Loading";
 import { GeneralContext, Preferences } from "../GeneralContext";
 import handleFetchError from "../../utils/handleFetchError";
+import { Curtain } from "../../components/Curtain";
 
 interface GeneralProviderProps {
   children: ReactNode;
@@ -13,11 +13,12 @@ export const GeneralProvider: React.FC<GeneralProviderProps> = ({
   const [preferences, setPreferences] = useState<Preferences | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [status, setStatus] = useState<number | null>(null);
-
+  useEffect(() => console.log("loading:", loading), [loading]);
   useEffect(() => {
     let firstRun = true;
 
     const init = async () => {
+      document.body.className = "bg-dark text-white font-monospace";
       try {
         setLoading(true);
 
@@ -32,11 +33,14 @@ export const GeneralProvider: React.FC<GeneralProviderProps> = ({
           const data = await response.json();
           setPreferences(data);
           setLoading(false);
+          document.body.className = "";
         } else {
           setStatus(response.status);
         }
       } catch {
         triggerCheck();
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -81,9 +85,7 @@ export const GeneralProvider: React.FC<GeneralProviderProps> = ({
   }, []);
 
   const Child = () => {
-    if (loading) {
-      return <LoadingPage />;
-    } else if (status) {
+    if (status) {
       return <p>{"Error: " + handleFetchError(status)}</p>;
     } else {
       return children;
@@ -94,6 +96,7 @@ export const GeneralProvider: React.FC<GeneralProviderProps> = ({
     <GeneralContext.Provider
       value={{ preferences, setPreferences, loading, setLoading }}
     >
+      <Curtain hidden={loading} />
       <Child />
     </GeneralContext.Provider>
   );
