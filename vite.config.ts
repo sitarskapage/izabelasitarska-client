@@ -26,7 +26,7 @@ export default defineConfig({
           router: ["react-router-dom", "react-router-bootstrap"],
 
           // UI Libraries
-          bootstrap: ["react-bootstrap", "bootstrap", "bootstrap-icons"],
+          bootstrap: ["react-bootstrap", "bootstrap"],
           icons: ["react-bootstrap-icons"],
 
           // Cloudinary

@@ -4,7 +4,6 @@ import Bio from "./pages/single/Bio";
 import NotFoundPage from "./pages/404";
 import { fetchData } from "./utils/loader";
 import EduArtContent from "./components/EduArt.section";
-import { AnimatePresence } from "motion/react";
 import { useFetchData } from "./hooks/useFetch";
 import { Work as WorkType } from "../types/Work";
 import EduOrArt from "./pages/single/EduOrArt";
@@ -16,13 +15,12 @@ export default function Router() {
   const location = useLocation();
   const { data: works } = useFetchData<WorkType[]>("works?unique=true");
   const { data: posts } = useFetchData<PostType[]>("posts");
-
   const data = [...(works || []), ...(posts || [])];
 
-  if (!data || !works || !posts) return null;
+  if (!data || !works || !posts) return;
 
   return (
-    <AnimatePresence initial={false} mode="wait">
+    <>
       <Routes location={location}>
         {/* Root Route */}
         <Route path="/" element={<Homepage />}>
@@ -50,6 +48,6 @@ export default function Router() {
         {/* Catch-All for Not Found */}
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
-    </AnimatePresence>
+    </>
   );
 }

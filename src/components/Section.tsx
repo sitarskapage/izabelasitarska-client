@@ -47,7 +47,9 @@ export function Head({ subtitle, footer }: SectionHeadProps) {
   const { data: profile } = useFetchData<ProfileSchema>("profile/1");
   const isMobile = useIsMobile();
   const fontSize = ScrollEffects();
-  if (!preferences) return null;
+
+  if (!preferences) return;
+
   const { homepage_media } = preferences;
   const statement = profile?.statement && HTMLReactParser(profile.statement);
 

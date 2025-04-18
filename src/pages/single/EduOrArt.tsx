@@ -5,6 +5,7 @@ import Layout from "../../components/layout/Layout";
 import WorkCard from "../../components/WorkCard";
 import AnimatedButton from "../../components/AnimatedButton";
 import { Post } from "../Posts";
+import { ArrowLeftShort } from "react-bootstrap-icons";
 
 export default function EduOrArt({
   data,
@@ -31,7 +32,7 @@ export default function EduOrArt({
                     <Link to="/">
                       <div className="d-flex flex-column justify-content-start align-items-start">
                         <span className="text-light">
-                          <i className="bi bi-arrow-left-short"></i> Back
+                          <ArrowLeftShort /> Back
                         </span>
                       </div>
                     </Link>

@@ -3,6 +3,7 @@ import AnimatedButton from "./AnimatedButton";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import ReactPlayer from "react-player";
+import { Curtain } from "./Curtain";
 
 export default function EduArtContent() {
   const [hoverDirection, setHoverDirection] = useState<"left" | "right" | null>(
@@ -15,6 +16,7 @@ export default function EduArtContent() {
   const handleClick = (label: "art" | "edu") => {
     navigate(label);
   };
+  const [loading, setLoading] = useState(true);
 
   return (
     <div
@@ -29,6 +31,8 @@ export default function EduArtContent() {
         height: "90dvh",
       }}
     >
+      {" "}
+      <Curtain hidden={!loading} />
       {/* overlay */}
       <Row className="position-absolute z-2 w-100 h-100">
         <Col
@@ -51,7 +55,6 @@ export default function EduArtContent() {
           />
         </Col>
       </Row>
-
       <div
         id="Backdrop"
         className="w-100 h-100 opacity-25 z-1 position-absolute"
@@ -64,10 +67,15 @@ export default function EduArtContent() {
           transition: "background-color 0.3s ease-in-out",
         }}
       ></div>
-
       {/* background */}
       <div className="video-cover position-absolute w-100 h-100 top-0 start-0 z-0">
-        {!videoReady && <img src="./bg/poster.jpg" alt="poster" />}
+        {!videoReady && (
+          <img
+            src="./bg/poster.jpg"
+            alt="poster"
+            onLoad={() => setLoading(false)}
+          />
+        )}
         <ReactPlayer
           url="./bg/section_background.mp4"
           playing

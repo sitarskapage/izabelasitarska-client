@@ -1,0 +1,45 @@
+svg g {
+  visibility: hidden; /* Initially hidden */
+  fill: black; /* Initially black */
+  animation: fadeIn 5s forwards;
+  animation-iteration-count: infinite;
+  filter: contrast(999);
+}
+
+#Layer_11 {
+  animation-delay: 0s;
+}
+#Layer_10 {
+  animation-delay: 0.5s;
+}
+#Layer_9 {
+  animation-delay: 0.5s;
+}
+#Layer_8 {
+  animation-delay: 1s;
+}
+#Layer_7 {
+  animation-delay: 1s;
+}
+#Layer_6 {
+  animation-delay: 1s;
+}
+#Layer_5 {
+  animation-delay: 1.5s;
+}
+#Layer_2 {
+  animation-delay: 1.5s;
+}
+#Layer_3 {
+  animation-delay: 1.5s;
+}
+#Layer_4 {
+  animation-delay: 1.5s;
+}
+
+@keyframes fadeIn {
+  50% {
+    visibility: visible;
+    fill: white; /* Black initially */
+  }
+}

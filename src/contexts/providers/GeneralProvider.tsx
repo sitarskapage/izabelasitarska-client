@@ -1,7 +1,6 @@
 import { ReactNode, useState, useEffect } from "react";
 import { GeneralContext, Preferences } from "../GeneralContext";
 import handleFetchError from "../../utils/handleFetchError";
-import { Curtain } from "../../components/Curtain";
 
 interface GeneralProviderProps {
   children: ReactNode;
@@ -13,12 +12,8 @@ export const GeneralProvider: React.FC<GeneralProviderProps> = ({
   const [preferences, setPreferences] = useState<Preferences | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [status, setStatus] = useState<number | null>(null);
-  useEffect(() => console.log("loading:", loading), [loading]);
   useEffect(() => {
-    let firstRun = true;
-
     const init = async () => {
-      document.body.className = "bg-dark text-white font-monospace";
       try {
         setLoading(true);
 
@@ -38,45 +33,7 @@ export const GeneralProvider: React.FC<GeneralProviderProps> = ({
           setStatus(response.status);
         }
       } catch {
-        triggerCheck();
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    const triggerCheck = async () => {
-      if (!import.meta.env.VITE_API_GITHUB_TOKEN) {
-        return console.error("VITE_API_GITHUB_TOKEN not found");
-      }
-
-      const owner = import.meta.env.VITE_API_GITHUB_OWNER;
-      const repo = import.meta.env.VITE_API_GITHUB_REPO;
-      const workflowFileName = import.meta.env.VITE_API_GITHUB_WORKFLOW_FILE;
-      const token = import.meta.env.VITE_API_GITHUB_TOKEN;
-
-      const apiUrl = `https://api.github.com/repos/${owner}/${repo}/actions/workflows/${workflowFileName}/dispatches`;
-
-      const data = {
-        ref: "main", // The branch name where the workflow file is located
-      };
-
-      try {
-        const response = await fetch(apiUrl, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify(data),
-        });
-
-        if (response.ok) {
-          const delay = firstRun ? 15000 : 300000; // 15 seconds for the first run, 5 minutes for subsequent runs
-          firstRun = false;
-          setTimeout(() => init(), delay);
-        }
-      } catch (error) {
-        console.error("Error triggering workflow:", error);
+        return;
       }
     };
 
@@ -91,12 +48,10 @@ export const GeneralProvider: React.FC<GeneralProviderProps> = ({
       return children;
     }
   };
-
   return (
     <GeneralContext.Provider
       value={{ preferences, setPreferences, loading, setLoading }}
     >
-      <Curtain hidden={loading} />
       <Child />
     </GeneralContext.Provider>
   );
