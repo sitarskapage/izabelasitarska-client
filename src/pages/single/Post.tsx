@@ -10,9 +10,8 @@ import VideoComponent from "../../components/media/Video";
 import ImageComponent from "../../components/media/Image";
 import Layout from "../../components/layout/Layout";
 import { Content } from "@jakubkanna/labguy-front-schema/dist/Post.schema";
-import { Col, Container } from "react-bootstrap";
+import { Col } from "react-bootstrap";
 import { useFetchData } from "../../hooks/useFetch";
-import useIsMobile from "../../hooks/useIsMobile";
 import NotFoundPage from "../404";
 
 interface Post extends PostSchema {
@@ -26,7 +25,7 @@ function renderPostContent(content: Content | undefined) {
     if ("text" in block) {
       // Handle Text block
       return (
-        <div key={index} className={`p-3 `}>
+        <div key={index} className={`p-3 container`}>
           {HTMLReactParser(block.text as string)}
         </div>
       );
@@ -59,7 +58,6 @@ function renderPostContent(content: Content | undefined) {
 export default function Post() {
   const { slug } = useParams();
   const { data } = useFetchData<Post>(`posts/${slug}`);
-  const isMobile = useIsMobile();
 
   if (!data) return <NotFoundPage />;
 
@@ -72,17 +70,8 @@ export default function Post() {
 
   return (
     <Layout title={general.title}>
-      <Col className="p-0">
-        <Container
-          fluid={isMobile}
-          className={
-            isMobile
-              ? "p-0 gap-2 pb-5"
-              : "d-flex flex-column px-0 h-100 gap-2 pb-5"
-          }
-        >
-          {renderPostContent(content)}
-        </Container>
+      <Col className="p-0 d-flex flex-column px-0 h-100 gap-2 pb-5">
+        {renderPostContent(content)}
       </Col>
     </Layout>
   );

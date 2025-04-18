@@ -42,7 +42,10 @@ export default function Work() {
   return (
     <Layout title={general.title}>
       <Col>
-        <Container className="d-flex flex-column gap-4 mh-100 overflow-auto py-5">
+        <Container
+          fluid
+          className="d-flex flex-column gap-4 mh-100 overflow-auto py-5"
+        >
           {/* Display Dimensions and Year */}
           <Row>
             <Col xs={12}>
@@ -66,7 +69,13 @@ export default function Work() {
               </p>
             </Col>
           </Row>
-          <Row>{description && HTMLReactParser(description)}</Row>
+          <Row className="">
+            <Col>
+              <Container>
+                {description && HTMLReactParser(description)}
+              </Container>
+            </Col>
+          </Row>
 
           {/* Display Images */}
           <Row>
