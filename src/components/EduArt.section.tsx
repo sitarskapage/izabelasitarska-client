@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import ReactPlayer from "react-player";
 import { Curtain } from "./Curtain";
+import useIsMobile from "../hooks/useIsMobile";
 
 export default function EduArtContent() {
   const [hoverDirection, setHoverDirection] = useState<"left" | "right" | null>(
@@ -17,6 +18,7 @@ export default function EduArtContent() {
     navigate(label);
   };
   const [loading, setLoading] = useState(true);
+  const isMobile = useIsMobile();
 
   return (
     <div
@@ -76,16 +78,18 @@ export default function EduArtContent() {
             onLoad={() => setLoading(false)}
           />
         )}
-        <ReactPlayer
-          url="./bg/section_background.mp4"
-          playing
-          loop
-          muted
-          width="100%"
-          height="100%"
-          onStart={() => setVideoReady(true)}
-          style={{ position: "absolute", top: 0, left: 0 }}
-        />
+        {!isMobile && (
+          <ReactPlayer
+            url="./bg/section_background.mp4"
+            playing
+            loop
+            muted
+            width="100%"
+            height="100%"
+            onStart={() => setVideoReady(true)}
+            style={{ position: "absolute", top: 0, left: 0 }}
+          />
+        )}
       </div>
     </div>
   );
