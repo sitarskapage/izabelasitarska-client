@@ -79,6 +79,11 @@ const isLastItem = (index: number, arrayLength: number) =>
 
 const artists_name = import.meta.env.VITE_ARTISTS_NAME || "";
 
+const supportsHEVC = () => {
+  const video = document.createElement("video");
+  return video.canPlayType('video/mp4; codecs="hvc1"') !== "";
+};
+
 export {
   isVideo,
   isImage,
@@ -88,4 +93,5 @@ export {
   is3d,
   isLastItem,
   artists_name,
+  supportsHEVC,
 };

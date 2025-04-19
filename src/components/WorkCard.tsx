@@ -6,6 +6,7 @@ import { Post } from "../pages/Posts";
 import { useEffect, useState } from "react";
 import { GeneralSectionSchema } from "@jakubkanna/labguy-front-schema";
 import { MediaRef } from "../utils/helpers";
+import AsciiLoader from "./Loader";
 
 interface CardProps {
   work: Work | Post;
@@ -37,11 +38,16 @@ export default function WorkCard({ work: item, variant = "art" }: CardProps) {
     }
   }, [item]);
 
-  if (!general) return <p>Invalid content</p>;
+  if (!general)
+    return (
+      <Container>
+        <AsciiLoader className="position-absolute top-50 left-50 translate-center" />
+      </Container>
+    );
 
   const { title, slug } = general;
 
-  if (!media.length) return <p>No media</p>;
+  if (!media.length) return <Container />;
 
   return (
     <Link to={`/${variant}/${slug}`}>

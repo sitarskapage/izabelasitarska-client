@@ -36,7 +36,7 @@ function renderPostContent(content: Content | undefined) {
       const images = block.images as ImageRefSchema[];
       return images.map((image, i) => (
         <div key={`${index}-${i}`}>
-          <ImageComponent imageref={image} />
+          <ImageComponent imageref={image} className="w-100 h-auto" />
         </div>
       ));
     }
@@ -46,7 +46,7 @@ function renderPostContent(content: Content | undefined) {
       const videos = block.videos as VideoRefSchema[];
       return videos.map((video, i) => (
         <div key={`${index}-${i}`}>
-          <VideoComponent videoref={video} />
+          <VideoComponent videoref={video} className="w-100 h-auto" />
         </div>
       ));
     }
@@ -70,7 +70,7 @@ export default function Post() {
 
   return (
     <Layout title={general.title}>
-      <Col className="p-0 d-flex flex-column px-0 h-100 gap-2 pb-5">
+      <Col xs={12} className="d-flex flex-column  h-100 gap-2 mb-3 ">
         {renderPostContent(content)}
       </Col>
     </Layout>

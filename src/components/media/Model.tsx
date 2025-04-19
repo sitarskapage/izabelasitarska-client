@@ -7,9 +7,11 @@ import { ArrowsMove } from "react-bootstrap-icons";
 
 export default function Model({
   threedref,
+  className,
 }: {
   threedref: ThreedRef;
   controls?: true;
+  className?: string;
 }) {
   const [src, setSrc] = useState<string | undefined>(threedref?.url);
   const [valid, setIsValid] = useState<boolean>(true);
@@ -111,7 +113,7 @@ export default function Model({
             ref={modelViewerRef}
             src={src}
             id={"model-viewer-" + threedref.public_id}
-            class="model-viewer"
+            class={"model-viewer " + className}
             autoplay
             camera-controls={controls ? true : undefined}
             onError={(e: unknown) => console.error("Error loading model:", e)}

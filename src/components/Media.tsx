@@ -36,8 +36,8 @@ export default function MediaComponent({
         />
       );
     case is3d(media):
-      return <Model threedref={media} controls />;
+      return <Model threedref={media} controls className={className} />;
     default:
-      return <p>Unsupported media type.</p>;
+      return <div></div>;
   }
 }

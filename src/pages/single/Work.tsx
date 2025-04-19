@@ -42,59 +42,51 @@ export default function Work() {
   return (
     <Layout title={general.title}>
       <Col>
-        <Container
-          fluid
-          className="d-flex flex-column gap-4 mh-100 overflow-auto py-5"
-        >
-          {/* Display Dimensions and Year */}
-          <Row>
-            <Col xs={12}>
-              <p id="Details" className="text-center">
-                {medium && <span>{medium}, </span>}
-                {dimensions && <span>{dimensions}, </span>}
-                {year && <span>{year}</span>}
-                {urls && urls.length > 0 && (
-                  <>
-                    <br />
-                    <span>Links: </span>
+        <Row>
+          <Col xs={12}>
+            <p id="Details" className="text-center">
+              {medium && <span>{medium}, </span>}
+              {dimensions && <span>{dimensions}, </span>}
+              {year && <span>{year}</span>}
+              {urls && urls.length > 0 && (
+                <>
+                  <br />
+                  <span>Links: </span>
 
-                    {urls.map((url, index) => (
-                      <>
-                        <a href={url.url}>{url.title}</a>
-                        {index < urls.length - 1 && <span>, </span>}
-                      </>
-                    ))}
-                  </>
-                )}
-              </p>
-            </Col>
-          </Row>
-          <Row className="">
-            <Col>
-              <Container>
-                {description && HTMLReactParser(description)}
-              </Container>
-            </Col>
-          </Row>
+                  {urls.map((url, index) => (
+                    <>
+                      <a href={url.url}>{url.title}</a>
+                      {index < urls.length - 1 && <span>, </span>}
+                    </>
+                  ))}
+                </>
+              )}
+            </p>
+          </Col>
+        </Row>
+        <Row className="">
+          <Col>
+            <Container>{description && HTMLReactParser(description)}</Container>
+          </Col>
+        </Row>
 
-          {/* Display Images */}
-          <Row>
-            {mediaLayout.length > 0 ? (
-              mediaLayout.map((item, index) => (
-                <Col
-                  xs={item.xs}
-                  key={item.media?.etag || index}
-                  className="pb-3 px-2"
-                >
-                  <MediaComponent media={item.media} className="h-100 w-100" />
-                </Col>
-              ))
-            ) : (
-              <p>No media available for this project.</p>
-            )}
-          </Row>
-          {/* Footer Section */}
-        </Container>
+        {/* Display Images */}
+        <Row>
+          {mediaLayout.length > 0 ? (
+            mediaLayout.map((item, index) => (
+              <Col
+                xs={item.xs}
+                key={item.media?.etag || index}
+                className="pb-3 px-2"
+              >
+                <MediaComponent media={item.media} className="h-100 w-100" />
+              </Col>
+            ))
+          ) : (
+            <p>No media available for this project.</p>
+          )}
+        </Row>
+        {/* Footer Section */}
       </Col>
     </Layout>
   );

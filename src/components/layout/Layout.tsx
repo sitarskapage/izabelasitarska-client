@@ -10,7 +10,7 @@ export default function Layout({
   description,
   header = {},
   body = {},
-  footer = {},
+  // footer = {},
 }: {
   children: ReactNode;
   title?: string;
@@ -61,11 +61,11 @@ export default function Layout({
       </Row>
 
       {/* Footer */}
-      {footer.node && (
+      {/* {footer.node && (
         <Col xs={12} id="SinglePageFooter" className={footer.className}>
           <Row>{footer.node}</Row>
         </Col>
-      )}
+      )} */}
     </>
   );
 }

@@ -10,7 +10,11 @@ import { artists_name } from "../../utils/helpers";
 import useIsMobile from "../../hooks/useIsMobile";
 import { Image } from "react-bootstrap";
 
-export default function Header() {
+export default function Header({
+  setHeaderHeight,
+}: {
+  setHeaderHeight: React.Dispatch<React.SetStateAction<number>>;
+}): JSX.Element {
   const { preferences } = useContext(GeneralContext);
   const headerRef = useRef<HTMLDivElement | null>(null);
   const currentYear = new Date().getFullYear();
@@ -56,6 +60,14 @@ export default function Header() {
   const change = () => {
     setEmail("sitarskapage@gmail.com");
   };
+
+  // Measure content height when it is rendered
+  useEffect(() => {
+    if (headerRef.current) {
+      const height = headerRef.current.clientHeight;
+      if (height) setHeaderHeight(height);
+    }
+  }, [setHeaderHeight, isMobile]);
 
   return (
     <header
